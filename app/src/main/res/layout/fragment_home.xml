@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5FF"
-    tools:context="com.cloudfoyo.magazine.HomeFragment">
+    tools:context="com.cloudfoyo.magazine.MainActivity">
 
     <!-- Magazine title Container := Moved to recentUpdates -> HeaderView -->
 

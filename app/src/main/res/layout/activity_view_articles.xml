@@ -9,18 +9,22 @@
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#29b6f6"
+        android:background="#F44336"
         android:title=""
         android:titleTextColor="#ffff"
-        android:id="@+id/toolbar1">
+        android:id="@+id/toolbar1"
+        android:layout_alignParentTop="true"
+        >
     </android.support.v7.widget.Toolbar>
 
     <ScrollView
 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="500dp"
+        android:layout_below="@+id/toolbar1"
         android:id="@+id/scrollview"
-        android:layout_below="@+id/toolbar1">
+
+        >
 
 
         <RelativeLayout
@@ -91,7 +95,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/toolbar2"
         android:layout_alignParentBottom="true"
-        android:background="#29b6f6">
+        android:background="#F44336">
         <ToggleButton
             android:id="@+id/toggleButton"
             android:layout_width="40dp"
