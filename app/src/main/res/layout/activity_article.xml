@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.cloudfoyo.myapplication.Article">
+
+
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tablayout"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="#ffff"
+        app:tabMode="fixed"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="#ff0000" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:id="@+id/articles_listView"
+        android:drawSelectorOnTop="true"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp"
+        android:listSelector="@drawable/article_list_selector"
+        android:layout_height="wrap_content"></ListView>
+
+
+</LinearLayout>

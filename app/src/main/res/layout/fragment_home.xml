@@ -1,0 +1,42 @@
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5FF"
+    tools:context="com.cloudfoyo.myapplication.HomeFragment">
+
+    <!-- Magazine title Container := Moved to recentUpdates -> HeaderView -->
+
+ <!--   <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:id="@+id/home_titleContainer"
+        android:background="#FFF"
+        android:elevation="10dp"
+        android:layout_height="200dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Magazine"
+            android:textSize="40sp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>  -->
+
+
+
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp"
+        android:drawSelectorOnTop="true"
+        android:listSelector="@drawable/article_list_selector"
+        android:clipChildren="true"
+        android:id="@+id/home_recentUpdates" />
+
+
+</RelativeLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:gravity="center"
+    android:elevation="10dp"
+    android:alpha=".6"
+    android:layout_height="match_parent">
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/home_list_item_footer_more"
+        android:text="View more "
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
