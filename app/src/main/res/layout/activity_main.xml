@@ -5,13 +5,13 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cloudfoyo.myapplication.MainActivity">
+    tools:context="com.cloudfoyo.magazine.MainActivity">
 
     <android.support.design.widget.TabLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/tablayout"
-        android:background="#ffff"
+        android:background="#FF29B6F6"
         app:tabMode="fixed"
         app:tabGravity="fill"
         app:tabIndicatorColor="#ff0000">

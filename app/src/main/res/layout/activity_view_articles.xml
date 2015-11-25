@@ -1,17 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffff"
     tools:context="com.cloudfoyo.magazine.ViewArticleActivity">
 
-    <android.support.design.widget.TabLayout
+    <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tablayout"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="#29b6f6"
+        android:title=""
+        android:titleTextColor="#ffff"
+        android:id="@+id/toolbar1">
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        android:id="@+id/scrollview"
+        android:layout_below="@+id/toolbar1">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="225dp"
+        android:src="@drawable/playboy"
+        android:scaleType="fitXY"
+        android:layout_below="@+id/toolbar1"
+        android:id="@+id/iv"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/iv"
+        android:fontFamily="sans-serif-thin"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:text="Heading Goes Here"
+        android:textAlignment="center"
         android:background="#ffff"
-        app:tabMode="fixed"
-        app:tabGravity="fill"
-        app:tabIndicatorColor="#ff0000" />
+        android:id="@+id/heading"/>
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/heading"
+        android:fontFamily="sans-serif-thin"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:text="Category:"
+        android:background="#ffff"
+        android:id="@+id/category"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_toRightOf="@+id/category"
+        android:fontFamily="sans-serif-thin"
+        android:textStyle="bold"
+        android:layout_below="@+id/heading"
+        android:textSize="15dp"
+        android:text="By Author"
+        android:background="#ffff"
+        android:id="@+id/author"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/category"
+        android:fontFamily="sans-serif-thin"
+        android:textStyle="normal"
+        android:textSize="20dp"
+        android:paddingBottom="7dp"
+        android:paddingTop="7dp"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
+        android:background="#ffff"
+        android:layout_marginBottom="0dp"
+        android:id="@+id/content"/>
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar2"
+        android:layout_below="@+id/scrollview"
+        android:background="#29b6f6">
+        <ToggleButton
+            android:id="@+id/toggleButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="left"
+            android:layout_marginLeft="20dp"
+            style="@style/toggleButton"
+            android:background="@drawable/ic_toggle_bg"/>
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/share"
+            android:src="@drawable/share"
+            android:scaleType="fitXY"
+            android:layout_toRightOf="@+id/toggleButton"
+            android:layout_marginLeft="50dp"
+            android:background="@null"
+            />
+
+    </android.support.v7.widget.Toolbar>
 
 </RelativeLayout>
