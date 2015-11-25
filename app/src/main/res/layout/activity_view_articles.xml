@@ -18,14 +18,15 @@
     <ScrollView
 
         android:layout_width="match_parent"
-        android:layout_height="550dp"
+        android:layout_height="wrap_content"
         android:id="@+id/scrollview"
         android:layout_below="@+id/toolbar1">
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            >
         <ImageView
         android:layout_width="match_parent"
         android:layout_height="225dp"
@@ -51,6 +52,7 @@
         android:fontFamily="sans-serif-thin"
         android:textStyle="bold"
         android:textSize="15dp"
+        android:paddingLeft="30dp"
         android:text="Category:"
         android:background="#ffff"
         android:id="@+id/category"/>
@@ -67,18 +69,18 @@
         android:id="@+id/author"/>
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="3dp"
         android:layout_below="@+id/category"
-        android:fontFamily="sans-serif-thin"
+        android:fontFamily="sans-serif-condensed"
         android:textStyle="normal"
         android:textSize="20dp"
-        android:paddingBottom="7dp"
-        android:paddingTop="7dp"
-        android:paddingLeft="7dp"
-        android:paddingRight="7dp"
+        android:textColor="#000"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:background="#ffff"
-        android:layout_marginBottom="0dp"
         android:id="@+id/content"/>
         </RelativeLayout>
 
@@ -88,19 +90,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/toolbar2"
-        android:layout_below="@+id/scrollview"
+        android:layout_alignParentBottom="true"
         android:background="#29b6f6">
         <ToggleButton
             android:id="@+id/toggleButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="left"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="110dp"
             style="@style/toggleButton"
             android:background="@drawable/ic_toggle_bg"/>
         <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:id="@+id/share"
             android:src="@drawable/share"
             android:scaleType="fitXY"

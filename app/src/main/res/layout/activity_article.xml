@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.cloudfoyo.myapplication.Article">
+    tools:context="com.cloudfoyo.magazine.ArticlesActivity">
 
 
     <android.support.design.widget.TabLayout
