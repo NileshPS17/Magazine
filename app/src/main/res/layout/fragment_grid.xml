@@ -8,8 +8,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Category"
-            android:textSize="40dp"
-            android:background="#F44336"
+            android:textSize="35dp"
+            android:background="#f44336"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             android:textColor="#ffff"
             android:gravity="center_vertical"
             android:paddingLeft="8dp"
@@ -20,14 +22,14 @@
         android:layout_below="@id/textview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="2dp"
         android:numColumns="2"
         android:columnWidth="150dp"
         android:horizontalSpacing="2dp"
         android:verticalSpacing="2dp"
         android:gravity="center"
         android:stretchMode="columnWidth"
-        android:id="@+id/gridview">
+        android:id="@+id/gridview"
+        >
 
     </GridView>
 
