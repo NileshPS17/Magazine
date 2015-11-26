@@ -4,20 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.cloudfoyo.magazine.MainActivity">
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="55dp"
-    android:text="Category"
-    android:textSize="40dp"
-    android:background="#F44336"
-    android:textColor="#ffff"
-    android:paddingLeft="8dp"
-    android:id="@+id/textview"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:textSize="40dp"
+            android:background="#F44336"
+            android:textColor="#ffff"
+            android:gravity="center_vertical"
+            android:paddingLeft="8dp"
+            android:id="@+id/textview"/>
+
 
     <GridView
         android:layout_below="@id/textview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="2dp"
         android:numColumns="2"
         android:columnWidth="150dp"
         android:horizontalSpacing="2dp"

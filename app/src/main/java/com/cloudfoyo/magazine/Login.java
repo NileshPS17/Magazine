@@ -3,6 +3,7 @@ package com.cloudfoyo.magazine;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -92,6 +93,8 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        SharedPreferences preferences=getSharedPreferences("prefs1",0);
+        SharedPreferences.Editor editor=preferences.edit();
     }
 
     private void populateAutoComplete() {

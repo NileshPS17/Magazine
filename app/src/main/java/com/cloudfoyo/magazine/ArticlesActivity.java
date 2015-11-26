@@ -3,6 +3,9 @@ package com.cloudfoyo.magazine;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,7 +22,8 @@ public class ArticlesActivity extends AppCompatActivity {
 
     private ListView articlesListView = null;
     private ArrayList<ListItem> list = new ArrayList<ListItem>();
-
+    Toolbar t1;
+    TextView topic;
 
 
 
@@ -27,7 +31,9 @@ public class ArticlesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
-
+        t1=(Toolbar)findViewById(R.id.toolbar1);
+        setSupportActionBar(t1);
+        topic=(TextView)findViewById(R.id.topic);
         articlesListView = (ListView)findViewById(R.id.articles_listView);
 
         populateList(); // TODO := For testing purposes only
@@ -49,7 +55,21 @@ public class ArticlesActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.back) {
+            this.finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
     public void populateList()
     {
 

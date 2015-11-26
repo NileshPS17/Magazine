@@ -10,11 +10,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#F44336"
+        android:elevation="5dp"
         android:title=""
         android:titleTextColor="#ffff"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
         android:id="@+id/toolbar1"
         android:layout_alignParentTop="true"
         >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textSize="40dp"
+            android:background="#F44336"
+            android:textColor="#ffff"
+            android:gravity="center_vertical"
+            android:paddingLeft="8dp"
+            android:id="@+id/title"/>
     </android.support.v7.widget.Toolbar>
 
     <ScrollView
