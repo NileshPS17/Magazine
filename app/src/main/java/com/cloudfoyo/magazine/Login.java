@@ -3,6 +3,7 @@ package com.cloudfoyo.magazine;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -43,6 +44,7 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
     /**
      * Id to identity READ_CONTACTS permission request.
      */
+
     private static final int REQUEST_READ_CONTACTS = 0;
 
     /**
@@ -96,6 +98,7 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
         SharedPreferences preferences=getSharedPreferences("prefs1",0);
         SharedPreferences.Editor editor=preferences.edit();
     }
+
 
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
