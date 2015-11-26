@@ -15,17 +15,27 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/app_name">
+
+            <!-- For Testing Purposes ONly -->
+
+            <intent-filter>
+
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+
         </activity>
         <activity android:name=".ArticlesActivity" />
         <activity android:name=".ViewArticleActivity" />
         <activity android:name=".Splash" >
-        <intent-filter>
+     <!--   <intent-filter> // TODO := Uncomment before release
             <action android:name="android.intent.action.MAIN" />
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
+        -->
         </activity>
         <activity
             android:name=".Login"
