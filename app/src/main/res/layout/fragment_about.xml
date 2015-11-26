@@ -1,9 +1,27 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cloudfoyo.magazine.AboutFragment">
+    tools:context="com.cloudfoyo.myapplication.AboutFragment">
 
 
+    <TextView
+        android:layout_width="match_parent"
+        android:text="Contributors"
+        android:textSize="30sp"
+        android:layout_marginTop="5dp"
+        android:padding="@dimen/activity_vertical_margin"
+        android:id="@+id/about_TextView"
+        android:layout_height="wrap_content" />
 
-</FrameLayout>
+
+    <GridView
+        android:layout_width="match_parent"
+        android:id="@+id/about_gridView"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/about_TextView"
+        android:horizontalSpacing="2dp"
+        android:verticalSpacing="2dp"
+        android:layout_height="wrap_content"></GridView>
+
+</RelativeLayout>
