@@ -30,12 +30,12 @@
         <activity android:name=".ArticlesActivity" />
         <activity android:name=".ViewArticleActivity" />
         <activity android:name=".Splash" >
-     <!--   <intent-filter> // TODO := Uncomment before release
+       <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
-        -->
+
         </activity>
         <activity
             android:name=".Login"
