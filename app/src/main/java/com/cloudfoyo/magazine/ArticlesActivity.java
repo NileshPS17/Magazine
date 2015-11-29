@@ -57,7 +57,6 @@ public class ArticlesActivity extends AppCompatActivity {
         collapsingToolbarLayout.setTitle("Category Name");
 
 
-
     }
 
     @Override
