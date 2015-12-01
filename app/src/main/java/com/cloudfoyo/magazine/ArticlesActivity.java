@@ -20,7 +20,7 @@ import java.util.ArrayList;
  */
 public class ArticlesActivity extends AppCompatActivity {
 
-    private ListView articlesListView = null;
+    private ListView articlesListView;
     private ArrayList<ListItem> list = new ArrayList<ListItem>();
     Toolbar t1;
     TextView topic;
