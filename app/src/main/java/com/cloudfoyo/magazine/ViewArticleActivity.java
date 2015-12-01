@@ -2,7 +2,6 @@ package com.cloudfoyo.magazine;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -56,18 +55,16 @@ public class ViewArticleActivity extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent shareIntent=new Intent(Intent.ACTION_SEND);
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 //  shareIntent.setType("image/png");
                 shareIntent.setType("text/html");
-                shareIntent.putExtra("Hello","World");
-                startActivity(Intent.createChooser(shareIntent,"Share using"));
+                shareIntent.putExtra("Hello", "World");
+                startActivity(Intent.createChooser(shareIntent, "Share using"));
                 // share.putExtra(Intent.EXTRA_STREAM, screenshotUri);
                 //startActivity(Intent.createChooser(sharingIntent, "Share image using"));
             }
         });
 
-        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
-        collapsingToolbarLayout.setTitle("Title");
 
     }
     @Override

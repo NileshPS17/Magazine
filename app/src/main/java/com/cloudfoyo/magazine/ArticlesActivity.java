@@ -2,7 +2,6 @@ package com.cloudfoyo.magazine;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -43,7 +42,7 @@ public class ArticlesActivity extends AppCompatActivity {
         ListItemArticleAdapter adapter = new ListItemArticleAdapter();
 
         articlesListView.setAdapter(adapter);
-      //  articlesListView.addHeaderView(getLayoutInflater().inflate(R.layout.article_list_header, null), null, false);
+        articlesListView.addHeaderView(getLayoutInflater().inflate(R.layout.article_list_header, null), null, false);
         articlesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -52,10 +51,6 @@ public class ArticlesActivity extends AppCompatActivity {
                 startActivity(new Intent(ArticlesActivity.this, ViewArticleActivity.class));
             }
         });
-
-        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
-        collapsingToolbarLayout.setTitle("Category Name");
-
 
     }
 
