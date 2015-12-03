@@ -18,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by nilesh on 24/11/15.
  */
-public class ArticlesActivity extends AppCompatActivity {
+public class ArticlesActivity extends MagazineAppCompatActivity {
 
     private ListView articlesListView;
     private ArrayList<ListItem> list = new ArrayList<ListItem>();

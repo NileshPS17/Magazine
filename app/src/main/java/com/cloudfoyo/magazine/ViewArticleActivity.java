@@ -2,7 +2,6 @@ package com.cloudfoyo.magazine;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-public class ViewArticleActivity extends AppCompatActivity {
+public class ViewArticleActivity extends MagazineAppCompatActivity {
 
     Toolbar t1,t2;
     TextView heading,author,category,content,title;
