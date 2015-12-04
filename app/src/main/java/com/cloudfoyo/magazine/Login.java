@@ -3,23 +3,21 @@ package com.cloudfoyo.magazine;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.LoaderManager.LoaderCallbacks;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -30,6 +28,15 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.Profile;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +47,10 @@ import static android.Manifest.permission.READ_CONTACTS;
  * A login screen that offers login via email/password.
  */
 public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+
+
+    private LoginButton fbButton;
+    private CallbackManager callbackManager;
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -95,10 +106,55 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-        SharedPreferences preferences=getSharedPreferences("prefs1",0);
+        SharedPreferences preferences=getSharedPreferences("prefs1", 0);
         SharedPreferences.Editor editor=preferences.edit();
+
+        /**
+         *
+         * Facebook Login Stuff
+         *
+         */
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+        fbButton = (LoginButton)findViewById(R.id.fb_login_button);
+        fbButton.setReadPermissions("user_friends,email");
+        fbButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+
+                Toast.makeText(getApplicationContext(), Profile.getCurrentProfile().getName(), Toast.LENGTH_SHORT).show();
+
+                startActivity(new Intent(Login.this, MainActivity.class));
+                finish();
+
+            }
+
+            @Override
+            public void onCancel() {
+
+                Toast.makeText(Login.this, "Please login", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+                Toast.makeText(Login.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
 
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
