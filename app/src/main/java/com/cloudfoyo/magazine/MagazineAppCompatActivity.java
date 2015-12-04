@@ -3,11 +3,13 @@ package com.cloudfoyo.magazine;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
-import com.facebook.FacebookSdk;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 
 /**
  *
@@ -25,28 +27,56 @@ import com.facebook.FacebookSdk;
 public class MagazineAppCompatActivity extends AppCompatActivity {
 
 
+
+
+    private static final String LOG_TAG = MagazineAppCompatActivity.class.getSimpleName();
+
+
     public static final String FB_TOKEN = "com.cloudfoyo.magazine.FB_TOKEN";
 
     private AccessTokenTracker tracker;
+
+    private ProfileTracker profileTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
+
+        Profile profile = Profile.getCurrentProfile();
+
+        if(profile == null) {
+
+            profileTracker = new ProfileTracker() {
+                @Override
+                protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                    if( currentProfile != null) {
+                        Log.d(LOG_TAG, currentProfile.getName());
+                    }
+                    else {
+                        Log.d(LOG_TAG, "Profile is null.");
+                    }
+
+                    profileTracker.stopTracking();
+                }
+            };
+
+            profileTracker.startTracking();
+        }
+        else {
+            Log.d(LOG_TAG, profile.getName());
+        }
 
 
-        tracker = new AccessTokenTracker() {
-            @Override
-            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
 
 
-                if ( currentAccessToken == null )
-                    redirectToLogin();
-                else
-                    Toast.makeText(getApplicationContext(), "Welcome Back " , Toast.LENGTH_SHORT).show();
-            }
-        };
+
+        if(! isLoggedInWithFacebook()) {
+
+            redirectToLogin();
+        }
+
+
 
 
         //Check for login here ....

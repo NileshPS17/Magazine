@@ -19,6 +19,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,8 +34,8 @@ import android.widget.Toast;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -51,6 +52,7 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
 
     private LoginButton fbButton;
     private CallbackManager callbackManager;
+    private ProfileTracker mProfileTracker;
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -115,18 +117,33 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
          *
          */
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         fbButton = (LoginButton)findViewById(R.id.fb_login_button);
-        fbButton.setReadPermissions("user_friends,email");
+        fbButton.setReadPermissions("user_friends,email,public_profile");
         fbButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
-                Toast.makeText(getApplicationContext(), Profile.getCurrentProfile().getName(), Toast.LENGTH_SHORT).show();
+                if(Profile.getCurrentProfile() == null) {
+                     mProfileTracker = new ProfileTracker() {
+                        @Override
+                        protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
+                            Log.v("facebook - profile", profile2.getFirstName());
+                            mProfileTracker.stopTracking();
+                        }
+                    };
+                    mProfileTracker.startTracking();
+                }
+                else {
+                    Profile profile = Profile.getCurrentProfile();
+                    Log.v("facebook - profile", profile.getFirstName());
+                }
 
-                startActivity(new Intent(Login.this, MainActivity.class));
-                finish();
+                if(loginResult.getAccessToken() != null) {
+
+                    startActivity(new Intent(Login.this, MainActivity.class));
+                    finish();
+                }
 
             }
 

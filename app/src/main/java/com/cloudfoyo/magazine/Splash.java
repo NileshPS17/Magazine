@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
 
+import com.facebook.FacebookSdk;
+
 public class Splash extends AppCompatActivity {
 
     int SPLASH_TIMER=4000;
@@ -14,6 +16,10 @@ public class Splash extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Initialise Facebook  SDK here ..
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
         setContentView(R.layout.activity_splash);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);

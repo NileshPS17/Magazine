@@ -1,8 +1,8 @@
 package com.cloudfoyo.magazine;
 
 
-
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +21,8 @@ import java.util.List;
  */
 public class AboutFragment extends Fragment {
 
+    private static final String LOG_TAG = AboutFragment.class.getSimpleName();
+
 
     List<Contributor> contributors = new ArrayList<>();
 
@@ -35,6 +37,7 @@ public class AboutFragment extends Fragment {
         contributors.add(new Contributor("Omega"));
     }
 
+    Handler h = new Handler();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
