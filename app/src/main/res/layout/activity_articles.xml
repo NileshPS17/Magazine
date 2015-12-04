@@ -9,25 +9,44 @@
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="5dp"
+        android:layout_height="45dp"
         android:background="#F44336"
+        android:elevation="5dp"
         android:title=""
         android:titleTextColor="#ffff"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         android:id="@+id/toolbar1"
         android:layout_alignParentTop="true"
         >
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Topics"
-            android:textSize="35dp"
-            android:background="#F44336"
-            android:textColor="#ffff"
-            android:gravity="center_vertical"
-            android:paddingLeft="8dp"
-            android:id="@+id/topic"/>
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Topics"
+                android:textSize="25dp"
+                android:background="#F44336"
+                android:textColor="#ffff"
+                android:gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:layout_marginLeft="40dp"
+                android:id="@+id/title"/>
+            <ImageButton
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/back_button"
+                android:src="@drawable/back"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:scaleType="fitXY"
+                android:layout_alignParentLeft="true"
+                android:background="@null"
+                android:onClick="back"
+                />
+        </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 
     <ListView

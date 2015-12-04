@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import se.emilsjolander.flipview.FlipView;
 
 public class ViewArticleActivity extends MagazineAppCompatActivity {
-
     Toolbar t1,t2;
     ImageButton imageButton;
     String text="To shed weight, Cooper jettisons himself and TARS into the black hole, " +
@@ -68,7 +67,9 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
         flipView.setAdapter(new FlipViewAdapter());
     }
 
-
+    public void back(View view){
+        this.finish();
+    }
     public void populateList() {
 
 
@@ -81,21 +82,6 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.back) {
-            this.finish();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     class FlipViewAdapter extends BaseAdapter {
 

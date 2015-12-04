@@ -6,19 +6,20 @@
     android:background="#ffff"
     tools:context="com.cloudfoyo.magazine.ViewArticleActivity">
 
-
     <ScrollView
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/scrollview"
         android:layout_below="@+id/toolbar1"
-        android:id="@+id/scrollview">
+
+        >
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            >
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="225dp"
@@ -26,8 +27,6 @@
                 android:scaleType="fitXY"
                 android:layout_below="@+id/toolbar1"
                 android:id="@+id/iv"/>
-
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -39,47 +38,34 @@
                 android:textAlignment="center"
                 android:background="#ffff"
                 android:id="@+id/heading"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:id="@+id/metaContainer"
-                android:layout_below="@id/heading"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="200dp"
-                    android:layout_height="20dp"
-                    android:layout_below="@+id/heading"
-                    android:fontFamily="sans-serif-thin"
-                    android:textStyle="bold"
-                    android:textSize="15dp"
-                    android:gravity="center_horizontal"
-                    android:text="Category:"
-                    android:background="#ffff"
-                    android:id="@+id/category"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_toRightOf="@+id/category"
-                    android:fontFamily="sans-serif-thin"
-                    android:textStyle="bold"
-                    android:layout_below="@+id/heading"
-                    android:textSize="15dp"
-                    android:gravity="center_horizontal"
-                    android:text="By Author"
-                    android:background="#ffff"
-                    android:id="@+id/author"/>
-
-            </LinearLayout>
-
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="20dp"
+                android:layout_below="@+id/heading"
+                android:fontFamily="sans-serif-thin"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:paddingLeft="30dp"
+                android:text="Category:"
+                android:background="#ffff"
+                android:id="@+id/category"/>
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="20dp"
+                android:layout_toRightOf="@+id/category"
+                android:fontFamily="sans-serif-thin"
+                android:textStyle="bold"
+                android:layout_below="@+id/heading"
+                android:textSize="15dp"
+                android:text="By Author"
+                android:background="#ffff"
+                android:id="@+id/author"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:lineSpacingExtra="3dp"
-                android:layout_marginTop="10dp"
-                android:layout_below="@id/metaContainer"
-                android:fontFamily="sans-serif-condensed"
+                android:layout_below="@+id/category"
+                android:fontFamily="sans-serif-thin"
                 android:textStyle="normal"
                 android:textSize="20dp"
                 android:textColor="#000"
@@ -89,10 +75,8 @@
                 android:paddingRight="10dp"
                 android:background="#ffff"
                 android:id="@+id/content"/>
-
         </RelativeLayout>
 
     </ScrollView>
-
 
 </RelativeLayout>

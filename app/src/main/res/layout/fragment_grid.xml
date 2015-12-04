@@ -4,22 +4,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.cloudfoyo.magazine.MainActivity">
-        <TextView
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#F44336"
+        android:title=""
+        android:titleTextColor="#ffff"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:id="@+id/toolbar1"
+        android:layout_alignParentTop="true"
+        >
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Category"
-            android:textSize="35dp"
-            android:background="#f44336"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:textColor="#ffff"
-            android:gravity="center_vertical"
-            android:paddingLeft="8dp"
-            android:id="@+id/textview"/>
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                android:textSize="25dp"
+                android:background="#F44336"
+                android:textColor="#ffff"
+                android:gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:layout_marginLeft="6dp"
+                android:id="@+id/title"/>
 
-
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
     <GridView
-        android:layout_below="@id/textview"
+        android:layout_below="@id/toolbar1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:numColumns="2"

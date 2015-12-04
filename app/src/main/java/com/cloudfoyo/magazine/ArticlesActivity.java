@@ -54,20 +54,8 @@ public class ArticlesActivity extends MagazineAppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.back) {
-            this.finish();
-        }
-
-        return super.onOptionsItemSelected(item);
+    public void back(View view){
+        this.finish();
     }
     public void populateList()
     {
