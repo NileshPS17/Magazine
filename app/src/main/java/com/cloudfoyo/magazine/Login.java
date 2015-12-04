@@ -40,6 +40,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -119,7 +120,7 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
 
         callbackManager = CallbackManager.Factory.create();
         fbButton = (LoginButton)findViewById(R.id.fb_login_button);
-        fbButton.setReadPermissions("user_friends,email,public_profile");
+        fbButton.setReadPermissions(Arrays.asList("user_friends, email, public_profile"));
         fbButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {

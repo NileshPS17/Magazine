@@ -6,17 +6,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.cloudfoyo.magazine.wrappers.Article;
+
+import java.util.ArrayList;
+
+import se.emilsjolander.flipview.FlipView;
 
 public class ViewArticleActivity extends MagazineAppCompatActivity {
 
     Toolbar t1,t2;
-    TextView heading,author,category,content,title;
-    ImageView iv;
-    ScrollView scrollView;
     ImageButton imageButton;
     String text="To shed weight, Cooper jettisons himself and TARS into the black hole, " +
             "so that Amelia and CASE can complete the journey. Cooper and TARS plunge into " +
@@ -33,23 +37,18 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
             " to rejoin Amelia, who is with CASE on Edmunds' Planet, which was found to be habitable.";
 
 
+    FlipView flipView;
+
+    ArrayList<Article> list = new  ArrayList<Article>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_article);
-        scrollView = (ScrollView)findViewById(R.id.scrollview);
         t1=(Toolbar)findViewById(R.id.toolbar1);
         t2=(Toolbar)findViewById(R.id.toolbar2);
         setSupportActionBar(t1);
-        content=(TextView)findViewById(R.id.content);
-        heading=(TextView)findViewById(R.id.heading);
-        category=(TextView)findViewById(R.id.category);
-        author=(TextView)findViewById(R.id.author);
-        title=(TextView)findViewById(R.id.title);
-        iv=(ImageView)findViewById(R.id.iv);
         imageButton=(ImageButton)findViewById(R.id.share);
-
-        content.setText(text);
         //content.setMovementMethod(new ScrollingMovementMethod());
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,8 +63,24 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
             }
         });
 
+        flipView = (FlipView)findViewById(R.id.flip_view);
+        populateList();
+        flipView.setAdapter(new FlipViewAdapter());
+    }
+
+
+    public void populateList() {
+
+
+        for(int i=1; i<6; ++i)
+        {
+            int altImage = (i%2)==0?R.drawable.believe:R.drawable.playboy;
+            list.add(new Article("Heading " +i, "Title "+i, "Author", "Category", text, altImage));
+        }
+
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -80,6 +95,63 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    class FlipViewAdapter extends BaseAdapter {
+
+
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return list.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            ViewHolder holder;
+            if(convertView == null) {
+                holder = new ViewHolder();
+
+                convertView = getLayoutInflater().inflate(R.layout.article_flip_view, parent, false);
+                holder.content=(TextView)convertView.findViewById(R.id.content);
+                holder.heading=(TextView)convertView.findViewById(R.id.heading);
+                holder.category=(TextView)convertView.findViewById(R.id.category);
+                holder.author=(TextView)convertView.findViewById(R.id.author);
+                holder.iv=(ImageView)convertView.findViewById(R.id.iv);
+                convertView.setTag(holder);
+
+            }
+            else {
+
+                holder = (ViewHolder)convertView.getTag();
+            }
+
+            Article article = list.get(position);
+            holder.author.setText(article.getAuthor());
+            holder.category.setText(article.getCategory());
+            holder.content.setText(article.getContent());
+            holder.heading.setText(article.getHeading());
+            holder.iv.setImageResource(article.getImage());
+
+            return convertView;
+
+        }
+
+         class ViewHolder {
+
+            TextView content, author,category, heading, title;
+            ImageView iv;
+        }
     }
 }
 
