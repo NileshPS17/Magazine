@@ -44,10 +44,10 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_article);
-        t1=(Toolbar)findViewById(R.id.toolbar1);
-        t2=(Toolbar)findViewById(R.id.toolbar2);
-        setSupportActionBar(t1);
-        imageButton=(ImageButton)findViewById(R.id.share);
+       // t1=(Toolbar)findViewById(R.id.toolbar1);
+        //t2=(Toolbar)findViewById(R.id.toolbar2);
+       // setSupportActionBar(t1);
+      /*  imageButton=(ImageButton)findViewById(R.id.share);
         //content.setMovementMethod(new ScrollingMovementMethod());
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +61,7 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
                 //startActivity(Intent.createChooser(sharingIntent, "Share image using"));
             }
         });
-
+*/
         flipView = (FlipView)findViewById(R.id.flip_view);
         populateList();
         flipView.setAdapter(new FlipViewAdapter());
