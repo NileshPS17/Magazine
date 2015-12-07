@@ -1,153 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
+
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffff"
-    tools:context="com.cloudfoyo.magazine.ViewArticleActivity">
+    android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/id_appbar"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="#F44336"
-        android:elevation="5dp"
-        android:title=""
-        android:titleTextColor="#ffff"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark"
-        android:id="@+id/toolbar1"
-        android:layout_alignParentTop="true"
-        >
-        <RelativeLayout
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Title"
-                android:textSize="25dp"
-                android:background="#F44336"
-                android:textColor="#ffff"
-                android:gravity="center_vertical"
-                android:paddingLeft="8dp"
-                android:layout_marginLeft="60dp"
-                android:id="@+id/title"/>
+            android:layout_height="?attr/actionBarSize"
+            android:background="#F44336"
+            android:elevation="5dp"
+            android:titleTextColor="#ffff"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            android:id="@+id/toolbar1"
+            app:layout_scrollFlags="scroll|enterAlways"
+            android:layout_alignParentTop="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Title"
+                    android:textSize="25dp"
+                    android:background="#F44336"
+                    android:textColor="#ffff"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="8dp"
+                    android:layout_marginLeft="60dp"
+                    android:id="@+id/title"/>
+                <ImageButton
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:id="@+id/back_button"
+                    android:src="@drawable/back"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
+                    android:scaleType="fitXY"
+                    android:layout_alignParentLeft="true"
+                    android:background="@null"
+                    android:onClick="back"
+                    />
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/scrollview"
+            android:nestedScrollingEnabled="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_marginBottom="45dp"
+            android:fillViewport="false">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="225dp"
+                    android:src="@drawable/playboy"
+                    android:scaleType="fitXY"
+                    android:layout_below="@+id/toolbar1"
+                    android:id="@+id/iv"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/iv"
+                    android:fontFamily="sans-serif-thin"
+                    android:textStyle="bold"
+                    android:textSize="30dp"
+                    android:text="Heading Goes Here"
+                    android:textAlignment="center"
+                    android:background="#ffff"
+                    android:id="@+id/heading"/>
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="20dp"
+                    android:layout_below="@+id/heading"
+                    android:fontFamily="sans-serif-thin"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:paddingLeft="30dp"
+                    android:text="Category:"
+                    android:background="#ffff"
+                    android:id="@+id/category"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_toRightOf="@+id/category"
+                    android:fontFamily="sans-serif-thin"
+                    android:textStyle="bold"
+                    android:layout_below="@+id/heading"
+                    android:textSize="15dp"
+                    android:text="By Author"
+                    android:background="#ffff"
+                    android:id="@+id/author"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:lineSpacingExtra="3dp"
+                    android:layout_below="@+id/category"
+                    android:fontFamily="sans-serif-thin"
+                    android:textStyle="normal"
+                    android:textSize="20dp"
+                    android:textColor="#000"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:background="#ffff"
+                    android:id="@+id/content"/>
+            </RelativeLayout>
+
+        </ScrollView>
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:id="@+id/toolbar2"
+            android:elevation="5dp"
+            android:layout_gravity="bottom"
+            android:layout_alignParentBottom="true"
+            android:background="#F44336">
+            <ToggleButton
+                android:id="@+id/toggleButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="left"
+                android:layout_marginLeft="110dp"
+                style="@style/toggleButton"
+                android:background="@drawable/ic_toggle_bg"/>
             <ImageButton
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:id="@+id/back_button"
-                android:src="@drawable/back"
-                android:gravity="center_vertical"
-                android:paddingLeft="5dp"
-                android:paddingTop="5dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/share"
+                android:src="@drawable/share"
                 android:scaleType="fitXY"
-                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/toggleButton"
+                android:layout_marginLeft="50dp"
                 android:background="@null"
-                android:onClick="back"
                 />
-        </RelativeLayout>
-    </android.support.v7.widget.Toolbar>
-    <ScrollView
 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollview"
-        android:layout_below="@+id/toolbar1"
-        android:layout_marginBottom="45dp"
-
-        >
+        </android.support.v7.widget.Toolbar>
 
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="225dp"
-                android:src="@drawable/playboy"
-                android:scaleType="fitXY"
-                android:layout_below="@+id/toolbar1"
-                android:id="@+id/iv"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@+id/iv"
-                android:fontFamily="sans-serif-thin"
-                android:textStyle="bold"
-                android:textSize="30dp"
-                android:text="Heading Goes Here"
-                android:textAlignment="center"
-                android:background="#ffff"
-                android:id="@+id/heading"/>
-            <TextView
-                android:layout_width="200dp"
-                android:layout_height="20dp"
-                android:layout_below="@+id/heading"
-                android:fontFamily="sans-serif-thin"
-                android:textStyle="bold"
-                android:textSize="15dp"
-                android:paddingLeft="30dp"
-                android:text="Category:"
-                android:background="#ffff"
-                android:id="@+id/category"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_toRightOf="@+id/category"
-                android:fontFamily="sans-serif-thin"
-                android:textStyle="bold"
-                android:layout_below="@+id/heading"
-                android:textSize="15dp"
-                android:text="By Author"
-                android:background="#ffff"
-                android:id="@+id/author"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:lineSpacingExtra="3dp"
-                android:layout_below="@+id/category"
-                android:fontFamily="sans-serif-thin"
-                android:textStyle="normal"
-                android:textSize="20dp"
-                android:textColor="#000"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:background="#ffff"
-                android:id="@+id/content"/>
-        </RelativeLayout>
-
-    </ScrollView>
-
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:id="@+id/toolbar2"
-        android:elevation="5dp"
-        android:layout_alignParentBottom="true"
-        android:background="#F44336">
-        <ToggleButton
-            android:id="@+id/toggleButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="left"
-            android:layout_marginLeft="110dp"
-            style="@style/toggleButton"
-            android:background="@drawable/ic_toggle_bg"/>
-        <ImageButton
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/share"
-            android:src="@drawable/share"
-            android:scaleType="fitXY"
-            android:layout_toRightOf="@+id/toggleButton"
-            android:layout_marginLeft="50dp"
-            android:background="@null"
-            />
-
-    </android.support.v7.widget.Toolbar>
 
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
