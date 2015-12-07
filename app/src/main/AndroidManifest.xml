@@ -26,9 +26,11 @@
 
             <!-- For Testing Purposes ONly -->
         </activity>
-        <activity android:name=".ArticlesActivity" />
+        <activity android:name=".ArticlesActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".ViewArticleActivity" />
+        <activity android:name=".ViewArticleActivity"
+          android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".Splash" >
             <intent-filter>
