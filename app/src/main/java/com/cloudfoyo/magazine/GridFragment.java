@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,6 +113,7 @@ public class GridFragment extends Fragment {
             View root;
             TextView name;
             View v=view;
+            CardView cv;
             gridView.setNumColumns(2);
             int size = gridView.getColumnWidth();
             GridItemWrapper curItem = listOfGridItems.get(position);
@@ -121,8 +123,9 @@ public class GridFragment extends Fragment {
                  v.setTag(R.id.picture, v.findViewById(R.id.picture));
                  v.setTag(R.id.text, v.findViewById(R.id.text));
              }
-            root = v.findViewById(R.id.gridItem_root);
-            root.setBackgroundResource(curItem.color);
+            root = v.findViewById(R.id.ll);
+            cv=(CardView) v.findViewById(R.id.cv);
+            cv.setBackgroundResource(curItem.color);
             name = (TextView)v.findViewById(R.id.text);
             name.setText(curItem.title);
 
