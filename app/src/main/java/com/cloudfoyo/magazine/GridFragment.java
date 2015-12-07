@@ -24,25 +24,25 @@ public class GridFragment extends Fragment {
 
     private ArrayList<GridItemWrapper> listOfGridItems = new ArrayList<GridItemWrapper>();
     private GridView gridView = null;
-
+    int[] images={R.drawable.cheese_1,R.drawable.cheese_2,R.drawable.cheese_3,R.drawable.cheese_4,R.drawable.cheese_5};
     public GridFragment() {
         // Required empty argument public constructor
 
-        listOfGridItems.add(new GridItemWrapper(android.R.color.darker_gray, "Grey"));
-        listOfGridItems.add(new GridItemWrapper(android.R.color.holo_green_dark, "Green"));
-        listOfGridItems.add(new GridItemWrapper(android.R.color.holo_purple, "Purple"));
-        listOfGridItems.add(new GridItemWrapper(android.R.color.holo_orange_dark, "Orange"));
-        listOfGridItems.add(new GridItemWrapper(android.R.color.holo_red_dark, "Red"));
-        listOfGridItems.add(new GridItemWrapper(android.R.color.darker_gray, "Grey"));
-        listOfGridItems.add(new GridItemWrapper(android.R.color.holo_green_dark, "Green"));
-        listOfGridItems.add(new GridItemWrapper(android.R.color.holo_purple, "Purple"));
-        listOfGridItems.add(new GridItemWrapper(android.R.color.holo_orange_dark, "Orange"));
-        listOfGridItems.add(new GridItemWrapper(android.R.color.holo_red_dark, "Red"));
-        listOfGridItems.add(new GridItemWrapper(android.R.color.darker_gray, "Grey"));
-        listOfGridItems.add(new GridItemWrapper(android.R.color.holo_green_dark, "Green"));
-        listOfGridItems.add(new GridItemWrapper(android.R.color.holo_purple, "Purple"));
-        listOfGridItems.add(new GridItemWrapper(android.R.color.holo_orange_dark, "Orange"));
-        listOfGridItems.add(new GridItemWrapper(android.R.color.holo_red_dark, "Red"));
+        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_1, "Grey"));
+        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_2, "Green"));
+        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_3, "Purple"));
+        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_4, "Orange"));
+        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_5, "Red"));
+        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_1, "Grey"));
+        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_2, "Green"));
+        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_5, "Purple"));
+        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_4, "Orange"));
+        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_1, "Red"));
+        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_3, "Grey"));
+        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_2, "Green"));
+        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_4, "Purple"));
+        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_5, "Orange"));
+        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_1, "Red"));
     }
 
 

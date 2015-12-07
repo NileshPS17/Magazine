@@ -22,6 +22,7 @@ public class ArticlesActivity extends MagazineAppCompatActivity {
     private ListView articlesListView;
     private ArrayList<ListItem> list = new ArrayList<ListItem>();
     Toolbar t1;
+    int[] images={R.drawable.cheese_1,R.drawable.cheese_2,R.drawable.cheese_3,R.drawable.cheese_4,R.drawable.cheese_5};
 
 
 
@@ -64,14 +65,14 @@ public class ArticlesActivity extends MagazineAppCompatActivity {
     public void populateList()
     {
 
-        list.add(new ListItem(android.R.color.holo_red_light, "Red", "Entertainment", "dd/mm/yyyy"));
-        list.add(new ListItem(android.R.color.holo_blue_dark, "Blue", "Entertainment", "dd/mm/yyyy"));
-        list.add(new ListItem(android.R.color.holo_orange_dark, "Orange", "Education", "dd/mm/yyyy"));
-        list.add(new ListItem(android.R.color.holo_green_dark, "Green", "Fun", "dd/mm/yyyy"));
-        list.add(new ListItem(android.R.color.black, "Black", "Entertainment", "dd/mm/yyyy"));
-        list.add(new ListItem(android.R.color.holo_red_light, "Red", "Entertainment", "dd/mm/yyyy"));
-        list.add(new ListItem(android.R.color.holo_blue_dark, "Blue", "Entertainment", "dd/mm/yyyy"));
-        list.add(new ListItem(android.R.color.holo_orange_dark, "Orange", "Education", "dd/mm/yyyy"));
+        list.add(new ListItem(R.drawable.cheese_1, "Red", "Entertainment", "dd/mm/yyyy"));
+        list.add(new ListItem(R.drawable.cheese_2, "Blue", "Entertainment", "dd/mm/yyyy"));
+        list.add(new ListItem(R.drawable.cheese_3, "Orange", "Education", "dd/mm/yyyy"));
+        list.add(new ListItem(R.drawable.cheese_4, "Green", "Fun", "dd/mm/yyyy"));
+        list.add(new ListItem(R.drawable.cheese_5, "Black", "Entertainment", "dd/mm/yyyy"));
+        list.add(new ListItem(R.drawable.cheese_1, "Red", "Entertainment", "dd/mm/yyyy"));
+        list.add(new ListItem(R.drawable.cheese_2, "Blue", "Entertainment", "dd/mm/yyyy"));
+        list.add(new ListItem(R.drawable.cheese_3, "Orange", "Education", "dd/mm/yyyy"));
 
     }
 
