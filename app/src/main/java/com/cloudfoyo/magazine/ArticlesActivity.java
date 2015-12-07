@@ -1,11 +1,10 @@
 package com.cloudfoyo.magazine;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -35,6 +34,11 @@ public class ArticlesActivity extends MagazineAppCompatActivity {
         t1=(Toolbar)findViewById(R.id.toolbar1);
         setSupportActionBar(t1);
 
+        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
+        collapsingToolbarLayout.setTitle("Category Name");
+        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
+
+
         articlesListView = (ListView)findViewById(R.id.articles_listView);
 
         populateList(); // TODO := For testing purposes only
@@ -42,7 +46,7 @@ public class ArticlesActivity extends MagazineAppCompatActivity {
         ListItemArticleAdapter adapter = new ListItemArticleAdapter();
 
         articlesListView.setAdapter(adapter);
-        articlesListView.addHeaderView(getLayoutInflater().inflate(R.layout.article_list_header, null), null, false);
+       // articlesListView.addHeaderView(getLayoutInflater().inflate(R.layout.article_list_header, null), null, false);
         articlesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

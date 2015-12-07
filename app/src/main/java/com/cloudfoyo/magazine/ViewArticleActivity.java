@@ -1,15 +1,14 @@
 package com.cloudfoyo.magazine;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cloudfoyo.magazine.wrappers.Article;
@@ -38,7 +37,10 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
 
     FlipView flipView;
 
+    private ScrollView scrollView;
+
     ArrayList<Article> list = new  ArrayList<Article>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,8 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
         flipView = (FlipView)findViewById(R.id.flip_view);
         populateList();
         flipView.setAdapter(new FlipViewAdapter());
+
+
     }
 
     public void back(View view){
@@ -114,6 +118,7 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
                 holder.category=(TextView)convertView.findViewById(R.id.category);
                 holder.author=(TextView)convertView.findViewById(R.id.author);
                 holder.iv=(ImageView)convertView.findViewById(R.id.iv);
+                holder.collapsingToolbarLayout = (CollapsingToolbarLayout)convertView.findViewById(R.id.collapsing_toolbar);
                 convertView.setTag(holder);
 
             }
@@ -128,6 +133,7 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
             holder.content.setText(article.getContent());
             holder.heading.setText(article.getHeading());
             holder.iv.setImageResource(article.getImage());
+            holder.collapsingToolbarLayout.setTitle("Title " + (position + 1));
 
             return convertView;
 
@@ -137,6 +143,7 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
 
             TextView content, author,category, heading, title;
             ImageView iv;
+             CollapsingToolbarLayout collapsingToolbarLayout;
         }
     }
 }
