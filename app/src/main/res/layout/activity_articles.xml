@@ -79,6 +79,7 @@
         android:nestedScrollingEnabled="true"
         android:dividerHeight="10dp"
         android:clipToPadding="true"
+        android:layout_gravity="fill_vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:listSelector="@drawable/article_list_selector"
         android:layout_height="wrap_content" />
