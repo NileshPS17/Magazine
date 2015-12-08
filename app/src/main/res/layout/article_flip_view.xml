@@ -6,7 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
 
     <android.support.design.widget.AppBarLayout
@@ -57,7 +58,7 @@
                     android:layout_marginRight="12dp"
                     android:scaleType="fitXY"
                     android:layout_alignParentLeft="true"
-                    android:background="@null"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:onClick="back" />
 
 
@@ -84,14 +85,13 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:fontFamily="sans-serif-thin"
-                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed"
                     android:textSize="30dp"
                     android:text="Heading Goes Here"
-                    android:textAlignment="center"
-                    android:background="#ffff"
+                    android:layout_marginLeft="15dp"
+                    android:textColor="#000"
                     android:id="@+id/heading"/>
 
                 <com.cloudfoyo.magazine.extras.HorizontalLine
@@ -103,33 +103,31 @@
 
 
                 <TextView
-                    android:layout_width="200dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_below="@id/breaker"
-                    android:fontFamily="sans-serif-thin"
-                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed"
                     android:textSize="15dp"
-                    android:paddingLeft="30dp"
+                    android:paddingLeft="15dp"
                     android:text="Category:"
-                    android:background="#ffff"
                     android:id="@+id/category"/>
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_toRightOf="@+id/category"
-                    android:fontFamily="sans-serif-thin"
-                    android:textStyle="bold"
-                    android:layout_below="@id/breaker"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_below="@id/category"
                     android:textSize="15dp"
                     android:text="By Author"
-                    android:background="#ffff"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="15dp"
                     android:id="@+id/author"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:lineSpacingExtra="3dp"
-                    android:layout_below="@+id/category"
+                    android:layout_below="@+id/author"
                     android:fontFamily="sans-serif-thin"
                     android:textStyle="normal"
                     android:textSize="20dp"
@@ -138,7 +136,6 @@
                     android:paddingTop="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:background="#ffff"
                     android:id="@+id/content"/>
             </RelativeLayout>
 
@@ -161,12 +158,14 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_weight="1"
+                    android:paddingTop="7.5dp"
+                    android:paddingBottom="7.5dp"
                     android:gravity="center_horizontal"
                     android:layout_height="wrap_content">
                     <ToggleButton
                         android:id="@+id/toggleButton"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="left"
                         style="@style/toggleButton"
                         android:background="@drawable/ic_toggle_bg"/>
@@ -174,16 +173,18 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_weight="1"
+                    android:paddingTop="7.5dp"
+                    android:paddingBottom="7.5dp"
                     android:gravity="center_horizontal"
                     android:layout_height="wrap_content">
                     <ImageButton
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:id="@+id/share"
                         android:src="@drawable/share"
                         android:scaleType="fitXY"
                         android:layout_toRightOf="@+id/toggleButton"
-                        android:background="@null" />
+                        android:background="?android:attr/selectableItemBackgroundBorderless" />
                 </LinearLayout>
             </LinearLayout>
 

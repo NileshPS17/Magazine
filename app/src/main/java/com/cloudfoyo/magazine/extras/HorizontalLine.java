@@ -35,7 +35,7 @@ public class HorizontalLine extends View {
 
         p.setStrokeWidth(0);
         p.setStyle(Paint.Style.STROKE);
-        p.setColor(Color.LTGRAY);
+        p.setColor(Color.BLACK);
 
         canvas.drawLine(0, offset, canvas.getWidth(), offset, p);
     }

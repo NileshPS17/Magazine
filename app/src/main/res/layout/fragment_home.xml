@@ -34,8 +34,8 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="10dp"
         android:drawSelectorOnTop="true"
-        android:listSelector="@drawable/article_list_selector"
         android:clipChildren="true"
+        android:listSelector="@drawable/article_list_selector"
         android:id="@+id/home_recentUpdates" />
 
 
