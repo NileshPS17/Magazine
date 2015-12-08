@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -110,8 +111,8 @@ public class HomeFragment extends Fragment {
             tv.setText(item.date);
             tv = (TextView)convertView.findViewById(R.id.home_list_item_title);
             tv.setText(item.title);
-            View v = convertView.findViewById(R.id.home_list_item_articleImage);
-            v.setBackgroundResource(item.color);
+            ImageView v = (ImageView)convertView.findViewById(R.id.home_list_item_articleImage);
+            v.setImageResource(item.color);
             return convertView;
 
 
