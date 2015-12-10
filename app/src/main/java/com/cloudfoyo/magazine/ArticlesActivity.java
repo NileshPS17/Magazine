@@ -31,7 +31,7 @@ public class ArticlesActivity extends MagazineAppCompatActivity {
         setContentView(R.layout.activity_articles);
         t1=(Toolbar)findViewById(R.id.toolbar1);
         setSupportActionBar(t1);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle("Category Name");
         collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);

@@ -33,8 +33,6 @@
         android:layout_height="wrap_content"
         android:divider="@android:color/transparent"
         android:dividerHeight="8dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         android:drawSelectorOnTop="true"
         android:id="@+id/home_recentUpdates" />
        <!-- android:listSelector="@drawable/article_list_selector" -->

@@ -27,6 +27,7 @@
             <!-- For Testing Purposes ONly -->
         </activity>
         <activity android:name=".ArticlesActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".ViewArticleActivity"

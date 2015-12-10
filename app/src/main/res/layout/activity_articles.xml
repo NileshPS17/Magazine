@@ -2,7 +2,7 @@
 
 
 <android.support.design.widget.CoordinatorLayout
-
+    xmlns:ripple="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -42,24 +42,12 @@
 
             <android.support.v7.widget.Toolbar
                 android:layout_width="match_parent"
+                android:background="?android:attr/selectableItemBackground"
                 android:layout_height="?attr/actionBarSize"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_collapseMode="pin"
                 android:id="@+id/toolbar1" >
 
-
-                <ImageButton
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:id="@+id/back_button"
-                    android:src="@drawable/back"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="5dp"
-                    android:layout_marginRight="12dp"
-                    android:scaleType="fitXY"
-                    android:layout_alignParentLeft="true"
-                    android:background="@null"
-                    android:onClick="back" />
 
             </android.support.v7.widget.Toolbar>
 

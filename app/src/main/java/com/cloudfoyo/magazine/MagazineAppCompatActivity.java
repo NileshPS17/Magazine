@@ -70,7 +70,7 @@ public class MagazineAppCompatActivity extends AppCompatActivity {
 
         if(! isLoggedInWithFacebook()) {
 
-            redirectToLogin();
+           // redirectToLogin();
         }
 
 
