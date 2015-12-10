@@ -14,9 +14,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by nilesh on 24/11/15.
- */
 public class ArticlesActivity extends MagazineAppCompatActivity {
 
     private ListView articlesListView;
