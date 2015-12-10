@@ -7,7 +7,7 @@
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="#F44336"
+        android:background="#D50000"
         android:title=""
         android:titleTextColor="#ffff"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:text="Category"
                 android:textSize="25dp"
-                android:background="#F44336"
+                android:background="#D50000"
                 android:textColor="#ffff"
                 android:gravity="center_vertical"
                 android:paddingLeft="8dp"

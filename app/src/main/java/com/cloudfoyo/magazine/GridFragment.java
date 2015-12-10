@@ -82,7 +82,6 @@ public class GridFragment extends Fragment {
             }
         });
 
-
     }
 
      class ImageAdapter extends BaseAdapter {
