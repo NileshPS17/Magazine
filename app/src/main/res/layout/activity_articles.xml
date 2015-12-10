@@ -38,7 +38,7 @@
                 android:id="@+id/category_image"
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
 
             <android.support.v7.widget.Toolbar
                 android:layout_width="match_parent"
@@ -66,7 +66,8 @@
         android:drawSelectorOnTop="true"
         android:divider="@android:color/transparent"
         android:nestedScrollingEnabled="true"
-        android:dividerHeight="10dp"
+        android:dividerHeight="8dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:clipToPadding="true"

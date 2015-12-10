@@ -13,6 +13,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -113,6 +114,7 @@ public class GridFragment extends Fragment {
             TextView name;
             View v=view;
             CardView cv;
+            ImageView iv;
             gridView.setNumColumns(2);
             int size = gridView.getColumnWidth();
             GridItemWrapper curItem = listOfGridItems.get(position);
@@ -124,7 +126,8 @@ public class GridFragment extends Fragment {
              }
             root = v.findViewById(R.id.ll);
             cv=(CardView) v.findViewById(R.id.cv);
-            cv.setBackgroundResource(curItem.color);
+            iv=(ImageView)v.findViewById(R.id.iv);
+            iv.setBackgroundResource(curItem.color);
             name = (TextView)v.findViewById(R.id.text);
             name.setText(curItem.title);
 
