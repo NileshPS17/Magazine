@@ -10,7 +10,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-
+    <style name="white_text" parent="android:Widget.TextView">
+        <item name="android:textColor">#ffff</item>
+        <item name="android:textColorHint">#ffff</item>
+    </style>
     <style name="Home_list_item_text" parent="android:Widget.TextView">
         <item name="android:fontFamily">sans</item>
 

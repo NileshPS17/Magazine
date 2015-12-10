@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:text="Contributors"
         android:textColor="#ffff"
-        android:background="#FFF44336"
+        android:background="#D40000"
         android:textSize="25sp"
         android:paddingBottom="5dp"
         android:paddingTop="5dp"

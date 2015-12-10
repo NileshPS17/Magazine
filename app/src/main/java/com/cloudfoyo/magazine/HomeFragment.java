@@ -3,6 +3,7 @@ package com.cloudfoyo.magazine;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,6 +106,8 @@ public class HomeFragment extends Fragment {
            }
 
             ListItem item = list.get(position);
+            CardView cv=(CardView)convertView.findViewById(R.id.cv);
+            cv.setPadding(4,4,4,4);
             TextView tv = (TextView)convertView.findViewById(R.id.home_list_item_category);
             tv.setText(item.category);
             tv = (TextView) convertView.findViewById(R.id.home_list_item_date);

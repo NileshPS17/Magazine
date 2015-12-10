@@ -79,11 +79,15 @@
         android:divider="@android:color/transparent"
         android:nestedScrollingEnabled="true"
         android:dividerHeight="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:clipToPadding="true"
         android:layout_gravity="fill_vertical"
+
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:listSelector="@drawable/article_list_selector"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
+        <!--android:listSelector="@drawable/article_list_selector" !-->
+
 
 
 </android.support.design.widget.CoordinatorLayout>

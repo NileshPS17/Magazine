@@ -6,7 +6,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFF44336"
+        android:background="#D50000"
         android:paddingBottom="5.5dp"
         android:paddingTop="5.5dp"
         android:textColorHint="#ffff"
