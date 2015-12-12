@@ -41,7 +41,7 @@
         android:horizontalSpacing="2dp"
         android:verticalSpacing="2dp"
         android:gravity="center"
-
+        android:listSelector="?android:attr/selectableItemBackground"
         android:stretchMode="columnWidth"
         android:id="@+id/gridview"
         >
