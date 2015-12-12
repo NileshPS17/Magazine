@@ -44,8 +44,11 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_article);
+
+
        // t1=(Toolbar)findViewById(R.id.toolbar1);
         //t2=(Toolbar)findViewById(R.id.toolbar2);
        // setSupportActionBar(t1);
@@ -64,6 +67,7 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
             }
         });
 */
+
         flipView = (FlipView)findViewById(R.id.flip_view);
         populateList();
         flipView.setAdapter(new FlipViewAdapter());

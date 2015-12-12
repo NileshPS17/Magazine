@@ -52,8 +52,9 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ListView recentUpdates = (ListView)view.findViewById(R.id.home_recentUpdates);
-        recentUpdates.setAdapter(new RecentUpdatesListAdapter());
         recentUpdates.addHeaderView(LayoutInflater.from(getContext()).inflate(R.layout.home_list_item_header, null), null, false);
+        recentUpdates.setAdapter(new RecentUpdatesListAdapter());
+
         View footerView = LayoutInflater.from(getContext()).inflate(R.layout.home_list_item_footer, null);
         recentUpdates.addFooterView(footerView, null, false);
         viewMore = (TextView) footerView.findViewById(R.id.home_list_item_footer_more);

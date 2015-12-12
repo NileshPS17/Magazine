@@ -133,7 +133,7 @@
                     android:textStyle="normal"
                     android:textSize="20dp"
                     android:textColor="#000"
-                    android:paddingBottom="?attr/actionBarSize"
+                    android:paddingBottom="80dp"
                     android:paddingTop="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"

@@ -20,7 +20,7 @@ public class MainActivity extends MagazineAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        
+
         setContentView(R.layout.activity_main);
         tabLayout=(TabLayout)findViewById(R.id.tablayout);
         viewPager=(ViewPager)findViewById(R.id.viewpager);
@@ -30,6 +30,8 @@ public class MainActivity extends MagazineAppCompatActivity {
             tabLayout.getTabAt(i).setIcon(tab_icons[i]);
 
         }
+
+
 
     }
     private void setupviewpager(ViewPager viewPager){
