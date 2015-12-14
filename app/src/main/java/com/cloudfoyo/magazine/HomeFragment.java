@@ -1,20 +1,30 @@
 package com.cloudfoyo.magazine;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Handler;
 
 
 /**
@@ -24,6 +34,7 @@ public class HomeFragment extends Fragment {
 
     ArrayList<ListItem> list = new ArrayList<ListItem>();
     TextView viewMore;
+
     int[] images={R.drawable.cheese_1,R.drawable.cheese_2,R.drawable.cheese_3,R.drawable.cheese_4,R.drawable.cheese_5};
     public HomeFragment() {
         // Required empty public constructor
@@ -44,7 +55,9 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view=inflater.inflate(R.layout.fragment_home, container, false);
+
+        return view;
     }
 
 
@@ -52,9 +65,14 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ListView recentUpdates = (ListView)view.findViewById(R.id.home_recentUpdates);
-        recentUpdates.addHeaderView(LayoutInflater.from(getContext()).inflate(R.layout.home_list_item_header, null), null, false);
         recentUpdates.setAdapter(new RecentUpdatesListAdapter());
+        ViewPager viewPager=(ViewPager)view.findViewById(R.id.viewPager);
+        PagerAdapter adapter=new ImageSliderAdapter(getActivity(),viewPager);
+        /*View swipeview=LayoutInflater.from(getContext()).inflate(R.layout.home_list_item_header,null);
+        recentUpdates.addHeaderView(swipeview,null,false); */
 
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(1);
         View footerView = LayoutInflater.from(getContext()).inflate(R.layout.home_list_item_footer, null);
         recentUpdates.addFooterView(footerView, null, false);
         viewMore = (TextView) footerView.findViewById(R.id.home_list_item_footer_more);
@@ -80,6 +98,109 @@ public class HomeFragment extends Fragment {
 
 
     }
+    public class ImageSliderAdapter extends PagerAdapter{
+        Timer timer;
+        TimerTask timerTask;
+        int pos=1;
+        android.os.Handler handler=new android.os.Handler();
+        Context mContext;
+        LayoutInflater inflater;
+        private int[] pageIDsArray;
+        private int count;
+        ImageView imageView;
+        ViewPager viewPager;
+        int[] images={R.drawable.cheese_1,R.drawable.cheese_2,R.drawable.cheese_3,R.drawable.cheese_4,R.drawable.cheese_5};
+
+        public ImageSliderAdapter(Context context,final ViewPager pager){
+            mContext=context;
+            viewPager=pager;
+            inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            int actualNoOfIDs =images.length;
+            count = actualNoOfIDs + 2;
+            pageIDsArray = new int[count];
+            for (int i = 0; i < actualNoOfIDs; i++) {
+                pageIDsArray[i + 1] =images[i];
+            }
+            pageIDsArray[0] = images[actualNoOfIDs - 1];
+            pageIDsArray[count - 1] = images[0];
+
+            pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+                @Override
+                public void onPageSelected(int position) {
+                    int pageCount = getCount();
+                    if (position == 0){
+                        pager.setCurrentItem(pageCount-2,false);
+                    } else if (position ==pageCount-1){
+                        pager.setCurrentItem(1,false);
+                    }
+                }
+
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                    // TODO Auto-generated method stub
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+                    // TODO Auto-generated method stub
+                }
+            });
+             startTimer();
+            }
+
+        public void startTimer(){
+
+            timer=new Timer();
+            runTimerTask();
+            timer.scheduleAtFixedRate(timerTask,3000,3000);
+        }
+
+        public void runTimerTask(){
+
+            timerTask=new TimerTask() {
+                @Override
+                public void run() {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            increment();
+                        }
+                    });
+                }
+            };
+        }
+        public void increment(){
+            pos++;
+            if(pos==6){
+                pos=1;
+            }
+            viewPager.setCurrentItem(pos);
+        }
+        @Override
+        public int getCount() {
+            return count;
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view==(LinearLayout)object;
+        }
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            View itemView =inflater.inflate(R.layout.home_list_item_header, container, false);
+             imageView = (ImageView) itemView.findViewById(R.id.imageView);
+             imageView.setImageResource(pageIDsArray[position]);
+            container.addView(itemView);
+            return itemView;
+        }
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((LinearLayout) object);
+        }
+    }
+
+
 
     class RecentUpdatesListAdapter extends BaseAdapter {
 

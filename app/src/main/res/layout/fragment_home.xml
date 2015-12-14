@@ -6,34 +6,19 @@
     android:background="#F5F5FF"
     tools:context="com.cloudfoyo.magazine.MainActivity">
 
-    <!-- Magazine title Container := Moved to recentUpdates -> HeaderView -->
-
- <!--   <LinearLayout
+    <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
-        android:gravity="center"
-        android:id="@+id/home_titleContainer"
-        android:background="#FFF"
-        android:elevation="10dp"
-        android:layout_height="200dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="Magazine"
-            android:textSize="40sp"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>  -->
-
-
-
-
+        android:layout_height="200dp"
+        android:id="@+id/viewPager"></android.support.v4.view.ViewPager>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@android:color/transparent"
         android:dividerHeight="8dp"
+        android:layout_below="@+id/viewPager"
         android:drawSelectorOnTop="true"
+        android:overScrollMode="never"
         android:id="@+id/home_recentUpdates" />
        <!-- android:listSelector="@drawable/article_list_selector" -->
 
