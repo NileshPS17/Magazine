@@ -36,7 +36,7 @@ public class ArticlesActivity extends MagazineAppCompatActivity {
         collapsingToolbarLayout.setTitle("Category Name");
         collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
 
-
+        //Toast.makeText(this, getIntent().getIntExtra(getString(R.string.cat_id), 0)+"", Toast.LENGTH_SHORT).show();
         articlesListView = (ListView)findViewById(R.id.articles_listView);
 
         populateList(); // TODO := For testing purposes only

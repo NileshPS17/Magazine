@@ -5,22 +5,23 @@ package com.cloudfoyo.magazine.wrappers;
  */
 public class Category {
 
-    private String name, description, createdOn, categoryId;
+    private String name, description, createdOn, imageUrl;
+    private int categoryId;
 
-    public Category(String name, String description, String createdOn, String categoryId) {
+    public Category(int categoryId, String name, String description, String imageUrl,String createdOn) {
+        this.categoryId = categoryId;
         this.name = name;
         this.description = description;
         this.createdOn = createdOn;
-        this.categoryId = categoryId;
+        this.imageUrl = imageUrl;
     }
 
-
-    public String getName() {
-        return name;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getDescription() {
@@ -39,11 +40,19 @@ public class Category {
         this.createdOn = createdOn;
     }
 
-    public String getCategoryId() {
+    public int getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(String categoryId) {
+    public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

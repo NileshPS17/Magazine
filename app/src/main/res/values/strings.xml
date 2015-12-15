@@ -19,4 +19,18 @@
         completions."
     </string>
     <string name="facebook_app_id">977040179028058</string>
+    <string name='server_error'>Something went wrong. Try again later !</string>
+    <!-- Server JSON Response Keys -->
+    <string name='json_error'>error</string>
+    <string name='cat_id'>id</string>
+    <string name='cat_description'>category_description</string>
+    <string name='cat_name'>category_name</string>
+    <string name='cat_image'>category_image</string>
+    <string name='cat_date'>created_at</string>
+    <string name='categories'>categories</string>
+
+    <!-- String for General Purpose URLs -->
+
+    <string name='url_all_categories'>http://192.168.43.66/magazine/v1/categories</string>
+
 </resources>

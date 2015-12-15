@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.cloudfoyo.magazine.MainActivity">
+   xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   tools:context="com.cloudfoyo.magazine.MainActivity">
+
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -12,12 +14,12 @@
         android:titleTextColor="#ffff"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         android:id="@+id/toolbar1"
-        android:layout_alignParentTop="true"
-        >
+        android:layout_alignParentTop="true">
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -31,7 +33,9 @@
                 android:id="@+id/title"/>
 
         </RelativeLayout>
+
     </android.support.v7.widget.Toolbar>
+
     <GridView
         android:layout_below="@id/toolbar1"
         android:layout_width="match_parent"
@@ -43,9 +47,7 @@
         android:gravity="center"
         android:listSelector="?android:attr/selectableItemBackground"
         android:stretchMode="columnWidth"
-        android:id="@+id/gridview"
-        >
+        android:id="@+id/gridview">
 
     </GridView>
-
-    </RelativeLayout>
+</RelativeLayout>

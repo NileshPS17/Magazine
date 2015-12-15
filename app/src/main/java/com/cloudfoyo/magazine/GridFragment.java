@@ -3,19 +3,31 @@ package com.cloudfoyo.magazine;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cloudfoyo.magazine.extras.DynamicAdapterInterface;
+import com.cloudfoyo.magazine.wrappers.Category;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -23,29 +35,21 @@ import java.util.ArrayList;
  */
 public class GridFragment extends Fragment {
 
+    private static final String LOG_TAG = GridFragment.class.getSimpleName();
 
-    private ArrayList<GridItemWrapper> listOfGridItems = new ArrayList<GridItemWrapper>();
+
     private GridView gridView = null;
-    int[] images={R.drawable.cheese_1,R.drawable.cheese_2,R.drawable.cheese_3,R.drawable.cheese_4,R.drawable.cheese_5};
+    private ImageAdapter imageAdapter;
+    //int[] images={R.drawable.cheese_1,R.drawable.cheese_2,R.drawable.cheese_3,R.drawable.cheese_4,R.drawable.cheese_5};
+
     public GridFragment() {
         // Required empty argument public constructor
 
-        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_1, "Grey"));
-        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_2, "Green"));
-        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_3, "Purple"));
-        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_4, "Orange"));
-        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_5, "Red"));
-        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_1, "Grey"));
-        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_2, "Green"));
-        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_5, "Purple"));
-        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_4, "Orange"));
-        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_1, "Red"));
-        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_3, "Grey"));
-        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_2, "Green"));
-        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_4, "Purple"));
-        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_5, "Orange"));
-        listOfGridItems.add(new GridItemWrapper(R.drawable.cheese_1, "Red"));
+
     }
+
+
+
 
 
     @Override
@@ -60,50 +64,87 @@ public class GridFragment extends Fragment {
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        gridView = (GridView) getView().findViewById(R.id.gridview);
-        ImageAdapter imageAdapter = new ImageAdapter(getActivity());
+
+        gridView = (GridView)view.findViewById(R.id.gridview);
+        imageAdapter = new ImageAdapter(getActivity());
         gridView.setAdapter(imageAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), ArticlesActivity.class);
+                intent.putExtra(getString(R.string.cat_id), ((Category) imageAdapter.getItem(i)).getCategoryId());
                 startActivity(intent);
             }
         });
 
-        gridView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
+        gridView.setNumColumns(2);
 
-            }
 
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        populateGrid();
 
-            }
-        });
 
     }
 
-     class ImageAdapter extends BaseAdapter {
-        Context mcontext;
+
+
+    public void populateGrid()
+    {
+        try
+        {
+
+            new AsyncGridLoader().execute(new URL(getString(R.string.url_all_categories)));
+        }
+        catch(MalformedURLException e)
+        {
+            Log.d(LOG_TAG, "Whooops! That shouldn't happen. Must get the latest version of app.");
+            //TODO:= Show a snackbar "Connection error     |UNDO| " Onclick undo => populateGrid()
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onResume();
+
+    }
+
+
+    class ImageAdapter extends BaseAdapter implements DynamicAdapterInterface<Category> {
+         Context mcontext;
          LayoutInflater inflater;
 
+        private ArrayList<Category> categoriesList = new ArrayList<>();
 
          public  ImageAdapter(Context context){
-            mcontext=context;
+              mcontext=context;
              inflater=LayoutInflater.from(mcontext);
+
         }
+
+
+        @Override
+        public void clearItems()
+        {
+            categoriesList.clear();
+        }
+
+        @Override
+        public void addItem(Category item)
+        {
+            categoriesList.add(item);
+            this.notifyDataSetChanged();
+        }
+
+
 
 
         public int getCount(){
 
-            return listOfGridItems.size();
+            return categoriesList.size();
         }
 
         public Object getItem(int position){
 
-            return listOfGridItems.get(position);
+            return categoriesList.get(position);
 
         }
         public long getItemId(int position){
@@ -113,24 +154,24 @@ public class GridFragment extends Fragment {
             View root;
             TextView name;
             View v=view;
-            CardView cv;
             ImageView iv;
-            gridView.setNumColumns(2);
-            int size = gridView.getColumnWidth();
-            GridItemWrapper curItem = listOfGridItems.get(position);
-             if(v==null) {
+            Category curItem = categoriesList.get(position);
+
+             if(v == null) {
 
                  v = inflater.inflate(R.layout.grid_item, parent, false);
-                 v.setTag(R.id.picture, v.findViewById(R.id.picture));
-                 v.setTag(R.id.text, v.findViewById(R.id.text));
              }
-            root = v.findViewById(R.id.ll);
-            cv=(CardView) v.findViewById(R.id.cv);
+            root = v.findViewById(R.id.root);
             iv=(ImageView)v.findViewById(R.id.iv);
-            iv.setBackgroundResource(curItem.color);
-            name = (TextView)v.findViewById(R.id.text);
-            name.setText(curItem.title);
+            int size =  gridView.getColumnWidth();
+            Picasso.with(mcontext).load("http://192.168.43.66/img/3.jpg")
+                                  .placeholder(android.R.drawable.arrow_down_float)
+                                  .error(R.drawable.error)
+                                  .resize(size, size)
+                                  .into(iv);
 
+            name = (TextView)v.findViewById(R.id.text);
+            name.setText(curItem.getName());
             root.setLayoutParams(new GridView.LayoutParams(size, size));
             return v;
         }
@@ -147,4 +188,92 @@ public class GridFragment extends Fragment {
         }
     }
 
+
+
+    class AsyncGridLoader extends AsyncTask<URL, Category, ArrayList<Category> >
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected ArrayList<Category> doInBackground(URL... params) {
+
+            try {
+                HttpURLConnection connection = (HttpURLConnection) params[0].openConnection();
+                connection.setRequestMethod("GET");
+                connection.connect();
+                if(connection.getResponseCode() == 201 || connection.getResponseCode() == 200)
+                {
+                    BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    StringBuilder builder = new StringBuilder("");
+                    String line="";
+                    while((line = br.readLine()) != null)
+                    {
+                        builder.append(line);
+                    }
+                    //Log.d(LOG_TAG, builder.toString());
+                    br.close();
+                    connection.disconnect();
+                    //Parse JSON and obtain the list of Category Objects
+                    JSONObject root = new JSONObject(builder.toString());
+                    if(! root.getBoolean(getString(R.string.json_error)))
+                    {
+                        JSONArray array = root.getJSONArray(getString(R.string.categories));
+                        int n = array.length();
+                        for(int i=0; i<n; ++i)
+                        {
+                            JSONObject object = array.getJSONObject(i);
+                            Category category = new Category(object.getInt(getString(R.string.cat_id)),
+                                                            object.getString(getString(R.string.cat_name)),
+                                                            object.getString(getString(R.string.cat_description)),
+                                                            object.getString(getString(R.string.cat_description)),
+                                                            object.getString(getString(R.string.cat_date)));
+
+                            publishProgress(category);
+
+
+
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception(getString(R.string.server_error));
+                    }
+
+                }
+                else
+                {
+                    throw new Exception(getString(R.string.server_error));
+                }
+
+            }catch (Exception e)
+            {
+                    Log.e(LOG_TAG, e.getMessage());
+                //Something went wrong , in this scenorio  return a null object
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Category... values) {
+            super.onProgressUpdate(values);
+
+            imageAdapter.addItem(values[0]);
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Category> categories) {
+            super.onPostExecute(categories);
+            //Do nothing .. for now
+        }
+    }
+
+
+
+
 }
+
+

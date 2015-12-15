@@ -48,11 +48,6 @@
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <provider
-            android:name=".sqlite.MagazineContentProvider"
-            android:authorities="com.cloudfoyo.magazine.provider"
-            android:enabled="true" >
-        </provider>
     </application>
 
 </manifest>
