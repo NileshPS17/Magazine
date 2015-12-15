@@ -14,7 +14,7 @@
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="6dp"
         android:background="?android:attr/selectableItemBackground"
         card_view:cardElevation="5dp"
         card_view:cardBackgroundColor="#eeeeee"
@@ -25,17 +25,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-
-              <ImageView
+            <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:src="@drawable/cheese_1"
                     android:id="@+id/home_list_item_articleImage"
                     android:scaleType="centerCrop" />
-
-
-
 
             <TextView
                 android:layout_width="wrap_content"
@@ -62,6 +57,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="sans-serif"
                 android:textColor="#000"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -73,6 +69,7 @@
                 android:layout_alignParentLeft="true"
                 android:fontFamily="sans-serif"
                 android:textColor="#000"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

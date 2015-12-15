@@ -1,11 +1,15 @@
 package com.cloudfoyo.magazine;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+
+import com.cloudfoyo.magazine.sqlite.MagazineContentProvider;
+import com.cloudfoyo.magazine.sqlite.MagazineDatabaseHelper;
 
 import java.util.ArrayList;
 
@@ -32,6 +36,8 @@ public class MainActivity extends MagazineAppCompatActivity {
         }
 
 
+        foo();
+
 
     }
     private void setupviewpager(ViewPager viewPager){
@@ -39,7 +45,7 @@ public class MainActivity extends MagazineAppCompatActivity {
         viewPagerAdapter.addFragment(new HomeFragment(),"Home");
         viewPagerAdapter.addFragment(new GridFragment(),"Categories");
         viewPagerAdapter.addFragment(new SearchFragment(),"Search");
-        viewPagerAdapter.addFragment(new AboutFragment(),"About");
+        viewPagerAdapter.addFragment(new AboutFragment(), "About");
         viewPager.setAdapter(viewPagerAdapter);
 
     }
@@ -64,5 +70,14 @@ public class MainActivity extends MagazineAppCompatActivity {
             return null;
 
         }
+    }
+
+
+    //TODO:= Remove before Release .. For testing only
+    public void foo()
+    {
+        MagazineDatabaseHelper helper = new MagazineDatabaseHelper(this);
+        helper.getWritableDatabase();
+        getContentResolver().query(Uri.parse("content://"+ MagazineContentProvider.AUTHORITY+"/categories/10"), null, null, null, null);
     }
 }
