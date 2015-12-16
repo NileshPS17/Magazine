@@ -28,7 +28,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 
 public class ArticlesActivity extends MagazineAppCompatActivity {
@@ -269,7 +268,6 @@ private static final String LOG_TAG = ArticlesActivity.class.getSimpleName();
 
     }
 
-    ArrayDeque<String> a = new ArrayDeque<String>();
 
 }
 
