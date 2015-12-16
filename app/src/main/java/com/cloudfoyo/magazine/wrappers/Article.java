@@ -1,46 +1,56 @@
 package com.cloudfoyo.magazine.wrappers;
 
-import com.cloudfoyo.magazine.R;
 
-/**
- * Created by nilesh on 4/12/15.
- */
-public class Article {
+import android.os.Parcel;
+import android.os.Parcelable;
 
-    private String title, heading, author, category, content;
-    private int image = R.drawable.playboy;
+public class Article implements Parcelable
+{
+    private int articleId, categoryId;
+    private String title, author, imageUrl, date, content, categoryName;
 
-    public int getImage() {
-        return image;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
-    }
-
-    public Article(String heading, String title, String author, String category, String content, int image) {
-        this.heading = heading;
+    public Article(int articleId, int categoryId,String categoryName, String title, String author, String imageUrl, String date, String content) {
+        this.articleId = articleId;
+        this.categoryId = categoryId;
         this.title = title;
+        this.categoryName = categoryName;
         this.author = author;
-        this.category = category;
+        this.imageUrl = imageUrl;
+        this.date = date;
         this.content = content;
-        this.image = image;
     }
 
-    public String getHeading() {
-        return heading;
+    public int getArticleId() {
+        return articleId;
     }
 
-    public void setHeading(String heading) {
-        this.heading = heading;
+    public void setArticleId(int articleId) {
+        this.articleId = articleId;
     }
 
-    public String getCategory() {
-        return category;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getAuthor() {
@@ -51,6 +61,22 @@ public class Article {
         this.author = author;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public String getContent() {
         return content;
     }
@@ -59,12 +85,43 @@ public class Article {
         this.content = content;
     }
 
-    public String getTitle() {
-
-        return title;
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(articleId);
+        dest.writeInt(categoryId);
+        dest.writeString(categoryName);
+        dest.writeString(title);
+        dest.writeString(author);
+        dest.writeString(imageUrl);
+        dest.writeString(date);
+        dest.writeString(content);
     }
+
+
+    public static final Parcelable.Creator<Article> CREATOR = new Parcelable.Creator<Article>()
+    {
+
+        @Override
+        public Article createFromParcel(Parcel source) {
+            int articleID = source.readInt();
+            int cid      = source.readInt();
+            String cname   = source.readString();
+            String title = source.readString();
+            String author = source.readString();
+            String imageUrl = source.readString();
+            String date = source.readString();
+            String content = source.readString();
+            return new Article(articleID, cid, cname, title, author, imageUrl, date,content);
+        }
+
+        @Override
+        public Article[] newArray(int size) {
+            return new Article[size];
+        }
+    };
 }

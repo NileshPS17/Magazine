@@ -20,7 +20,7 @@
     </string>
     <string name="facebook_app_id">977040179028058</string>
     <string name='server_error'>Something went wrong. Try again later !</string>
-    <!-- Server JSON Response Keys -->
+    <!-- Server JSON Response Keys  // GET all Categories-->
     <string name='json_error'>error</string>
     <string name='cat_id'>id</string>
     <string name='cat_description'>category_description</string>
@@ -29,8 +29,23 @@
     <string name='cat_date'>created_at</string>
     <string name='categories'>categories</string>
 
+
+
+    <!-- Server JSON Response keys // GET all Categories By a specific ID -->
+    <string name='art_id'>id</string>
+    <string name='art_cat_id'>cat_id</string>
+    <string name='art_title'>article_title</string>
+    <string name='art_author'>author_name</string>
+    <string name='art_image'>article_image</string>
+    <string name='art_date'>date_published</string>
+    <string name='art_content'>article_content</string>
+
     <!-- String for General Purpose URLs -->
 
-    <string name='url_all_categories'>http://192.168.43.66/magazine/v1/categories</string>
+    <string name='url_all_categories'>http://10.42.0.1/magazine/v1/categories</string>
+    <string name='url_articles_by_category'>@string/url_all_categories</string> <!-- Append categoryId/articles at the end -->
+
+
+
 
 </resources>

@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/mainActivityRoot"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <android.support.design.widget.TabLayout
@@ -18,8 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/viewpager"
-            android:layout_below="@+id/tablayout"
-            />
+            android:layout_below="@+id/tablayout" />
 
 
 </RelativeLayout>

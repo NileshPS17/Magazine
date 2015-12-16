@@ -1,11 +1,17 @@
 package com.cloudfoyo.magazine;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -15,6 +21,11 @@ public class MainActivity extends MagazineAppCompatActivity {
     private Toolbar toolbar;
     ViewPager viewPager;
     private int[]tab_icons={R.mipmap.home,R.mipmap.grid,R.mipmap.search,R.mipmap.about};
+
+    private HomeFragment homeFragment = new HomeFragment();
+    private GridFragment gridFragment = new GridFragment();
+
+    public static final String FULL_RELOAD = "com.cloudfoyo.magazine.mainactivity.full_reload";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +43,41 @@ public class MainActivity extends MagazineAppCompatActivity {
         }
 
 
+
+
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(! isNetworkAvailable())
+        {
+            showSnackBar();
+        }
+    }
+
+    public void showSnackBar()
+    {
+        Snackbar.make(findViewById(R.id.mainActivityRoot), "No Internet Connection", Snackbar.LENGTH_INDEFINITE)
+                .setAction("RETRY", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!isNetworkAvailable()) {
+                            //Do nothing
+                            showSnackBar();
+                        } else {
+
+                        }
+                    }
+                }).setActionTextColor(Color.MAGENTA).show();
+    }
+
+
     private void setupviewpager(ViewPager viewPager){
         ViewPagerAdapter viewPagerAdapter=new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragment(new HomeFragment(),"Home");
-        viewPagerAdapter.addFragment(new GridFragment(),"Categories");
+        viewPagerAdapter.addFragment(homeFragment,"Home");
+        viewPagerAdapter.addFragment(gridFragment,"Categories");
         viewPagerAdapter.addFragment(new SearchFragment(),"Search");
         viewPagerAdapter.addFragment(new AboutFragment(), "About");
         viewPager.setAdapter(viewPagerAdapter);
@@ -65,5 +106,12 @@ public class MainActivity extends MagazineAppCompatActivity {
         }
     }
 
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 
 }

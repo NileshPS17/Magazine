@@ -16,6 +16,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cloudfoyo.magazine.extras.ActivityPingListener;
 import com.cloudfoyo.magazine.extras.DynamicAdapterInterface;
 import com.cloudfoyo.magazine.wrappers.Category;
 import com.squareup.picasso.Picasso;
@@ -33,12 +34,12 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GridFragment extends Fragment {
+public class GridFragment extends Fragment implements ActivityPingListener{
 
     private static final String LOG_TAG = GridFragment.class.getSimpleName();
 
-
     private GridView gridView = null;
+    private AsyncGridLoader gridLoader = null;
     private ImageAdapter imageAdapter;
     //int[] images={R.drawable.cheese_1,R.drawable.cheese_2,R.drawable.cheese_3,R.drawable.cheese_4,R.drawable.cheese_5};
 
@@ -49,8 +50,11 @@ public class GridFragment extends Fragment {
     }
 
 
-
-
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,8 +76,10 @@ public class GridFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), ArticlesActivity.class);
-                intent.putExtra(getString(R.string.cat_id), ((Category) imageAdapter.getItem(i)).getCategoryId());
+                Category category = (Category)imageAdapter.getItem(i);
+                intent.putExtra("category", category);
                 startActivity(intent);
+
             }
         });
 
@@ -85,25 +91,39 @@ public class GridFragment extends Fragment {
 
     }
 
-
+    @Override
+    public void onActivityPing(Intent intent) {
+        if(intent.getAction().equals(MainActivity.FULL_RELOAD))
+        {
+                populateGrid();
+        }
+    }
 
     public void populateGrid()
     {
         try
         {
 
-            new AsyncGridLoader().execute(new URL(getString(R.string.url_all_categories)));
+            if(gridLoader !=null)
+            {
+                gridLoader.cancel(true);
+                gridLoader = null;
+            }
+            gridLoader =  new AsyncGridLoader();
+            gridLoader.execute(new URL(getString(R.string.url_all_categories)));
         }
         catch(MalformedURLException e)
         {
             Log.d(LOG_TAG, "Whooops! That shouldn't happen. Must get the latest version of app.");
-            //TODO:= Show a snackbar "Connection error     |UNDO| " Onclick undo => populateGrid()
+            //TODO:= Show a snackbar "Connection error     |AGAIN| " Onclick undo => populateGrid()
         }
     }
 
     @Override
     public void onStart() {
-        super.onResume();
+        super.onStart();
+
+        populateGrid();
 
     }
 
@@ -125,6 +145,7 @@ public class GridFragment extends Fragment {
         public void clearItems()
         {
             categoriesList.clear();
+            notifyDataSetChanged();
         }
 
         @Override
@@ -164,7 +185,7 @@ public class GridFragment extends Fragment {
             root = v.findViewById(R.id.root);
             iv=(ImageView)v.findViewById(R.id.iv);
             int size =  gridView.getColumnWidth();
-            Picasso.with(mcontext).load("http://192.168.43.66/img/3.jpg")
+            Picasso.with(mcontext).load("http://10.42.0.1/img/3.jpg")
                                   .placeholder(android.R.drawable.arrow_down_float)
                                   .error(R.drawable.error)
                                   .resize(size, size)
@@ -177,16 +198,6 @@ public class GridFragment extends Fragment {
         }
     }
 
-    class GridItemWrapper
-    {
-        public int color;
-        public String title;
-
-        public GridItemWrapper(int color, String title) {
-            this.color = color;
-            this.title = title;
-        }
-    }
 
 
 
@@ -195,6 +206,7 @@ public class GridFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            imageAdapter.clearItems();
         }
 
         @Override
@@ -222,7 +234,7 @@ public class GridFragment extends Fragment {
                     {
                         JSONArray array = root.getJSONArray(getString(R.string.categories));
                         int n = array.length();
-                        for(int i=0; i<n; ++i)
+                        for(int i=0; i<n && !isCancelled(); ++i)
                         {
                             JSONObject object = array.getJSONObject(i);
                             Category category = new Category(object.getInt(getString(R.string.cat_id)),
@@ -251,7 +263,8 @@ public class GridFragment extends Fragment {
             }catch (Exception e)
             {
                     Log.e(LOG_TAG, e.getMessage());
-                //Something went wrong , in this scenorio  return a null object
+                     this.cancel(true);
+                //Something went wrong
             }
 
             return null;
@@ -269,11 +282,19 @@ public class GridFragment extends Fragment {
             super.onPostExecute(categories);
             //Do nothing .. for now
         }
+
+        @Override
+        protected void onCancelled(ArrayList<Category> categories) {
+            super.onCancelled(categories);
+            imageAdapter.clearItems();
+        }
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
 
-
-
+    }
 }
 
 

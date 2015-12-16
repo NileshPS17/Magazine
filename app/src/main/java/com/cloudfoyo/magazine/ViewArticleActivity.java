@@ -12,6 +12,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cloudfoyo.magazine.wrappers.Article;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -40,7 +41,7 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
     private ScrollView scrollView;
 
     ArrayList<Article> list = new  ArrayList<Article>();
-
+    private FlipViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,28 +68,16 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
             }
         });
 */
-
+        adapter = new FlipViewAdapter();
         flipView = (FlipView)findViewById(R.id.flip_view);
-        populateList();
-        flipView.setAdapter(new FlipViewAdapter());
-
+        flipView.setAdapter(adapter);
 
     }
 
     public void back(View view){
         this.finish();
     }
-    public void populateList() {
 
-
-        for(int i=1; i<6; ++i)
-        {
-            int altImage = (i%2)==0?R.drawable.believe:R.drawable.playboy;
-            list.add(new Article("Heading " +i, "Title "+i, "Author", "Category", text, altImage));
-        }
-
-
-    }
 
 
     class FlipViewAdapter extends BaseAdapter {
@@ -133,10 +122,10 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
 
             Article article = list.get(position);
             holder.author.setText(article.getAuthor());
-            holder.category.setText(article.getCategory());
+            holder.category.setText(article.getCategoryName());
             holder.content.setText(article.getContent());
-            holder.heading.setText(article.getHeading());
-            holder.iv.setImageResource(article.getImage());
+            holder.heading.setText(article.getTitle());
+            Picasso.with(ViewArticleActivity.this).load(article.getImageUrl()).into(holder.iv);
             holder.collapsingToolbarLayout.setTitle("Title " + (position + 1));
 
             return convertView;
@@ -145,8 +134,8 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
 
          class ViewHolder {
 
-            TextView content, author,category, heading, title;
-            ImageView iv;
+             TextView content, author,category, heading, title;
+             ImageView iv;
              CollapsingToolbarLayout collapsingToolbarLayout;
         }
     }

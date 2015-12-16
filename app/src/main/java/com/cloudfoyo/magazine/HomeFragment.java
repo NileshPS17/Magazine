@@ -18,6 +18,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cloudfoyo.magazine.extras.ActivityPingListener;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -26,7 +28,7 @@ import java.util.TimerTask;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements ActivityPingListener {
 
     ArrayList<ListItem> list = new ArrayList<ListItem>();
     TextView viewMore;
@@ -94,6 +96,16 @@ public class HomeFragment extends Fragment {
 
 
     }
+
+
+    @Override
+    public void onActivityPing(Intent intent) {
+        if(intent.getAction().equals(MainActivity.FULL_RELOAD))
+        {
+            //Clear all existing data and reload it
+        }
+    }
+
     public class ImageSliderAdapter extends PagerAdapter{
         Timer timer;
         TimerTask timerTask;
