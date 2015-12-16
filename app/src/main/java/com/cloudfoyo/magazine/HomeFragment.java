@@ -62,11 +62,10 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ListView recentUpdates = (ListView)view.findViewById(R.id.home_recentUpdates);
         recentUpdates.setAdapter(new RecentUpdatesListAdapter());
-        ViewPager viewPager=(ViewPager)view.findViewById(R.id.viewPager);
+        View swipeview=LayoutInflater.from(getContext()).inflate(R.layout.pager,null);
+        recentUpdates.addHeaderView(swipeview,null,false);
+        ViewPager viewPager=(ViewPager)swipeview.findViewById(R.id.viewPager);
         PagerAdapter adapter=new ImageSliderAdapter(getActivity(),viewPager);
-        /*View swipeview=LayoutInflater.from(getContext()).inflate(R.layout.home_list_item_header,null);
-        recentUpdates.addHeaderView(swipeview,null,false); */
-
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(1);
         View footerView = LayoutInflater.from(getContext()).inflate(R.layout.home_list_item_footer, null);
