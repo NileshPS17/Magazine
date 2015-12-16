@@ -126,7 +126,7 @@
                     android:id="@+id/author"/>
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:lineSpacingExtra="3dp"
                     android:layout_below="@+id/author"
                     android:fontFamily="sans-serif-thin"

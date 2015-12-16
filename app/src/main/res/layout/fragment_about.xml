@@ -5,24 +5,45 @@
     tools:context="com.cloudfoyo.magazine.AboutFragment">
 
 
-    <TextView
+    <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        android:text="Contributors"
-        android:textColor="#ffff"
-        android:background="#D40000"
-        android:textSize="25sp"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
-        android:paddingLeft="8dp"
-        android:id="@+id/about_TextView"
-        android:layout_height="wrap_content" />
+        android:layout_height="45dp"
+        android:background="#D50000"
+        android:title=""
+        android:titleTextColor="#ffff"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:id="@+id/toolbar1"
+        android:layout_alignParentTop="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contributers"
+                android:textSize="20dp"
+                android:fontFamily="sans-serif-medium"
+                android:background="#D50000"
+                android:textColor="#ffff"
+                android:gravity="center_vertical"
+                android:paddingLeft="0dp"
+                android:layout_marginLeft="3dp"
+                android:id="@+id/title"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
 
 
     <GridView
         android:layout_width="match_parent"
         android:id="@+id/about_gridView"
         android:layout_marginTop="0dp"
-        android:layout_below="@id/about_TextView"
+        android:layout_below="@id/toolbar1"
         android:horizontalSpacing="2dp"
         android:verticalSpacing="2dp"
         android:layout_height="wrap_content"></GridView>
