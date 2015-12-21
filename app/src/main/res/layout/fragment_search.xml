@@ -3,11 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.cloudfoyo.magazine.MainActivity">
+
+
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:background="#D50000"
         android:paddingBottom="5.5dp"
+        android:elevation="5dp"
         android:paddingTop="5.5dp"
         android:textColorHint="#ffff"
         android:textSize="15dp"
@@ -17,15 +20,18 @@
         android:layout_marginTop="0dp"
         android:hint="@string/search"
         android:singleLine="true"
-        android:drawableLeft="@drawable/searchw"
-        />
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/search"
-        android:id="@+id/listview"
-        >
-    </ListView>
+        android:drawableLeft="@drawable/searchw" />
 
+    <!--
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/search"
+                android:id="@+id/listview"
+                >
+            </ListView>
+
+
+    -->
 
 </RelativeLayout>

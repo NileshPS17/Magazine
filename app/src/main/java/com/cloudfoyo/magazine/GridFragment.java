@@ -186,8 +186,8 @@ public class GridFragment extends Fragment implements ActivityPingListener{
             iv=(ImageView)v.findViewById(R.id.iv);
             int size =  gridView.getColumnWidth();
             Picasso.with(mcontext).load("http://10.42.0.1/img/3.jpg")
-                                  .placeholder(android.R.drawable.arrow_down_float)
-                                  .error(R.drawable.error)
+                                  .placeholder(R.drawable.img_loading)
+                                  .error(R.drawable.img_loading)
                                   .resize(size, size)
                                   .into(iv);
 

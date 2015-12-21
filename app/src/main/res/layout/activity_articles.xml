@@ -65,10 +65,7 @@
         android:animateLayoutChanges="true"
         android:divider="@android:color/transparent"
         android:nestedScrollingEnabled="true"
-        android:dividerHeight="8dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:fitsSystemWindows="true"
+        android:dividerHeight="2dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_height="match_parent" />
         <!--android:listSelector="@drawable/article_list_selector" !-->

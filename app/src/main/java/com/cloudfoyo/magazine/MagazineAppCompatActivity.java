@@ -3,12 +3,10 @@ package com.cloudfoyo.magazine;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
-import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 
 /**
@@ -43,7 +41,7 @@ public class MagazineAppCompatActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
 
-        Profile profile = Profile.getCurrentProfile();
+      /**  Profile profile = Profile.getCurrentProfile();
 
         if(profile == null) {
 
@@ -75,6 +73,7 @@ public class MagazineAppCompatActivity extends AppCompatActivity {
 
 
 
+**/
 
         //Check for login here ....
         /**
@@ -84,7 +83,7 @@ public class MagazineAppCompatActivity extends AppCompatActivity {
          *            + clear all cookies
          *            + start a new User Session
          *
-         */
+       * */
     }
 
 

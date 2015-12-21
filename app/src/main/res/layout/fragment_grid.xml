@@ -8,9 +8,10 @@
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="?attr/actionBarSize"
         android:background="#D50000"
         android:title=""
+        android:elevation="5dp"
         android:titleTextColor="#ffff"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         android:id="@+id/toolbar1"
@@ -18,8 +19,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"

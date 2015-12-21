@@ -42,9 +42,6 @@ public class MainActivity extends MagazineAppCompatActivity {
 
         }
 
-
-
-
     }
 
 

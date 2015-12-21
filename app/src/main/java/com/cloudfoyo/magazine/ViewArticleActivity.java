@@ -1,27 +1,38 @@
 package com.cloudfoyo.magazine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.cloudfoyo.magazine.extras.AsyncArticleLoader;
+import com.cloudfoyo.magazine.extras.DynamicAdapterInterface;
 import com.cloudfoyo.magazine.wrappers.Article;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.LinkedList;
 
 import se.emilsjolander.flipview.FlipView;
 
 public class ViewArticleActivity extends MagazineAppCompatActivity {
+
+    private static final String LOG_TAG = ViewArticleActivity.class.getSimpleName();
+
+    public static final String ACTION_ARTICLE = "com.cloudfoyo.magazine.ViewArticleActivity";
+
     Toolbar t1,t2;
     ImageButton imageButton;
-    String text="To shed weight, Cooper jettisons himself and TARS into the black hole, " +
+   /** String text="To shed weight, Cooper jettisons himself and TARS into the black hole, " +
             "so that Amelia and CASE can complete the journey. Cooper and TARS plunge into " +
             "the black hole, but emerge in a tesseract, which appears as a stream of bookshelves;" +
             " with portals that look out into Murphy's bedroom at different times in her life. " +
@@ -33,14 +44,15 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
             "equation, enabling Plan A.Cooper emerges from the wormhole and is rescued by the crew" +
             " of a space habitat orbiting Saturn. Aboard, he reunites with Murphy, now elderly and " +
             "near death. After sharing one last goodbye, Cooper, along with TARS, leaves the habitat" +
-            " to rejoin Amelia, who is with CASE on Edmunds' Planet, which was found to be habitable.";
+            " to rejoin Amelia, who is with CASE on Edmunds' Planet, which was found to be habitable."; **/
 
 
-    FlipView flipView;
+    private   FlipView flipView;
 
-    private ScrollView scrollView;
+    private  int categoryId = -1;
+    private int articleId = -1;
+    private AsyncArticleLoader asyncTask = null;
 
-    ArrayList<Article> list = new  ArrayList<Article>();
     private FlipViewAdapter adapter;
 
     @Override
@@ -68,9 +80,27 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
             }
         });
 */
-        adapter = new FlipViewAdapter();
-        flipView = (FlipView)findViewById(R.id.flip_view);
-        flipView.setAdapter(adapter);
+
+
+        Intent intent = getIntent();
+
+        if(intent!=null && intent.getParcelableExtra(ACTION_ARTICLE) != null)
+        {
+            Article article = (Article)intent.getParcelableExtra(ACTION_ARTICLE);
+            categoryId = article.getCategoryId();
+            articleId  = article.getArticleId();
+            adapter = new FlipViewAdapter();
+            flipView = (FlipView)findViewById(R.id.flip_view);
+            flipView.setAdapter(adapter);
+        }
+        else
+        {
+            Log.e(LOG_TAG, "Intent | Intent.ACTION_ARTICLE is NULL. Detected illegal start of Activity");
+            Toast.makeText(getApplicationContext(), "Something went wrong !" , Toast.LENGTH_SHORT).show();
+            this.finish();
+        }
+
+
 
     }
 
@@ -79,9 +109,30 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
     }
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-    class FlipViewAdapter extends BaseAdapter {
+        if(asyncTask != null)
+        {
+            asyncTask.cancel(true);
+            asyncTask = null;
+        }
 
+        try {
+            asyncTask = new AsyncArticleLoader(this, adapter, true);
+            asyncTask.execute(new URL(getString(R.string.url_articles_by_category)+"/"+ categoryId + "/articles"));
+
+        }catch (MalformedURLException e)
+        {
+            Log.e(LOG_TAG, e.getMessage());
+            asyncTask = null;
+        }
+    }
+
+    class FlipViewAdapter extends BaseAdapter  implements DynamicAdapterInterface<Article>{
+
+        public LinkedList<Article> list = new LinkedList<Article>();
 
         @Override
         public int getCount() {
@@ -96,6 +147,29 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
         @Override
         public long getItemId(int position) {
             return 0;
+        }
+
+        @Override
+        public void addItem(Article item) {
+
+
+
+            if( item.getArticleId() >= articleId )
+            {
+                list.add(item);
+                notifyDataSetChanged();
+            }
+
+
+
+
+        }
+
+        @Override
+        public void clearItems() {
+
+            list.clear();
+            notifyDataSetChanged();
         }
 
         @Override
@@ -125,7 +199,7 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
             holder.category.setText(article.getCategoryName());
             holder.content.setText(article.getContent());
             holder.heading.setText(article.getTitle());
-            Picasso.with(ViewArticleActivity.this).load(article.getImageUrl()).into(holder.iv);
+            Picasso.with(ViewArticleActivity.this).load(/** article.getImageUrl() **/ "http://10.42.0.1/img/13.jpg").placeholder(R.drawable.img_loading).error(R.drawable.img_loading).into(holder.iv);
             holder.collapsingToolbarLayout.setTitle("Title " + (position + 1));
 
             return convertView;
@@ -134,10 +208,13 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
 
          class ViewHolder {
 
-             TextView content, author,category, heading, title;
+             TextView content, author,category, heading;
              ImageView iv;
              CollapsingToolbarLayout collapsingToolbarLayout;
         }
     }
+
+
+
 }
 

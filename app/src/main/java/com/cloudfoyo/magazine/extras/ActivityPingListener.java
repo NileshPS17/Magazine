@@ -7,5 +7,8 @@ import android.content.Intent;
  */
 public interface ActivityPingListener {
 
+
+
+
     public void onActivityPing(Intent intent);
 }

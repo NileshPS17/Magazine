@@ -54,11 +54,11 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/back_button"
                     android:src="?android:homeAsUpIndicator"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:gravity="center"
-                    android:paddingLeft="5dp"
-                    android:layout_marginRight="12dp"
-                    android:scaleType="fitXY"
+                     android:paddingLeft="5dp"
+                     android:layout_marginRight="12dp"
+                     android:scaleType="fitXY"
+                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:layout_alignParentLeft="true"
                     android:onClick="back" />
 
@@ -87,7 +87,7 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-condensed"
                     android:textSize="30dp"
                     android:text="Heading Goes Here"
@@ -190,6 +190,8 @@
             </LinearLayout>
 
         </android.support.v7.widget.Toolbar>
+
+
 
 
 
