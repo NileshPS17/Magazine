@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -37,6 +38,8 @@ private static final String LOG_TAG = ArticlesActivity.class.getSimpleName();
 
     private Category c;
 
+    ImageView categoryImage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +62,18 @@ private static final String LOG_TAG = ArticlesActivity.class.getSimpleName();
         collapsingToolbarLayout.setTitle(c.getName());
 
         articlesListView = (ListView)findViewById(R.id.articles_listView);
-        ImageView categoryImage = (ImageView)findViewById(R.id.category_image);
+        categoryImage = (ImageView)findViewById(R.id.category_image);
 
-        Picasso.with(this).load("http://192.168.43.66/img/6.jpg").into(categoryImage); // TODO := For testing purposes only
+        categoryImage.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
 
+                Picasso.with(getBaseContext()).load("http://10.42.0.1/img/3.jpg").resize(categoryImage.getMeasuredHeight(), categoryImage.getMeasuredWidth()).into(categoryImage); // TODO := For testing purposes only
+
+
+                return true;
+            }
+        });
 
 
         adapter = new ListItemArticleAdapter();
@@ -80,9 +91,12 @@ private static final String LOG_TAG = ArticlesActivity.class.getSimpleName();
 
     }
 
+
+
     @Override
     protected void onStart() {
         super.onStart();
+
         if(asyncTask != null)
         {
             asyncTask.cancel(true);

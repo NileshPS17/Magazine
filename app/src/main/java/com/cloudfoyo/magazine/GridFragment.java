@@ -1,10 +1,14 @@
 package com.cloudfoyo.magazine;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -75,10 +79,17 @@ public class GridFragment extends Fragment implements ActivityPingListener{
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(), ArticlesActivity.class);
-                Category category = (Category)imageAdapter.getItem(i);
-                intent.putExtra("category", category);
-                startActivity(intent);
+                Activity act = getActivity();
+                Intent intent = new Intent(act, ArticlesActivity.class);
+                intent.putExtra("category", (Category) imageAdapter.getItem(i));
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(act, view.findViewById(R.id.iv), getString(R.string.transition_name));
+                    ActivityCompat.startActivity(act, intent, options.toBundle());
+                }else
+                {
+                    startActivity(intent);
+                }
+
 
             }
         });

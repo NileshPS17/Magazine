@@ -45,6 +45,6 @@
     <string name='url_all_categories'>http://10.42.0.1/magazine/v1/categories</string>
     <string name='url_articles_by_category'>@string/url_all_categories</string> <!-- Append categoryId/articles at the end -->
 
-
+    <string name='transition_name'>transition_name</string>
 
 </resources>
