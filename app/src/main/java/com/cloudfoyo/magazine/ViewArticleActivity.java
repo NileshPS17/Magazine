@@ -8,10 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.cloudfoyo.magazine.extras.AsyncArticleLoader;
 import com.cloudfoyo.magazine.extras.DynamicAdapterInterface;
@@ -32,6 +34,7 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
 
     Toolbar t1,t2;
     ImageButton imageButton;
+
    /** String text="To shed weight, Cooper jettisons himself and TARS into the black hole, " +
             "so that Amelia and CASE can complete the journey. Cooper and TARS plunge into " +
             "the black hole, but emerge in a tesseract, which appears as a stream of bookshelves;" +
@@ -121,7 +124,7 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
 
         try {
             asyncTask = new AsyncArticleLoader(this, adapter, true);
-            asyncTask.execute(new URL(getString(R.string.url_articles_by_category)+"/"+ categoryId + "/articles"));
+            asyncTask.execute(new URL(getString(R.string.base_url)+"/categories/"+ categoryId + "/articles"));
 
         }catch (MalformedURLException e)
         {
@@ -130,7 +133,7 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
         }
     }
 
-    class FlipViewAdapter extends BaseAdapter  implements DynamicAdapterInterface<Article>{
+    class FlipViewAdapter extends BaseAdapter  implements DynamicAdapterInterface<Article>, View.OnClickListener, CompoundButton.OnCheckedChangeListener{
 
         public LinkedList<Article> list = new LinkedList<Article>();
 
@@ -186,6 +189,8 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
                 holder.author=(TextView)convertView.findViewById(R.id.author);
                 holder.iv=(ImageView)convertView.findViewById(R.id.iv);
                 holder.collapsingToolbarLayout = (CollapsingToolbarLayout)convertView.findViewById(R.id.collapsing_toolbar);
+                holder.toggleButton = (ToggleButton)convertView.findViewById(R.id.toggleButton);
+                holder.shareButton = (ImageButton)convertView.findViewById(R.id.share);
                 convertView.setTag(holder);
 
             }
@@ -199,9 +204,13 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
             holder.category.setText(article.getCategoryName());
             holder.content.setText(article.getContent());
             holder.heading.setText(article.getTitle());
-            Picasso.with(ViewArticleActivity.this).load(/** article.getImageUrl() **/ "http://10.42.0.1/img/13.jpg").placeholder(R.drawable.img_loading).error(R.drawable.img_loading).into(holder.iv);
-            holder.collapsingToolbarLayout.setTitle("Title " + (position + 1));
-
+            Picasso.with(ViewArticleActivity.this).load(/** article.getImageUrl() **/ getString(R.string.url_host)+"img/13.jpg").placeholder(R.drawable.img_loading).error(R.drawable.img_loading).into(holder.iv);
+            holder.collapsingToolbarLayout.setTitle("");
+            holder.toggleButton.setTag(new Integer(position));
+            holder.shareButton.setTag(new Integer(position));
+            holder.toggleButton.setOnCheckedChangeListener(this);
+            holder.shareButton.setOnClickListener(this);
+            convertView.findViewById(R.id.scrollview).setScrollX(0);
             return convertView;
 
         }
@@ -211,8 +220,43 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
              TextView content, author,category, heading;
              ImageView iv;
              CollapsingToolbarLayout collapsingToolbarLayout;
+             ToggleButton toggleButton;
+             ImageButton shareButton;
+        }
+
+        @Override
+        public void onClick(View v) {
+            Article a = list.get((Integer)v.getTag());
+            if(v.getId() == R.id.share) // Share the article
+            {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.putExtra(Intent.EXTRA_TEXT, a.getTitle() + "\n\n" + a.getContent());
+                    startActivity(Intent.createChooser(intent, "Select an app : " ));
+
+            }
+
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if(buttonView.getId() == R.id.toggleButton)
+            {
+                Article a = list.get((Integer)buttonView.getTag());
+                if(isChecked) // LIke the article
+                {
+
+                }
+                else // Unlike it
+                {
+
+                }
+
+            }
+
         }
     }
+
+
 
 
 

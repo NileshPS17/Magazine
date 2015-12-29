@@ -109,4 +109,6 @@ public class MagazineAppCompatActivity extends AppCompatActivity {
             // Handle Exception
         }
     }
+
+
 }

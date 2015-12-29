@@ -7,23 +7,19 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.cloudfoyo.magazine.extras.AsyncArticleLoader;
-import com.cloudfoyo.magazine.extras.DynamicAdapterInterface;
+import com.cloudfoyo.magazine.extras.ListItemArticleAdapter;
 import com.cloudfoyo.magazine.wrappers.Article;
 import com.cloudfoyo.magazine.wrappers.Category;
 import com.squareup.picasso.Picasso;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class ArticlesActivity extends MagazineAppCompatActivity {
 
@@ -68,7 +64,7 @@ private static final String LOG_TAG = ArticlesActivity.class.getSimpleName();
             @Override
             public boolean onPreDraw() {
 
-                Picasso.with(getBaseContext()).load("http://10.42.0.1/img/3.jpg").resize(categoryImage.getMeasuredHeight(), categoryImage.getMeasuredWidth()).into(categoryImage); // TODO := For testing purposes only
+                Picasso.with(getBaseContext()).load(getString(R.string.url_host)+"img/3.jpg").resize(categoryImage.getMeasuredHeight(), categoryImage.getMeasuredWidth()).into(categoryImage); // TODO := For testing purposes only
 
 
                 return true;
@@ -76,7 +72,7 @@ private static final String LOG_TAG = ArticlesActivity.class.getSimpleName();
         });
 
 
-        adapter = new ListItemArticleAdapter();
+        adapter = new ListItemArticleAdapter(this);
 
         articlesListView.setAdapter(adapter);
         articlesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -106,7 +102,7 @@ private static final String LOG_TAG = ArticlesActivity.class.getSimpleName();
             try
             {
                 asyncTask = new AsyncArticleLoader(this, adapter, false);
-                asyncTask.execute(new URL(getString(R.string.url_articles_by_category) + "/" + c.getCategoryId() + "/articles"));
+                asyncTask.execute(new URL(getString(R.string.base_url) + "categories/" + c.getCategoryId() + "/articles"));
             }
             catch (MalformedURLException e)
             {
@@ -118,59 +114,6 @@ private static final String LOG_TAG = ArticlesActivity.class.getSimpleName();
 
     }
 
-    class ListItemArticleAdapter extends BaseAdapter implements DynamicAdapterInterface<Article>
-    {
-        ArrayList<Article> articlesList = new ArrayList<Article>();
-
-        @Override
-        public int getCount() {
-            return articlesList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return articlesList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public void addItem(Article item) {
-            articlesList.add(item);
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public void clearItems() {
-            articlesList.clear();
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-
-                convertView = getLayoutInflater().inflate(R.layout.home_list_item, parent, false);
-
-            }
-
-            Article article = articlesList.get(position);
-            TextView tv = (TextView)convertView.findViewById(R.id.home_list_item_category);
-            tv.setText(article.getCategoryName());
-            tv = (TextView) convertView.findViewById(R.id.home_list_item_date);
-            tv.setText(article.getDate());
-            tv = (TextView)convertView.findViewById(R.id.home_list_item_title);
-            tv.setText(article.getTitle());
-            tv = (TextView)convertView.findViewById(R.id.home_list_item_author);
-            tv.setText(article.getAuthor());
-            ImageView image = (ImageView)convertView.findViewById(R.id.home_list_item_articleImage);
-            Picasso.with(ArticlesActivity.this).load(/**article.getImageUrl() **/"http://10.42.0.1/img/6.jpg").placeholder(R.drawable.img_loading).error(R.drawable.img_loading).into(image);
-            return convertView;
-        }
-    }
 
 
 

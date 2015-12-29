@@ -2,16 +2,17 @@ package com.cloudfoyo.magazine;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -19,8 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudfoyo.magazine.extras.ActivityPingListener;
+import com.cloudfoyo.magazine.extras.AsyncArticleLoader;
+import com.cloudfoyo.magazine.extras.ListItemArticleAdapter;
+import com.cloudfoyo.magazine.wrappers.Article;
 
-import java.util.ArrayList;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -28,23 +33,28 @@ import java.util.TimerTask;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment implements ActivityPingListener {
+public class HomeFragment extends Fragment implements ActivityPingListener, AdapterView.OnItemClickListener {
 
-    ArrayList<ListItem> list = new ArrayList<ListItem>();
-    TextView viewMore;
+    private static final String LOG_TAG = HomeFragment.class.getSimpleName();
 
-    int[] images={R.drawable.cheese_1,R.drawable.cheese_2,R.drawable.cheese_3,R.drawable.cheese_4,R.drawable.cheese_5};
+
+    public static final String INTENT_RECENT_LIST = "com.cloudfoyo.magazine.recent_list";
+
+    private TextView viewMore;
+    private View headerView, footerView;
+
+    private ListView recentUpdates;
+
+    private ListItemArticleAdapter adapter;
+
+    private AsyncArticleLoader asyncTask = null;
+
+    //int[] images={R.drawable.cheese_1,R.drawable.cheese_2,R.drawable.cheese_3,R.drawable.cheese_4,R.drawable.cheese_5};
+
     public HomeFragment() {
         // Required empty public constructor
 
-        list.add(new ListItem(R.drawable.cheese_1, "Red", "Entertainment", "dd/mm/yyyy"));
-        list.add(new ListItem(R.drawable.cheese_2, "Blue", "Entertainment", "dd/mm/yyyy"));
-        list.add(new ListItem(R.drawable.cheese_3, "Orange", "Education", "dd/mm/yyyy"));
-        list.add(new ListItem(R.drawable.cheese_4, "Green", "Fun", "dd/mm/yyyy"));
-        list.add(new ListItem(R.drawable.cheese_1, "Black", "Entertainment", "dd/mm/yyyy"));
-        list.add(new ListItem(R.drawable.cheese_4, "Red", "Entertainment", "dd/mm/yyyy"));
-        list.add(new ListItem(R.drawable.cheese_5, "Blue", "Entertainment", "dd/mm/yyyy"));
-        list.add(new ListItem(R.drawable.cheese_1, "Orange", "Education", "dd/mm/yyyy"));
+
 
     }
 
@@ -54,7 +64,7 @@ public class HomeFragment extends Fragment implements ActivityPingListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_home, container, false);
-
+        setRetainInstance(true);
         return view;
     }
 
@@ -62,18 +72,21 @@ public class HomeFragment extends Fragment implements ActivityPingListener {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ListView recentUpdates = (ListView)view.findViewById(R.id.home_recentUpdates);
-        View swipeview=LayoutInflater.from(getContext()).inflate(R.layout.pager,null);
-        recentUpdates.addHeaderView(swipeview,null,false);
-        recentUpdates.setAdapter(new RecentUpdatesListAdapter());
-        ViewPager viewPager=(ViewPager)swipeview.findViewById(R.id.viewPager);
+
+        recentUpdates = (ListView)view.findViewById(R.id.home_recentUpdates);
+
+        headerView=LayoutInflater.from(getContext()).inflate(R.layout.pager,null);
+
+        footerView = LayoutInflater.from(getContext()).inflate(R.layout.home_list_item_footer, null);
+        adapter = new ListItemArticleAdapter(getContext());
+        populateListView();
+        recentUpdates.setAdapter(adapter);
+        ViewPager viewPager=(ViewPager)headerView.findViewById(R.id.viewPager);
         PagerAdapter adapter=new ImageSliderAdapter(getActivity(),viewPager);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(1);
-        View footerView = LayoutInflater.from(getContext()).inflate(R.layout.home_list_item_footer, null);
-        recentUpdates.addFooterView(footerView, null, false);
         viewMore = (TextView) footerView.findViewById(R.id.home_list_item_footer_more);
-        viewMore.setOnClickListener(new View.OnClickListener(){
+        viewMore.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -83,26 +96,60 @@ public class HomeFragment extends Fragment implements ActivityPingListener {
         });
 
 
-        recentUpdates.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                // TODO := Start the ViewArticleAcivity with appropriate Intent Flags
-               startActivity(new Intent(getContext(), ViewArticleActivity.class));
-            }
-        });
-
-
+        recentUpdates.setOnItemClickListener(this);
 
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+        Intent intent = new Intent(getActivity(), ViewArticleActivity.class);
+        intent.putExtra(Intent.EXTRA_SUBJECT, INTENT_RECENT_LIST);
+        intent.putExtra(ViewArticleActivity.ACTION_ARTICLE, (Article)adapter.getItem(position));
+        startActivity(intent);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if(asyncTask != null)
+        {
+            asyncTask.cancel(true);
+            asyncTask = null;
+        }
+
+        try {
+            asyncTask = new AsyncArticleLoader(getContext(), adapter, false);
+            asyncTask.execute(new URL(getString(R.string.base_url)+"recent"));
+
+        }catch (MalformedURLException e)
+        {
+            Log.e(LOG_TAG, "Malformed URL : "+e.getMessage());
+            asyncTask = null;
+        }
+    }
 
     @Override
     public void onActivityPing(Intent intent) {
         if(intent.getAction().equals(MainActivity.FULL_RELOAD))
         {
             //Clear all existing data and reload it
+            if(! isNetworkAvailable())
+            {
+                recentUpdates.removeHeaderView(headerView);
+                recentUpdates.removeFooterView(footerView);
+            }
         }
+    }
+
+    public void populateListView()
+    {
+
+        recentUpdates.addHeaderView(headerView, null, false);
+       // recentUpdates.addFooterView(footerView, null, false);
+
     }
 
     public class ImageSliderAdapter extends PagerAdapter{
@@ -186,7 +233,7 @@ public class HomeFragment extends Fragment implements ActivityPingListener {
         }
         @Override
         public int getCount() {
-            return count;
+            return 0;
         }
 
         @Override
@@ -209,59 +256,12 @@ public class HomeFragment extends Fragment implements ActivityPingListener {
 
 
 
-    class RecentUpdatesListAdapter extends BaseAdapter {
 
-
-        @Override
-        public int getCount() {
-            return list.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return list.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-           if( convertView == null)
-           {
-               convertView = LayoutInflater.from(getContext()).inflate(R.layout.home_list_item, parent, false);
-           }
-
-            ListItem item = list.get(position);
-            CardView cv=(CardView)convertView.findViewById(R.id.cv);
-            cv.setPadding(4,4,4,4);
-            TextView tv = (TextView)convertView.findViewById(R.id.home_list_item_category);
-            tv.setText(item.category);
-            tv = (TextView) convertView.findViewById(R.id.home_list_item_date);
-            tv.setText(item.date);
-            tv = (TextView)convertView.findViewById(R.id.home_list_item_title);
-            tv.setText(item.title);
-            ImageView v = (ImageView)convertView.findViewById(R.id.home_list_item_articleImage);
-            v.setImageResource(item.color);
-            return convertView;
-
-
-        }
-    }
-
-    class ListItem
-    {
-        public int color; //TODO : Replace with drawable
-        public String title, category, date;
-
-        public ListItem(int color,  String title, String category, String date) {
-            this.color = color;
-            this.date = date;
-            this.category = category;
-            this.title = title;
-        }
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
 }

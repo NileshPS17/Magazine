@@ -3,6 +3,8 @@ package com.cloudfoyo.magazine.extras;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.BaseAdapter;
+import android.widget.Toast;
 
 import com.cloudfoyo.magazine.R;
 import com.cloudfoyo.magazine.wrappers.Article;
@@ -106,7 +108,10 @@ public class AsyncArticleLoader extends AsyncTask<URL, Article, Void>
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        //Do nothing
+        if (((BaseAdapter)adapter).getCount() == 0)
+        {
+            Toast.makeText(context, "No Articles", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

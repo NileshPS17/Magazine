@@ -13,6 +13,8 @@
         android:elevation="5dp"
         android:paddingTop="5.5dp"
         android:textColorHint="#ffff"
+        android:inputType="text"
+        android:imeOptions="actionSearch"
         android:textSize="15dp"
         android:textColor="#ffff"
         android:id="@+id/search"
@@ -22,16 +24,12 @@
         android:singleLine="true"
         android:drawableLeft="@drawable/searchw" />
 
-    <!--
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/search"
-                android:id="@+id/listview"
-                >
-            </ListView>
+                android:id="@+id/listview" />
 
 
-    -->
 
 </RelativeLayout>

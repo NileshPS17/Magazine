@@ -5,10 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -82,13 +79,7 @@ public class GridFragment extends Fragment implements ActivityPingListener{
                 Activity act = getActivity();
                 Intent intent = new Intent(act, ArticlesActivity.class);
                 intent.putExtra("category", (Category) imageAdapter.getItem(i));
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(act, view.findViewById(R.id.iv), getString(R.string.transition_name));
-                    ActivityCompat.startActivity(act, intent, options.toBundle());
-                }else
-                {
-                    startActivity(intent);
-                }
+                startActivity(intent);
 
 
             }
@@ -121,7 +112,7 @@ public class GridFragment extends Fragment implements ActivityPingListener{
                 gridLoader = null;
             }
             gridLoader =  new AsyncGridLoader();
-            gridLoader.execute(new URL(getString(R.string.url_all_categories)));
+            gridLoader.execute(new URL(getString(R.string.base_url) + "categories"));
         }
         catch(MalformedURLException e)
         {
@@ -196,7 +187,7 @@ public class GridFragment extends Fragment implements ActivityPingListener{
             root = v.findViewById(R.id.root);
             iv=(ImageView)v.findViewById(R.id.iv);
             int size =  gridView.getColumnWidth();
-            Picasso.with(mcontext).load("http://10.42.0.1/img/3.jpg")
+            Picasso.with(mcontext).load(getString(R.string.url_host)+"img/3.jpg")
                                   .placeholder(R.drawable.img_loading)
                                   .error(R.drawable.img_loading)
                                   .resize(size, size)
@@ -227,7 +218,8 @@ public class GridFragment extends Fragment implements ActivityPingListener{
                 HttpURLConnection connection = (HttpURLConnection) params[0].openConnection();
                 connection.setRequestMethod("GET");
                 connection.connect();
-                if(connection.getResponseCode() == 201 || connection.getResponseCode() == 200)
+                int responseCode = connection.getResponseCode();
+                if(responseCode == 201 || responseCode == 200)
                 {
                     BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     StringBuilder builder = new StringBuilder("");
@@ -262,13 +254,13 @@ public class GridFragment extends Fragment implements ActivityPingListener{
                     }
                     else
                     {
-                        throw new Exception(getString(R.string.server_error));
+                        throw new Exception(getString(R.string.server_error) + ":=Server fault!");
                     }
 
                 }
                 else
                 {
-                    throw new Exception(getString(R.string.server_error));
+                    throw new Exception(getString(R.string.server_error) + ":= Bad Response Code " + responseCode);
                 }
 
             }catch (Exception e)
