@@ -243,7 +243,7 @@ public class GridFragment extends Fragment implements ActivityPingListener{
                             Category category = new Category(object.getInt(getString(R.string.cat_id)),
                                                             object.getString(getString(R.string.category_name)),
                                                             object.getString(getString(R.string.cat_description)),
-                                                            object.getString(getString(R.string.cat_description)),
+                                                            object.getString(getString(R.string.cat_image)),
                                                             object.getString(getString(R.string.cat_date)));
 
                             publishProgress(category);

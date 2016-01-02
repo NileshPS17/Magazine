@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cloudfoyo.magazine.extras.DynamicAdapterInterface;
 import com.cloudfoyo.magazine.extras.ListItemArticleAdapter;
@@ -120,7 +121,8 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
     public void showNoSearchResultsInterface()
     {
 
-
+                //TODO := Replace with a Dialog
+        Toast.makeText(getContext(), "No result!", Toast.LENGTH_SHORT).show();
 
     }
 
