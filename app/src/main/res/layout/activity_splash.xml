@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffff"
 
     tools:context="com.cloudfoyo.magazine.Splash">
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/playboy"
-        android:scaleType="centerCrop"/>
+        android:src="@drawable/coverpic2"
+        android:scaleType="fitCenter"/>
 </RelativeLayout>

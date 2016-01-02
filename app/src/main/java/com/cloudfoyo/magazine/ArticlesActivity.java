@@ -56,6 +56,7 @@ private static final String LOG_TAG = ArticlesActivity.class.getSimpleName();
         collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
         collapsingToolbarLayout.setTitle(c.getName());
 
+
         articlesListView = (ListView)findViewById(R.id.articles_listView);
         categoryImage = (ImageView)findViewById(R.id.category_image);
 

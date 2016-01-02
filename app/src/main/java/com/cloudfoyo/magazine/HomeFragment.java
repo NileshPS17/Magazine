@@ -34,7 +34,7 @@ public class HomeFragment extends Fragment implements ActivityPingListener, Adap
 
 
     private TextView viewMore;
-    private ImageView headerLogo;
+    private View headerLogo;
 
     private ListView recentUpdates;
 
@@ -68,8 +68,7 @@ public class HomeFragment extends Fragment implements ActivityPingListener, Adap
 
         recentUpdates = (ListView)view.findViewById(R.id.home_recentUpdates);
 
-        headerLogo=(ImageView)LayoutInflater.from(getContext()).inflate(R.layout.home_list_item_header,null);
-        headerLogo.setImageResource(R.drawable.believe);
+        headerLogo=LayoutInflater.from(getContext()).inflate(R.layout.home_list_item_header,null,false);
         recentUpdates.addHeaderView(headerLogo, null, false);
         adapter = new ListItemArticleAdapter(getContext());
         recentUpdates.setAdapter(adapter);
