@@ -52,7 +52,6 @@ private static final String LOG_TAG = ArticlesActivity.class.getSimpleName();
             Log.e(LOG_TAG, "Category parcelable is null");
             this.finish();
         }
-        //c.setCategoryId(9);
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
         collapsingToolbarLayout.setTitle(c.getName());
@@ -64,7 +63,7 @@ private static final String LOG_TAG = ArticlesActivity.class.getSimpleName();
             @Override
             public boolean onPreDraw() {
 
-                Picasso.with(getBaseContext()).load(getString(R.string.url_host)+"img/3.jpg").resize(categoryImage.getMeasuredHeight(), categoryImage.getMeasuredWidth()).into(categoryImage); // TODO := For testing purposes only
+                Picasso.with(getBaseContext()).load(c.getImageUrl()).resize(categoryImage.getMeasuredHeight(), categoryImage.getMeasuredWidth()).into(categoryImage);
 
 
                 return true;
@@ -101,7 +100,7 @@ private static final String LOG_TAG = ArticlesActivity.class.getSimpleName();
         {
             try
             {
-                asyncTask = new AsyncArticleLoader(this, adapter, false);
+                asyncTask = new AsyncArticleLoader(this, adapter, false, false);
                 asyncTask.execute(new URL(getString(R.string.base_url) + "categories/" + c.getCategoryId() + "/articles"));
             }
             catch (MalformedURLException e)

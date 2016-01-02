@@ -7,7 +7,7 @@ import android.os.Parcelable;
 public class Article implements Parcelable
 {
     private int articleId, categoryId;
-    private String title, author, imageUrl, date, content, categoryName;
+    private String title="", author="", imageUrl="", date="", content="", categoryName="";
 
     public Article(int articleId, int categoryId,String categoryName, String title, String author, String imageUrl, String date, String content) {
         this.articleId = articleId;

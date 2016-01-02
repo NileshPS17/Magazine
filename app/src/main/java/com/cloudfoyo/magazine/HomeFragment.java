@@ -6,18 +6,14 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cloudfoyo.magazine.extras.ActivityPingListener;
 import com.cloudfoyo.magazine.extras.AsyncArticleLoader;
@@ -26,8 +22,6 @@ import com.cloudfoyo.magazine.wrappers.Article;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 /**
@@ -38,10 +32,9 @@ public class HomeFragment extends Fragment implements ActivityPingListener, Adap
     private static final String LOG_TAG = HomeFragment.class.getSimpleName();
 
 
-    public static final String INTENT_RECENT_LIST = "com.cloudfoyo.magazine.recent_list";
 
     private TextView viewMore;
-    private View headerView, footerView;
+    private ImageView headerLogo;
 
     private ListView recentUpdates;
 
@@ -75,27 +68,11 @@ public class HomeFragment extends Fragment implements ActivityPingListener, Adap
 
         recentUpdates = (ListView)view.findViewById(R.id.home_recentUpdates);
 
-        headerView=LayoutInflater.from(getContext()).inflate(R.layout.pager,null);
-
-        footerView = LayoutInflater.from(getContext()).inflate(R.layout.home_list_item_footer, null);
+        headerLogo=(ImageView)LayoutInflater.from(getContext()).inflate(R.layout.home_list_item_header,null);
+        headerLogo.setImageResource(R.drawable.believe);
+        recentUpdates.addHeaderView(headerLogo, null, false);
         adapter = new ListItemArticleAdapter(getContext());
-        populateListView();
         recentUpdates.setAdapter(adapter);
-        ViewPager viewPager=(ViewPager)headerView.findViewById(R.id.viewPager);
-        PagerAdapter adapter=new ImageSliderAdapter(getActivity(),viewPager);
-        viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(1);
-        viewMore = (TextView) footerView.findViewById(R.id.home_list_item_footer_more);
-        viewMore.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO : Load more posts into 'recent Updates' here
-                Toast.makeText(getContext(), "Loading..", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
         recentUpdates.setOnItemClickListener(this);
 
     }
@@ -105,8 +82,7 @@ public class HomeFragment extends Fragment implements ActivityPingListener, Adap
 
 
         Intent intent = new Intent(getActivity(), ViewArticleActivity.class);
-        intent.putExtra(Intent.EXTRA_SUBJECT, INTENT_RECENT_LIST);
-        intent.putExtra(ViewArticleActivity.ACTION_ARTICLE, (Article)adapter.getItem(position));
+        intent.putExtra(ViewArticleActivity.ACTION_ARTICLE, (Article) adapter.getItem(position-1));
         startActivity(intent);
     }
 
@@ -114,6 +90,12 @@ public class HomeFragment extends Fragment implements ActivityPingListener, Adap
     public void onStart() {
         super.onStart();
 
+       reloadData();
+    }
+
+
+    public void reloadData()
+    {
         if(asyncTask != null)
         {
             asyncTask.cancel(true);
@@ -121,8 +103,8 @@ public class HomeFragment extends Fragment implements ActivityPingListener, Adap
         }
 
         try {
-            asyncTask = new AsyncArticleLoader(getContext(), adapter, false);
-            asyncTask.execute(new URL(getString(R.string.base_url)+"recent"));
+            asyncTask = new AsyncArticleLoader(getContext(), adapter, false, true);
+            asyncTask.execute(new URL(getString(R.string.base_url)+"article/latest"));
 
         }catch (MalformedURLException e)
         {
@@ -136,23 +118,13 @@ public class HomeFragment extends Fragment implements ActivityPingListener, Adap
         if(intent.getAction().equals(MainActivity.FULL_RELOAD))
         {
             //Clear all existing data and reload it
-            if(! isNetworkAvailable())
-            {
-                recentUpdates.removeHeaderView(headerView);
-                recentUpdates.removeFooterView(footerView);
-            }
+            reloadData();
         }
     }
 
-    public void populateListView()
-    {
 
-        recentUpdates.addHeaderView(headerView, null, false);
-       // recentUpdates.addFooterView(footerView, null, false);
 
-    }
-
-    public class ImageSliderAdapter extends PagerAdapter{
+   /** public class ImageSliderAdapter extends PagerAdapter{
         Timer timer;
         TimerTask timerTask;
         int pos=1;
@@ -254,7 +226,7 @@ public class HomeFragment extends Fragment implements ActivityPingListener, Adap
         }
     }
 
-
+**/
 
 
     private boolean isNetworkAvailable() {

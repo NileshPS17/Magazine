@@ -63,6 +63,17 @@
                     android:onClick="back" />
 
 
+                <ImageButton
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:id="@+id/share"
+                    android:src="@drawable/share"
+                    android:scaleType="fitXY"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="20dp"
+                    android:layout_toRightOf="@+id/toggleButton"
+                    android:background="?android:attr/selectableItemBackgroundBorderless" />
+
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -133,7 +144,7 @@
                     android:textStyle="normal"
                     android:textSize="20dp"
                     android:textColor="#000"
-                    android:paddingBottom="80dp"
+                    android:paddingBottom="50dp"
                     android:paddingTop="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
@@ -142,7 +153,7 @@
 
         </ScrollView>
 
-        <android.support.v7.widget.Toolbar
+     <!--   <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:id="@+id/toolbar2"
@@ -191,7 +202,7 @@
 
         </android.support.v7.widget.Toolbar>
 
-
+-->
 
 
 

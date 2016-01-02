@@ -76,7 +76,7 @@ public class ListItemArticleAdapter extends BaseAdapter implements DynamicAdapte
         tv = (TextView)convertView.findViewById(R.id.home_list_item_author);
         tv.setText(article.getAuthor());
         ImageView image = (ImageView)convertView.findViewById(R.id.home_list_item_articleImage);
-        Picasso.with(c).load(/**article.getImageUrl() **/ c.getString(R.string.url_host)+"img/6.jpg").placeholder(R.drawable.img_loading).error(R.drawable.img_loading).into(image);
+        Picasso.with(c).load(article.getImageUrl()).placeholder(R.drawable.img_loading).error(R.drawable.img_loading).into(image);
         return convertView;
     }
 }

@@ -187,7 +187,7 @@ public class GridFragment extends Fragment implements ActivityPingListener{
             root = v.findViewById(R.id.root);
             iv=(ImageView)v.findViewById(R.id.iv);
             int size =  gridView.getColumnWidth();
-            Picasso.with(mcontext).load(getString(R.string.url_host)+"img/3.jpg")
+            Picasso.with(mcontext).load(curItem.getImageUrl())
                                   .placeholder(R.drawable.img_loading)
                                   .error(R.drawable.img_loading)
                                   .resize(size, size)
@@ -241,7 +241,7 @@ public class GridFragment extends Fragment implements ActivityPingListener{
                         {
                             JSONObject object = array.getJSONObject(i);
                             Category category = new Category(object.getInt(getString(R.string.cat_id)),
-                                                            object.getString(getString(R.string.cat_name)),
+                                                            object.getString(getString(R.string.category_name)),
                                                             object.getString(getString(R.string.cat_description)),
                                                             object.getString(getString(R.string.cat_description)),
                                                             object.getString(getString(R.string.cat_date)));

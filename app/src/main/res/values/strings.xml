@@ -24,7 +24,7 @@
     <string name='json_error'>error</string>
     <string name='cat_id'>id</string>
     <string name='cat_description'>category_description</string>
-    <string name='cat_name'>category_name</string>
+    <string name='cat_name'>cat_name</string>
     <string name='cat_image'>category_image</string>
     <string name='cat_date'>created_at</string>
     <string name='categories'>categories</string>
@@ -35,12 +35,15 @@
     <string name='art_image'>article_image</string>
     <string name='art_date'>date_published</string>
     <string name='art_content'>article_content</string>
+    <string name='category_name'>category_name</string>
+
 
     <!-- String for General Purpose URLs -->
 
-    <string name="base_url">http://192.168.2.105/magazine/v1/</string>
 
-    <string name='url_host'>http://192.168.2.105/</string>
+    <string name="base_url">http://www.appooppanthadi.in/api/v1/</string>
+
+    <string name='url_host'>http://www.appooppanthadi.in/</string>
 
     <string name='transition_name'>transition_name</string>
 

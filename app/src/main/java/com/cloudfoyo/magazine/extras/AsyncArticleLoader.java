@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.cloudfoyo.magazine.R;
 import com.cloudfoyo.magazine.wrappers.Article;
+import com.cloudfoyo.magazine.wrappers.Category;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -26,10 +27,12 @@ public class AsyncArticleLoader extends AsyncTask<URL, Article, Void>
     private boolean fetchContent = false;
     private DynamicAdapterInterface<Article> adapter;
     private Context context;
-    public AsyncArticleLoader(Context c, DynamicAdapterInterface<Article> adapter,boolean fetchContent) {
+    private boolean isRequestedTypeLatest = true;
+    public AsyncArticleLoader(Context c, DynamicAdapterInterface<Article> adapter,boolean fetchContent, boolean isRequestedTypeLatest) {
         this.adapter = adapter;
         this.context = c;
         this.fetchContent = fetchContent;
+        this.isRequestedTypeLatest = isRequestedTypeLatest;
     }
 
     @Override
@@ -59,6 +62,7 @@ public class AsyncArticleLoader extends AsyncTask<URL, Article, Void>
                 }
                 connection.disconnect();
                 br.close();
+
                 JSONObject obj = new JSONObject(builder.toString());
                 if(obj.getBoolean(context.getString(R.string.json_error)))
                 {
@@ -66,21 +70,14 @@ public class AsyncArticleLoader extends AsyncTask<URL, Article, Void>
                 }
                 else
                 {
-                    JSONArray array = obj.getJSONArray("articles");
-                    int n = array.length();
-                    for(int  i=0; (i<n && !isCancelled()); ++i)
-                    {
-                        JSONObject object = array.getJSONObject(i);
-                        Article article = new Article(object.getInt(context.getString(R.string.art_id)),
-                                object.getInt(context.getString(R.string.art_cat_id)),
-                                object.getString(context.getString(R.string.cat_name)),
-                                object.getString(context.getString(R.string.art_title)),
-                                object.getString(context.getString(R.string.art_author)),
-                                object.getString(context.getString(R.string.art_image)),
-                                object.getString(context.getString(R.string.art_date)),
-                                (fetchContent ? object.getString(context.getString(R.string.art_content)):""));
-                        publishProgress(article);
-                    }
+
+                        if(isRequestedTypeLatest) {
+                            getLatestArticles(obj);
+                        }
+                        else // Then it is obviously fetch articles by category
+                        {
+                            getArticlesByCategory(obj);
+                        }
 
                 }
             }
@@ -96,6 +93,65 @@ public class AsyncArticleLoader extends AsyncTask<URL, Article, Void>
         }
 
         return null;
+    }
+
+
+
+    public void getLatestArticles(JSONObject obj) throws Exception
+    {
+
+        JSONArray array = obj.getJSONArray("articles");
+        int n = array.length();
+        for(int  i=0; (i<n && !isCancelled()); ++i) {
+            JSONObject object = array.getJSONObject(i);
+            Article article = new Article(object.getInt(context.getString(R.string.art_id)),
+                    object.getInt(context.getString(R.string.art_cat_id)),
+                    object.getString(context.getString(R.string.cat_name)),
+                    object.getString(context.getString(R.string.art_title)),
+                    object.getString(context.getString(R.string.art_author)),
+                    object.getString(context.getString(R.string.art_image)),
+                    object.getString(context.getString(R.string.art_date)),
+                    (fetchContent ? object.getString(context.getString(R.string.art_content)) : ""));
+            publishProgress(article);
+
+        }
+
+
+    }
+
+
+
+    public void getArticlesByCategory(JSONObject obj1) throws Exception
+    {
+
+        JSONObject c = obj1.getJSONArray("category").getJSONObject(0);
+        Category category = new Category(c.getInt("cat_id"),
+                                         c.getString("category_name"),
+                                         c.getString(context.getString(R.string.cat_description)),
+                                         c.getString(context.getString(R.string.cat_image)),
+                                         c.getString("createdAt"));
+
+        JSONArray array = obj1.getJSONArray("articles");
+        int n = array.length();
+        for(int i=0; (i<n && !isCancelled()); ++i)
+        {
+            JSONObject obj = array.getJSONObject(i);
+            Article article = new Article(obj.getInt(context.getString(R.string.art_id)) ,
+                                            category.getCategoryId() ,
+                                            category.getName() ,
+                                            obj.getString(context.getString(R.string.art_title)),
+                                            obj.getString(context.getString(R.string.art_author)) ,
+                                            obj.getString(context.getString(R.string.art_image)),
+                                            obj.getString(context.getString(R.string.art_date)),
+                             (fetchContent)?obj.getString(context.getString(R.string.art_content)):"");
+
+            publishProgress(article);
+
+
+
+        }
+
+
     }
 
 

@@ -10,10 +10,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="2dp"
-        android:drawSelectorOnTop="true"
-        android:overScrollMode="never"
+        style="@style/listViewTheme"
         android:id="@+id/home_recentUpdates" />
        <!-- android:listSelector="@drawable/article_list_selector" -->
 

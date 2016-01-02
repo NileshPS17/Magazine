@@ -56,6 +56,9 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
     private int articleId = -1;
     private AsyncArticleLoader asyncTask = null;
 
+
+    private String categoryName;
+
     private FlipViewAdapter adapter;
 
     @Override
@@ -84,6 +87,12 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
         });
 */
 
+        if(! isNetworkAvailable() )
+        {
+            Toast.makeText(getApplicationContext(), "No  Network Connection", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
 
         Intent intent = getIntent();
 
@@ -92,6 +101,7 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
             Article article = (Article)intent.getParcelableExtra(ACTION_ARTICLE);
             categoryId = article.getCategoryId();
             articleId  = article.getArticleId();
+            categoryName = article.getCategoryName();
             adapter = new FlipViewAdapter();
             flipView = (FlipView)findViewById(R.id.flip_view);
             flipView.setAdapter(adapter);
@@ -123,7 +133,7 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
         }
 
         try {
-            asyncTask = new AsyncArticleLoader(this, adapter, true);
+            asyncTask = new AsyncArticleLoader(this, adapter, true, false);
             asyncTask.execute(new URL(getString(R.string.base_url)+"/categories/"+ categoryId + "/articles"));
 
         }catch (MalformedURLException e)
@@ -189,7 +199,7 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
                 holder.author=(TextView)convertView.findViewById(R.id.author);
                 holder.iv=(ImageView)convertView.findViewById(R.id.iv);
                 holder.collapsingToolbarLayout = (CollapsingToolbarLayout)convertView.findViewById(R.id.collapsing_toolbar);
-                holder.toggleButton = (ToggleButton)convertView.findViewById(R.id.toggleButton);
+                //holder.toggleButton = (ToggleButton)convertView.findViewById(R.id.toggleButton);
                 holder.shareButton = (ImageButton)convertView.findViewById(R.id.share);
                 convertView.setTag(holder);
 
@@ -204,11 +214,11 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
             holder.category.setText(article.getCategoryName());
             holder.content.setText(article.getContent());
             holder.heading.setText(article.getTitle());
-            Picasso.with(ViewArticleActivity.this).load(/** article.getImageUrl() **/ getString(R.string.url_host)+"img/13.jpg").placeholder(R.drawable.img_loading).error(R.drawable.img_loading).into(holder.iv);
-            holder.collapsingToolbarLayout.setTitle("");
-            holder.toggleButton.setTag(new Integer(position));
+            Picasso.with(ViewArticleActivity.this).load(article.getImageUrl()).placeholder(R.drawable.img_loading).error(R.drawable.img_loading).into(holder.iv);
+            holder.collapsingToolbarLayout.setTitle(categoryName);
+            //holder.toggleButton.setTag(new Integer(position));
             holder.shareButton.setTag(new Integer(position));
-            holder.toggleButton.setOnCheckedChangeListener(this);
+            //holder.toggleButton.setOnCheckedChangeListener(this);
             holder.shareButton.setOnClickListener(this);
             convertView.findViewById(R.id.scrollview).setScrollX(0);
             return convertView;
