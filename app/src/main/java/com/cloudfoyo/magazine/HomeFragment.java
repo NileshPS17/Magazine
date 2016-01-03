@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -74,6 +73,9 @@ public class HomeFragment extends Fragment implements ActivityPingListener, Adap
         recentUpdates.setAdapter(adapter);
         recentUpdates.setOnItemClickListener(this);
 
+
+        reloadData();
+
     }
 
     @Override
@@ -89,7 +91,6 @@ public class HomeFragment extends Fragment implements ActivityPingListener, Adap
     public void onStart() {
         super.onStart();
 
-       reloadData();
     }
 
 

@@ -4,7 +4,9 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_content"
+    tools:context=".ViewArticleActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -149,6 +151,37 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:id="@+id/content"/>
+
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/content"
+                    android:foregroundGravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/playerButton"
+                        android:padding="15dp"
+                        android:text="Watch Video"
+                        android:background="@color/colorPrimary"
+                        android:textColor="#fff"
+                        android:typeface="sans"
+                        android:drawableLeft="@drawable/utube"
+                        android:elevation="3dp"
+                        android:textSize="12dp"
+                        android:textStyle="bold"
+                        android:layout_below="@id/content"
+                        android:layout_height="wrap_content" />
+
+                </FrameLayout>
+
             </RelativeLayout>
 
         </ScrollView>

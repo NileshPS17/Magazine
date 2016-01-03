@@ -57,15 +57,30 @@
 
 
 
-
-    <ListView
-        android:layout_width="match_parent"
-        android:id="@+id/articles_listView"
-        style="@style/listViewTheme"
-        android:divider="@android:color/transparent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_height="match_parent" />
+        <ListView
+            android:layout_width="match_parent"
+            android:id="@+id/articles_listView"
+            style="@style/listViewTheme"
+            android:divider="@android:color/transparent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_height="match_parent" />
         <!--android:listSelector="@drawable/article_list_selector" !-->
+
+    <!--
+
+    <ProgressBar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="50px"
+        android:indeterminateOnly="true"
+        android:progress="100"
+        android:id="@+id/progressBar"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="400dp"
+        style="?progressBarStyle"
+        android:layout_height="50px" />
+-->
+
 
 
 

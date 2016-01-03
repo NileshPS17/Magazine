@@ -7,7 +7,7 @@ import android.os.Parcelable;
 public class Article implements Parcelable
 {
     private int articleId, categoryId;
-    private String title="", author="", imageUrl="", date="", content="", categoryName="";
+    private String title="", author="", imageUrl="", date="", content="", categoryName="", videoUrl="";
 
     public Article(int articleId, int categoryId,String categoryName, String title, String author, String imageUrl, String date, String content) {
         this.articleId = articleId;
@@ -18,7 +18,10 @@ public class Article implements Parcelable
         this.imageUrl = imageUrl;
         this.date = date;
         this.content = content;
+        this.videoUrl = "WkqecpHcIPw";
     }
+
+
 
     public int getArticleId() {
         return articleId;
@@ -67,6 +70,15 @@ public class Article implements Parcelable
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public Article setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
+        return this;
     }
 
     public String getDate() {

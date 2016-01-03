@@ -11,6 +11,7 @@ import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.cloudfoyo.magazine.extras.AsyncArticleLoader;
 import com.cloudfoyo.magazine.extras.ListItemArticleAdapter;
@@ -36,6 +37,8 @@ private static final String LOG_TAG = ArticlesActivity.class.getSimpleName();
 
     ImageView categoryImage;
 
+    private ProgressBar progressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,7 @@ private static final String LOG_TAG = ArticlesActivity.class.getSimpleName();
 
         articlesListView = (ListView)findViewById(R.id.articles_listView);
         categoryImage = (ImageView)findViewById(R.id.category_image);
+
 
         categoryImage.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -85,14 +89,16 @@ private static final String LOG_TAG = ArticlesActivity.class.getSimpleName();
             }
         });
 
+        populateListView();
+
     }
 
 
 
-    @Override
-    protected void onStart() {
-        super.onStart();
 
+
+    public void populateListView()
+    {
         if(asyncTask != null)
         {
             asyncTask.cancel(true);
@@ -106,29 +112,17 @@ private static final String LOG_TAG = ArticlesActivity.class.getSimpleName();
             }
             catch (MalformedURLException e)
             {
-                    //That shouldn't happen :-(
-                    Log.d(LOG_TAG, e.getMessage());
-                    asyncTask = null;
+                //That shouldn't happen :-(
+                Log.d(LOG_TAG, e.getMessage());
+                asyncTask = null;
             }
         }
-
     }
 
 
 
 
-    @Override
-    protected void onStop() {
-        super.onStop();
 
-        if(asyncTask != null)
-        {
-            asyncTask.cancel(true);
-            asyncTask = null;
-        }
-
-
-    }
 
 
 }

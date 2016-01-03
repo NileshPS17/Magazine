@@ -117,16 +117,7 @@ public class GridFragment extends Fragment implements ActivityPingListener{
         catch(MalformedURLException e)
         {
             Log.d(LOG_TAG, "Whooops! That shouldn't happen. Must get the latest version of app.");
-            //TODO:= Show a snackbar "Connection error     |AGAIN| " Onclick undo => populateGrid()
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        populateGrid();
-
     }
 
 
@@ -293,11 +284,7 @@ public class GridFragment extends Fragment implements ActivityPingListener{
         }
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
 
-    }
 }
 
 

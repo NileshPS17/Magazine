@@ -1,7 +1,9 @@
 package com.cloudfoyo.magazine;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,7 +19,6 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cloudfoyo.magazine.extras.DynamicAdapterInterface;
 import com.cloudfoyo.magazine.extras.ListItemArticleAdapter;
@@ -44,12 +45,21 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
 
     private AsyncSearchLoader loader;
 
+    private AlertDialog dialog;
+
     private InputMethodManager   imanager;
     public SearchFragment() {
         // Required empty public constructor
 
     }
 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,7 +97,17 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
 
-
+        AlertDialog.Builder buildr = new AlertDialog.Builder(getContext());
+        buildr.setCancelable(false);
+        buildr.setMessage("Your search did not match any documents !");
+        buildr.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        buildr.setTitle("Sorry");
+        dialog = buildr.create();
     }
 
 
@@ -121,8 +141,8 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
     public void showNoSearchResultsInterface()
     {
 
-                //TODO := Replace with a Dialog
-        Toast.makeText(getContext(), "No result!", Toast.LENGTH_SHORT).show();
+        dialog.show();
+
 
     }
 
@@ -174,19 +194,20 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
 
                         JSONArray array = obj.getJSONArray("articles");
                         int n = array.length();
-                        for(int i=0; (i<n && !isCancelled()); ++i)
-                        {
+
+                        for (int i = 0; (i < n && !isCancelled()); ++i) {
                             JSONObject object = array.getJSONObject(i);
                             Article article = new Article(object.getInt(getString(R.string.art_id)),
-                                                         object.getInt(getString(R.string.cat_id)),
-                                                         object.getString(getString(R.string.cat_name)),
-                                                         object.getString(getString(R.string.art_title)),
-                                                         object.getString(getString(R.string.art_author)),
-                                                         object.getString(getString(R.string.art_image)),
-                                                         object.getString(getString(R.string.art_date)),
-                                                         "" /** Keep the content empty to save memory and improve performance **/);
+                                    object.getInt(getString(R.string.cat_id)),
+                                    object.getString(getString(R.string.cat_name)),
+                                    object.getString(getString(R.string.art_title)),
+                                    object.getString(getString(R.string.art_author)),
+                                    object.getString(getString(R.string.art_image)),
+                                    object.getString(getString(R.string.art_date)),
+                                    "" /** Keep the content empty to save memory and improve performance **/);
                             publishProgress(article);
                         }
+
 
                     }
                 }
@@ -203,6 +224,8 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
 
             return null;
         }
+
+
 
         @Override
         protected void onPostExecute(Void aVoid) {

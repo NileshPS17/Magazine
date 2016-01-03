@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-<ImageView
-    android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:src="@drawable/coverpic2"
-    android:scaleType="centerCrop"
-    />
+
+    <ProgressBar
+        android:layout_width="50px"
+        android:indeterminateOnly="true"
+        android:progress="100"
+        style="?progressBarStyle"
+        android:layout_height="50px" />
 </LinearLayout>

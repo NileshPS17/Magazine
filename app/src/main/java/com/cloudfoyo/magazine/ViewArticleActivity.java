@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -18,6 +20,8 @@ import android.widget.ToggleButton;
 import com.cloudfoyo.magazine.extras.AsyncArticleLoader;
 import com.cloudfoyo.magazine.extras.DynamicAdapterInterface;
 import com.cloudfoyo.magazine.wrappers.Article;
+import com.google.android.youtube.player.YouTubeStandalonePlayer;
+import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.squareup.picasso.Picasso;
 
 import java.net.MalformedURLException;
@@ -25,30 +29,16 @@ import java.net.URL;
 import java.util.LinkedList;
 
 import se.emilsjolander.flipview.FlipView;
-
 public class ViewArticleActivity extends MagazineAppCompatActivity {
 
     private static final String LOG_TAG = ViewArticleActivity.class.getSimpleName();
 
     public static final String ACTION_ARTICLE = "com.cloudfoyo.magazine.ViewArticleActivity";
 
+    public static final int RECOVERY_REQUEST = 1;
+
     Toolbar t1,t2;
     ImageButton imageButton;
-
-   /** String text="To shed weight, Cooper jettisons himself and TARS into the black hole, " +
-            "so that Amelia and CASE can complete the journey. Cooper and TARS plunge into " +
-            "the black hole, but emerge in a tesseract, which appears as a stream of bookshelves;" +
-            " with portals that look out into Murphy's bedroom at different times in her life. " +
-            "Cooper realizes that the tesseract and wormhole were created by fifth dimensional " +
-            "beings from the future to enable him to communicate with Murphy through gravitational " +
-            "waves, and that he is her ghost. He relays quantum data that TARS collected from the " +
-            "black hole in Morse code by manipulating the second hand of a watch he gave to Murphy " +
-            "before he left. Murphy uses the quantum data to solve the remaining gravitational " +
-            "equation, enabling Plan A.Cooper emerges from the wormhole and is rescued by the crew" +
-            " of a space habitat orbiting Saturn. Aboard, he reunites with Murphy, now elderly and " +
-            "near death. After sharing one last goodbye, Cooper, along with TARS, leaves the habitat" +
-            " to rejoin Amelia, who is with CASE on Edmunds' Planet, which was found to be habitable."; **/
-
 
     private   FlipView flipView;
 
@@ -56,16 +46,17 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
     private int articleId = -1;
     private AsyncArticleLoader asyncTask = null;
 
-
     private String categoryName;
 
     private FlipViewAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_article);
+
 
 
        // t1=(Toolbar)findViewById(R.id.toolbar1);
@@ -117,9 +108,14 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
 
     }
 
+
+
+
+
     public void back(View view){
         this.finish();
     }
+
 
 
     @Override
@@ -146,6 +142,15 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
     class FlipViewAdapter extends BaseAdapter  implements DynamicAdapterInterface<Article>, View.OnClickListener, CompoundButton.OnCheckedChangeListener{
 
         public LinkedList<Article> list = new LinkedList<Article>();
+        private LayoutInflater inflater;
+
+
+
+
+        public FlipViewAdapter()
+        {
+            inflater = getLayoutInflater();
+        }
 
         @Override
         public int getCount() {
@@ -173,10 +178,8 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
                 notifyDataSetChanged();
             }
 
-
-
-
         }
+
 
         @Override
         public void clearItems() {
@@ -188,39 +191,49 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            ViewHolder holder;
+
+            TextView content, author,category, heading;
+            ImageView iv;
+            CollapsingToolbarLayout collapsingToolbarLayout;
+            ToggleButton toggleButton;
+            ImageButton shareButton;
+            Button playButton;
+
+            final Article article = list.get(position);
+
+
             if(convertView == null) {
-                holder = new ViewHolder();
-
-                convertView = getLayoutInflater().inflate(R.layout.article_flip_view, parent, false);
-                holder.content=(TextView)convertView.findViewById(R.id.content);
-                holder.heading=(TextView)convertView.findViewById(R.id.heading);
-                holder.category=(TextView)convertView.findViewById(R.id.category);
-                holder.author=(TextView)convertView.findViewById(R.id.author);
-                holder.iv=(ImageView)convertView.findViewById(R.id.iv);
-                holder.collapsingToolbarLayout = (CollapsingToolbarLayout)convertView.findViewById(R.id.collapsing_toolbar);
-                //holder.toggleButton = (ToggleButton)convertView.findViewById(R.id.toggleButton);
-                holder.shareButton = (ImageButton)convertView.findViewById(R.id.share);
-                convertView.setTag(holder);
-
-            }
-            else {
-
-                holder = (ViewHolder)convertView.getTag();
+                convertView = inflater.inflate(R.layout.article_flip_view, parent, false);
             }
 
-            Article article = list.get(position);
-            holder.author.setText(article.getAuthor());
-            holder.category.setText(article.getCategoryName());
-            holder.content.setText(article.getContent());
-            holder.heading.setText(article.getTitle());
-            Picasso.with(ViewArticleActivity.this).load(article.getImageUrl()).placeholder(R.drawable.img_loading).error(R.drawable.img_loading).into(holder.iv);
-            holder.collapsingToolbarLayout.setTitle(categoryName);
-            //holder.toggleButton.setTag(new Integer(position));
-            holder.shareButton.setTag(new Integer(position));
-            //holder.toggleButton.setOnCheckedChangeListener(this);
-            holder.shareButton.setOnClickListener(this);
+            content=(TextView)convertView.findViewById(R.id.content);
+            heading=(TextView)convertView.findViewById(R.id.heading);
+            category=(TextView)convertView.findViewById(R.id.category);
+            author=(TextView)convertView.findViewById(R.id.author);
+            iv=(ImageView)convertView.findViewById(R.id.iv);
+            collapsingToolbarLayout = (CollapsingToolbarLayout)convertView.findViewById(R.id.collapsing_toolbar);
+            //holder.toggleButton = (ToggleButton)convertView.findViewById(R.id.toggleButton);
+            shareButton = (ImageButton)convertView.findViewById(R.id.share);
+            playButton  = (Button) convertView.findViewById(R.id.playerButton);
+            playButton.setTag(new Integer(position));
+
+            if(article.getVideoUrl().trim().equals("")) // Hide the button if no Video URL is available
+                playButton.setVisibility(View.GONE);
+            else
+                playButton.setOnClickListener(this);
+
+            author.setText(article.getAuthor());
+            category.setText(article.getCategoryName());
+            content.setText(article.getContent());
+            heading.setText(article.getTitle());
+            Picasso.with(ViewArticleActivity.this).load(article.getImageUrl()).placeholder(R.drawable.img_loading).error(R.drawable.img_loading).into(iv);
+            collapsingToolbarLayout.setTitle(categoryName);
+            //toggleButton.setTag(new Integer(position));
+            shareButton.setTag(new Integer(position));
+            //toggleButton.setOnCheckedChangeListener(this);
+            shareButton.setOnClickListener(this);
             convertView.findViewById(R.id.scrollview).setScrollX(0);
+
             return convertView;
 
         }
@@ -232,17 +245,28 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
              CollapsingToolbarLayout collapsingToolbarLayout;
              ToggleButton toggleButton;
              ImageButton shareButton;
+             YouTubeThumbnailView playerView;
         }
+
+
+
 
         @Override
         public void onClick(View v) {
-            Article a = list.get((Integer)v.getTag());
-            if(v.getId() == R.id.share) // Share the article
+            int id = v.getId();
+            Article a = list.get((Integer) v.getTag());
+            if(id == R.id.share) // Share the article
             {
+
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.putExtra(Intent.EXTRA_TEXT, a.getTitle() + "\n\n" + a.getContent());
                     startActivity(Intent.createChooser(intent, "Select an app : " ));
 
+            }
+            else if(id == R.id.playerButton)
+            {
+                Intent intent = YouTubeStandalonePlayer.createVideoIntent(ViewArticleActivity.this, getString(R.string.YOUTUBE_KEY),a.getVideoUrl(), 0, true, false);
+                startActivity(intent);
             }
 
         }
