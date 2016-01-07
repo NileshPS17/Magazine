@@ -81,10 +81,13 @@ public class GridFragment extends Fragment implements ActivityPingListener{
     public void onResume() {
         super.onResume();
         gridView.setVisibility(View.INVISIBLE);
-        noCategories.setVisibility(View.GONE);
-        progressBar.setVisibility(View.GONE);
-        Log.d(LOG_TAG , "onResume()");
+        noCategories.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+
+        Log.e(LOG_TAG, "onResume()");
+
         populateGrid();
+
     }
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -106,10 +109,6 @@ public class GridFragment extends Fragment implements ActivityPingListener{
         });
 
         gridView.setNumColumns(2);
-
-
-
-
     }
 
     @Override
@@ -224,6 +223,7 @@ public class GridFragment extends Fragment implements ActivityPingListener{
             handler.post(new Runnable() {
                 @Override
                 public void run() {
+                    progressBar.setAlpha(1f);
                     Utility.crossFadeViews(gridView,    progressBar ); //Hide gridView, showProgressbar
                 }
             });

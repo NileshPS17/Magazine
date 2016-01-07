@@ -23,9 +23,9 @@ public class Utility {
         two.setAlpha(0f);
         two.setVisibility(View.VISIBLE);
 
-        two.animate().alpha(1f).setDuration(500).setListener(null);
+        two.animate().alpha(1f).setDuration(200).setListener(null);
 
-        one.animate().alpha(0f).setDuration(500).setListener(new Animator.AnimatorListener() {
+        one.animate().alpha(0f).setDuration(200).setListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
 
@@ -33,12 +33,13 @@ public class Utility {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                    one.setVisibility(View.GONE);
+                    one.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onAnimationCancel(Animator animation) {
-
+                    two.setVisibility(View.INVISIBLE);
+                    two.setAlpha(1f); // Opaque
             }
 
             @Override
@@ -54,7 +55,7 @@ public class Utility {
     {
         v.setVisibility(View.VISIBLE);
         v.setAlpha(1f);
-        v.animate().setDuration(500).alpha(0f).setListener(new Animator.AnimatorListener() {
+        v.animate().setDuration(200).alpha(0f).setListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
 
@@ -62,12 +63,12 @@ public class Utility {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                v.setVisibility(View.GONE);
+                v.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onAnimationCancel(Animator animation) {
-
+                    v.setVisibility(View.INVISIBLE);
             }
 
             @Override

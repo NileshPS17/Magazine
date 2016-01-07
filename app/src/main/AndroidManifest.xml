@@ -24,16 +24,16 @@
             android:name=".MainActivity"
             android:configChanges="navigation"
             android:label="Magazine" >
-
-            <!-- For Testing Purposes ONly -->
         </activity>
+
+
         <activity
             android:name=".ArticlesActivity"
-            android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".ViewArticleActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".ViewArticleActivity"  />
+
+
         <activity android:name=".Splash" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

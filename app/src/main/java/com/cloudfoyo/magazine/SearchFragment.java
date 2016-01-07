@@ -73,7 +73,6 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        setRetainInstance(true);
         return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
@@ -171,9 +170,10 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
         protected void onPreExecute() {
             super.onPreExecute();
             adapter.clearItems();
-            listView.setVisibility(View.INVISIBLE);
+            listView.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
-            noResult.setVisibility(View.INVISIBLE);
+            progressBar.setAlpha(1f);
+            noResult.setVisibility(View.GONE);
         }
 
         @Override

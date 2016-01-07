@@ -91,25 +91,25 @@ public class HomeFragment extends Fragment implements ActivityPingListener, Adap
         return view;
     }
 
-    public void animateNoResult()
-    {
-        //recentUpdates.setVisibility(View.GONE);
-        Utility.crossFadeViews(progressBar, noArticles);
+        public void animateNoResult()
+        {
+            //recentUpdates.setVisibility(View.GONE);
+            Utility.crossFadeViews(progressBar, noArticles);
 
-    }
+        }
 
-    public void animateShowProgress()
-    {
-        noArticles.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
-    }
+        public void animateShowProgress()
+        {
+            noArticles.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
+        }
 
-    public void animateShowList()
-    {
-        noArticles.setVisibility(View.GONE);
-        Utility.fadeOutView(progressBar);
+        public void animateShowList()
+        {
+            noArticles.setVisibility(View.GONE);
+            Utility.fadeOutView(progressBar);
 
-    }
+        }
 
 
 

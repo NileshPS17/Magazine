@@ -1,13 +1,13 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="windowNoTitle">true</item>
+        <item name="android:actionBarStyle">@style/myActionBarStyle</item>
         <item name="windowActionBar">false</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name='android:windowContentTransitions'>true</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
@@ -15,12 +15,17 @@
         <item name="android:textColor">#ffff</item>
         <item name="android:textColorHint">#ffff</item>
     </style>
+
+
     <style name="Home_list_item_text" parent="android:Widget.TextView">
         <item name="android:fontFamily">sans</item>
-
-
-
     </style>
+
+    <style name="myActionBarStyle" parent="Base.Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+
     <style name="Widget.Button.Toggle" parent="android:Widget">
         <item name="android:background">@drawable/ic_toggle_bg</item>
         <item name="android:disabledAlpha">?android:attr/disabledAlpha</item>

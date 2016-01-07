@@ -1,5 +1,6 @@
 package com.cloudfoyo.magazine;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -64,6 +65,10 @@ public class MainActivity extends MagazineAppCompatActivity {
                         } else {
 
                         }
+                        Intent intent = new Intent();
+                        intent.setAction(FULL_RELOAD);
+                        homeFragment.onActivityPing(intent);
+                        gridFragment.onActivityPing(intent);
                     }
                 }).setActionTextColor(Color.MAGENTA).show();
     }
