@@ -224,7 +224,7 @@ public class GridFragment extends Fragment implements ActivityPingListener{
                 @Override
                 public void run() {
                     progressBar.setAlpha(1f);
-                    Utility.crossFadeViews(gridView,    progressBar ); //Hide gridView, showProgressbar
+                    progressBar.setVisibility(View.VISIBLE);//Hide gridView, showProgressbar
                 }
             });
 
@@ -265,7 +265,8 @@ public class GridFragment extends Fragment implements ActivityPingListener{
                                     public void run() {
                                         noCategories.setVisibility(View.INVISIBLE);
                                         Utility.crossFadeViews(progressBar, gridView); // Hide ProgressBar, show GridView
-
+                                        gridView.setVisibility(View.VISIBLE);
+                                        gridView.setAlpha(1f);
                                     }
                                 });
                             }
