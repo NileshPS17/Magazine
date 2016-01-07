@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,11 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cloudfoyo.magazine.extras.ActivityPingListener;
 import com.cloudfoyo.magazine.extras.AsyncArticleLoader;
 import com.cloudfoyo.magazine.extras.ListItemArticleAdapter;
+import com.cloudfoyo.magazine.extras.Utility;
 import com.cloudfoyo.magazine.wrappers.Article;
 
 import java.net.MalformedURLException;
@@ -32,14 +36,17 @@ public class HomeFragment extends Fragment implements ActivityPingListener, Adap
 
 
 
-    private TextView viewMore;
+    private TextView noArticles;
+    private ProgressBar progressBar;
     private View headerLogo;
 
     private ListView recentUpdates;
+    private Handler handler;
 
     private ListItemArticleAdapter adapter;
 
     private AsyncArticleLoader asyncTask = null;
+
 
     //int[] images={R.drawable.cheese_1,R.drawable.cheese_2,R.drawable.cheese_3,R.drawable.cheese_4,R.drawable.cheese_5};
 
@@ -57,8 +64,53 @@ public class HomeFragment extends Fragment implements ActivityPingListener, Adap
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_home, container, false);
         setRetainInstance(true);
+        handler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
+                switch (msg.what)
+                {
+                    case Utility.SHOW_PROGRESS:
+                        animateShowProgress();
+                        break;
+
+                    case Utility.NO_RESULT:
+                        animateNoResult();
+                        break;
+
+                    case Utility.HIDE_PROGRESS:
+                        animateShowList();
+                        break;
+
+                    default:
+                        //Do nothing
+
+                }
+                return true;
+            }
+        });
         return view;
     }
+
+    public void animateNoResult()
+    {
+        //recentUpdates.setVisibility(View.GONE);
+        Utility.crossFadeViews(progressBar, noArticles);
+
+    }
+
+    public void animateShowProgress()
+    {
+        noArticles.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void animateShowList()
+    {
+        noArticles.setVisibility(View.GONE);
+        Utility.fadeOutView(progressBar);
+
+    }
+
 
 
     @Override
@@ -72,6 +124,8 @@ public class HomeFragment extends Fragment implements ActivityPingListener, Adap
         adapter = new ListItemArticleAdapter(getContext());
         recentUpdates.setAdapter(adapter);
         recentUpdates.setOnItemClickListener(this);
+        progressBar = (ProgressBar)view.findViewById(R.id.progress);
+        noArticles = (TextView)view.findViewById(R.id.noDataTextView);
 
 
         reloadData();
@@ -103,7 +157,7 @@ public class HomeFragment extends Fragment implements ActivityPingListener, Adap
         }
 
         try {
-            asyncTask = new AsyncArticleLoader(getContext(), adapter, false, true);
+            asyncTask = new AsyncArticleLoader(getContext(), adapter, false, true, handler);
             asyncTask.execute(new URL(getString(R.string.base_url)+"article/latest"));
 
         }catch (MalformedURLException e)

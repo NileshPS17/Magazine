@@ -2,6 +2,8 @@ package com.cloudfoyo.magazine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -13,12 +15,14 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.cloudfoyo.magazine.extras.AsyncArticleLoader;
 import com.cloudfoyo.magazine.extras.DynamicAdapterInterface;
+import com.cloudfoyo.magazine.extras.Utility;
 import com.cloudfoyo.magazine.wrappers.Article;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.android.youtube.player.YouTubeThumbnailView;
@@ -50,6 +54,11 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
 
     private FlipViewAdapter adapter;
 
+    private Handler handler;
+
+    private ProgressBar progressBar;
+
+    private TextView noArticles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,10 +113,58 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
             this.finish();
         }
 
+        handler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
+                switch (msg.what)
+                {
+                    case Utility.SHOW_PROGRESS:
+                        animateShowProgress();
+                        break;
 
+                    case Utility.NO_RESULT:
+                        animateNoResult();
+                        break;
+
+                    case Utility.HIDE_PROGRESS:
+                        animateShowList();
+                        break;
+
+                    default:
+                        //Do nothing
+
+                }
+                return true;
+            }
+        });
+
+
+        noArticles = (TextView)findViewById(R.id.noDataTextView);
+        progressBar = (ProgressBar)findViewById(R.id.progress);
+
+        flipView.setVisibility(View.GONE);
+    }
+
+
+    public void animateNoResult()
+    {
+        //recentUpdates.setVisibility(View.GONE);
+        Utility.crossFadeViews(progressBar, noArticles);
 
     }
 
+    public void animateShowProgress()
+    {
+        noArticles.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void animateShowList()
+    {
+        noArticles.setVisibility(View.GONE);
+        Utility.crossFadeViews(progressBar, flipView);
+
+    }
 
 
 
@@ -129,7 +186,7 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
         }
 
         try {
-            asyncTask = new AsyncArticleLoader(this, adapter, true, false);
+            asyncTask = new AsyncArticleLoader(this, adapter, true, false, handler);
             asyncTask.execute(new URL(getString(R.string.base_url)+"/categories/"+ categoryId + "/articles"));
 
         }catch (MalformedURLException e)
@@ -259,7 +316,8 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
             {
 
                     Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.putExtra(Intent.EXTRA_TEXT, a.getTitle() + "\n\n" + a.getContent());
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_TEXT, a.getTitle() +"\n\n" + a.getImageUrl() + "\n\n" +  a.getContent() + "\n\n" +"https://www.youtube.com?watch="+a.getVideoUrl());
                     startActivity(Intent.createChooser(intent, "Select an app : " ));
 
             }

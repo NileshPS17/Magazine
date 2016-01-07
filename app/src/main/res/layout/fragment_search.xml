@@ -25,13 +25,38 @@
         android:singleLine="true"
         android:drawableLeft="@drawable/searchw" />
 
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/search"
-                style="@style/listViewTheme"
-                android:id="@+id/listview" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_below="@id/search"
+            android:layout_height="match_parent">
+
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/search"
+                    style="@style/listViewTheme"
+                    android:visibility="invisible"
+                    android:id="@+id/listview" />
+
+                <ProgressBar
+                    android:layout_width="40dp"
+                    android:layout_gravity="center"
+                    android:indeterminateOnly="true"
+                    android:layout_height="40dp"
+                    android:id="@+id/progress"
+                    android:visibility="invisible"
+                    style="?attr/indeterminateProgressStyle"/>
 
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/noDataTextView"
+                    android:visibility="invisible"
+                    android:text="(No Results)"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content" />
+
+        </FrameLayout>
 
 </RelativeLayout>

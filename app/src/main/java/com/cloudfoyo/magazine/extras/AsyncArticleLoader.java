@@ -2,9 +2,9 @@ package com.cloudfoyo.magazine.extras;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
-import android.widget.BaseAdapter;
-import android.widget.Toast;
 
 import com.cloudfoyo.magazine.R;
 import com.cloudfoyo.magazine.wrappers.Article;
@@ -28,17 +28,26 @@ public class AsyncArticleLoader extends AsyncTask<URL, Article, Void>
     private DynamicAdapterInterface<Article> adapter;
     private Context context;
     private boolean isRequestedTypeLatest = true;
-    public AsyncArticleLoader(Context c, DynamicAdapterInterface<Article> adapter,boolean fetchContent, boolean isRequestedTypeLatest) {
+    private Handler handler;
+    private Message msg = new Message();
+    public AsyncArticleLoader(Context c, DynamicAdapterInterface<Article> adapter,boolean fetchContent, boolean isRequestedTypeLatest,Handler handler ) {
         this.adapter = adapter;
         this.context = c;
         this.fetchContent = fetchContent;
         this.isRequestedTypeLatest = isRequestedTypeLatest;
+        this.handler = handler;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
         adapter.clearItems();
+        if(handler!=null)
+        {
+            msg = new Message();
+            msg.what = Utility.SHOW_PROGRESS;
+            handler.sendMessage(msg);
+        }
     }
 
 
@@ -102,7 +111,14 @@ public class AsyncArticleLoader extends AsyncTask<URL, Article, Void>
 
         JSONArray array = obj.getJSONArray("articles");
         int n = array.length();
-        for(int  i=0; (i<n && !isCancelled()); ++i) {
+        int i;
+        for(i=0; (i<n && !isCancelled()); ++i) {
+            if(i==0 && handler!= null)
+            {
+                msg = new Message();
+                msg.what = Utility.HIDE_PROGRESS;
+                handler.sendMessage(msg);
+            }
             JSONObject object = array.getJSONObject(i);
             Article article = new Article(object.getInt(context.getString(R.string.art_id)),
                     object.getInt(context.getString(R.string.art_cat_id)),
@@ -116,6 +132,12 @@ public class AsyncArticleLoader extends AsyncTask<URL, Article, Void>
 
         }
 
+
+        if(i==0 && handler!=null){
+            msg = new Message();
+            msg.what = Utility.NO_RESULT;
+            handler.sendMessage(msg);
+        }
 
     }
 
@@ -133,8 +155,15 @@ public class AsyncArticleLoader extends AsyncTask<URL, Article, Void>
 
         JSONArray array = obj1.getJSONArray("articles");
         int n = array.length();
-        for(int i=0; (i<n && !isCancelled()); ++i)
+        int i;
+        for(i=0; (i<n && !isCancelled()); ++i)
         {
+            if(i==0 && handler!= null)
+            {
+                msg = new Message();
+                msg.what = Utility.HIDE_PROGRESS;
+                handler.sendMessage(msg);
+            }
             JSONObject obj = array.getJSONObject(i);
             Article article = new Article(obj.getInt(context.getString(R.string.art_id)) ,
                                             category.getCategoryId() ,
@@ -152,6 +181,13 @@ public class AsyncArticleLoader extends AsyncTask<URL, Article, Void>
         }
 
 
+        if(i==0 && handler!=null)
+        {
+            msg = new Message();
+            msg.what = Utility.NO_RESULT;
+            handler.sendMessage(msg);
+        }
+
     }
 
 
@@ -159,15 +195,18 @@ public class AsyncArticleLoader extends AsyncTask<URL, Article, Void>
     protected void onCancelled(Void aVoid) {
 
         adapter.clearItems();
+        if(handler!=null)
+        {
+            msg = new Message();
+            msg.what = Utility.NO_RESULT;
+            handler.sendMessage(msg);
+        }
+
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        if (((BaseAdapter)adapter).getCount() == 0)
-        {
-            Toast.makeText(context, "No Articles", Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override

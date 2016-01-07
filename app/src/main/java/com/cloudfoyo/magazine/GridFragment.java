@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,10 +16,12 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cloudfoyo.magazine.extras.ActivityPingListener;
 import com.cloudfoyo.magazine.extras.DynamicAdapterInterface;
+import com.cloudfoyo.magazine.extras.Utility;
 import com.cloudfoyo.magazine.wrappers.Category;
 import com.squareup.picasso.Picasso;
 
@@ -42,6 +45,8 @@ public class GridFragment extends Fragment implements ActivityPingListener{
     private GridView gridView = null;
     private AsyncGridLoader gridLoader = null;
     private ImageAdapter imageAdapter;
+    private ProgressBar progressBar;
+    private TextView noCategories;
     //int[] images={R.drawable.cheese_1,R.drawable.cheese_2,R.drawable.cheese_3,R.drawable.cheese_4,R.drawable.cheese_5};
 
     public GridFragment() {
@@ -49,6 +54,9 @@ public class GridFragment extends Fragment implements ActivityPingListener{
 
 
     }
+
+
+    private Handler handler = new Handler();
 
 
     @Override
@@ -63,8 +71,20 @@ public class GridFragment extends Fragment implements ActivityPingListener{
         View view = inflater.inflate(R.layout.fragment_grid, container, false);
         // Inflate the layout for this fragment
 
+        noCategories = (TextView)view.findViewById(R.id.noDataTextView);
+        progressBar = (ProgressBar)view.findViewById(R.id.progress);
         return view;
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        gridView.setVisibility(View.INVISIBLE);
+        noCategories.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        Log.d(LOG_TAG , "onResume()");
+        populateGrid();
     }
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -88,7 +108,6 @@ public class GridFragment extends Fragment implements ActivityPingListener{
         gridView.setNumColumns(2);
 
 
-        populateGrid();
 
 
     }
@@ -116,6 +135,8 @@ public class GridFragment extends Fragment implements ActivityPingListener{
         }
         catch(MalformedURLException e)
         {
+            imageAdapter.clearItems();
+            noCategories.setVisibility(View.VISIBLE); //Show no Categories
             Log.d(LOG_TAG, "Whooops! That shouldn't happen. Must get the latest version of app.");
         }
     }
@@ -200,6 +221,13 @@ public class GridFragment extends Fragment implements ActivityPingListener{
         protected void onPreExecute() {
             super.onPreExecute();
             imageAdapter.clearItems();
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Utility.crossFadeViews(gridView,    progressBar ); //Hide gridView, showProgressbar
+                }
+            });
+
         }
 
         @Override
@@ -230,6 +258,18 @@ public class GridFragment extends Fragment implements ActivityPingListener{
                         int n = array.length();
                         for(int i=0; i<n && !isCancelled(); ++i)
                         {
+
+                            if(i==0) { // Execute only the first iteration
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        noCategories.setVisibility(View.INVISIBLE);
+                                        Utility.crossFadeViews(progressBar, gridView); // Hide ProgressBar, show GridView
+
+                                    }
+                                });
+                            }
+
                             JSONObject object = array.getJSONObject(i);
                             Category category = new Category(object.getInt(getString(R.string.cat_id)),
                                                             object.getString(getString(R.string.category_name)),
@@ -242,6 +282,9 @@ public class GridFragment extends Fragment implements ActivityPingListener{
 
 
                         }
+
+
+
                     }
                     else
                     {
@@ -251,13 +294,21 @@ public class GridFragment extends Fragment implements ActivityPingListener{
                 }
                 else
                 {
+
                     throw new Exception(getString(R.string.server_error) + ":= Bad Response Code " + responseCode);
                 }
 
             }catch (Exception e)
             {
                     Log.e(LOG_TAG, e.getMessage());
-                     this.cancel(true);
+                    this.cancel(true);
+                    handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Utility.crossFadeViews(progressBar, noCategories);
+                    }
+                });
+
                 //Something went wrong
             }
 
@@ -275,6 +326,17 @@ public class GridFragment extends Fragment implements ActivityPingListener{
         protected void onPostExecute(ArrayList<Category> categories) {
             super.onPostExecute(categories);
             //Do nothing .. for now
+
+            if(imageAdapter.getCount() == 0)
+            {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                            Utility.crossFadeViews(progressBar, noCategories);
+                    }
+                });
+            }
+
         }
 
         @Override

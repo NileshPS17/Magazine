@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -18,10 +19,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cloudfoyo.magazine.extras.DynamicAdapterInterface;
 import com.cloudfoyo.magazine.extras.ListItemArticleAdapter;
+import com.cloudfoyo.magazine.extras.Utility;
 import com.cloudfoyo.magazine.wrappers.Article;
 
 import org.json.JSONArray;
@@ -47,6 +50,10 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
 
     private AlertDialog dialog;
 
+    private ProgressBar progressBar;
+    private TextView noResult;
+    private Handler handler;
+
     private InputMethodManager   imanager;
     public SearchFragment() {
         // Required empty public constructor
@@ -58,6 +65,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        handler = new Handler();
 
     }
 
@@ -97,6 +105,8 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
 
+        noResult = (TextView)view.findViewById(R.id.noDataTextView);
+        progressBar = (ProgressBar)view.findViewById(R.id.progress);
         AlertDialog.Builder buildr = new AlertDialog.Builder(getContext());
         buildr.setCancelable(false);
         buildr.setMessage("Your search did not match any documents !");
@@ -161,6 +171,9 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
         protected void onPreExecute() {
             super.onPreExecute();
             adapter.clearItems();
+            listView.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
+            noResult.setVisibility(View.INVISIBLE);
         }
 
         @Override
@@ -196,6 +209,18 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
                         int n = array.length();
 
                         for (int i = 0; (i < n && !isCancelled()); ++i) {
+
+                            if(i==0) { // Execute only the first iteration
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        noResult.setVisibility(View.INVISIBLE);
+                                        Utility.crossFadeViews(progressBar, listView); // Hide ProgressBar, show GridView
+
+                                    }
+                                });
+                            }
+
                             JSONObject object = array.getJSONObject(i);
                             Article article = new Article(object.getInt(getString(R.string.art_id)),
                                     object.getInt(getString(R.string.cat_id)),
@@ -219,6 +244,14 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
             }catch(Exception e)
             {
                 this.cancel(true);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        listView.setVisibility(View.GONE);
+                        Utility.crossFadeViews(progressBar, noResult);
+
+                    }
+                });
                 Log.e(LOG_TAG, e.getMessage());
             }
 
@@ -232,7 +265,9 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
             super.onPostExecute(aVoid);
             if(SearchFragment.this.adapter.getCount() == 0)
             {
-                showNoSearchResultsInterface();
+                listView.setVisibility(View.GONE);
+                Utility.crossFadeViews(progressBar, noResult);
+
             }
 
         }

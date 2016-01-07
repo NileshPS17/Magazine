@@ -39,19 +39,45 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <GridView
-        android:layout_below="@id/toolbar1"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="2"
-        android:animateLayoutChanges="true"
-        android:columnWidth="150dp"
-        android:horizontalSpacing="2dp"
-        android:verticalSpacing="2dp"
-        android:gravity="center"
-        android:listSelector="?android:attr/selectableItemBackground"
-        android:stretchMode="columnWidth"
-        android:id="@+id/gridview">
+        android:layout_below="@id/toolbar1"
+        android:layout_height="match_parent">
 
-    </GridView>
+
+        <GridView
+            android:layout_below="@id/toolbar1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="2"
+            android:layout_marginTop="2dp"
+            android:animateLayoutChanges="true"
+            android:columnWidth="150dp"
+            android:horizontalSpacing="2dp"
+            android:verticalSpacing="2dp"
+            android:gravity="center"
+            android:listSelector="?android:attr/selectableItemBackground"
+            android:stretchMode="columnWidth"
+            android:id="@+id/gridview" />
+
+
+        <ProgressBar
+            android:layout_width="40dp"
+            android:layout_gravity="center"
+            android:indeterminateOnly="true"
+            android:layout_height="40dp"
+            android:id="@+id/progress"
+            android:visibility="visible"
+            style="?attr/indeterminateProgressStyle"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/noDataTextView"
+            android:visibility="gone"
+            android:text="(No Categories)"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
 </RelativeLayout>

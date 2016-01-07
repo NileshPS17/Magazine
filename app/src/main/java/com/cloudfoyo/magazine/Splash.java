@@ -11,7 +11,6 @@ import com.facebook.FacebookSdk;
 
 public class Splash extends AppCompatActivity {
 
-    public static final String APP_MODE = "development"; //Set it to "release" before release
 
 
     int SPLASH_TIMER=4000;
@@ -43,7 +42,7 @@ public class Splash extends AppCompatActivity {
                     Splash.this.finish();
                 }
             }
-        },(APP_MODE.equals("development"))?100:SPLASH_TIMER); //Time is precious :-P
+        },(SPLASH_TIMER)); //Time is precious :-P
     }
     @Override
     public void onBackPressed(){

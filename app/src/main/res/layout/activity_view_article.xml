@@ -8,15 +8,47 @@
     android:background="#ffff"
     tools:context="com.cloudfoyo.magazine.ViewArticleActivity">
 
-    <se.emilsjolander.flipview.FlipView
-        xmlns:flipview="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/flip_view"
-        flipview:orientation="horizontal"
-        flipview:overFlipMode="glow" />
 
 
+
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content">
+
+
+
+        <se.emilsjolander.flipview.FlipView
+            xmlns:flipview="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/flip_view"
+            android:visibility="invisible"
+            flipview:orientation="horizontal"
+            flipview:overFlipMode="glow" />
+
+
+
+        <ProgressBar
+            android:layout_width="40dp"
+            android:layout_gravity="center"
+            android:indeterminateOnly="true"
+            android:layout_height="40dp"
+            android:id="@+id/progress"
+            android:visibility="visible"
+            style="?attr/indeterminateProgressStyle"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/noDataTextView"
+            android:visibility="gone"
+            android:text="(No Articles)"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_height="wrap_content" />
+
+    </FrameLayout>
 
 
 </RelativeLayout>

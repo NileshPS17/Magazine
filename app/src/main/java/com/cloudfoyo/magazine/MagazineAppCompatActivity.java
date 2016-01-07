@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -68,25 +69,19 @@ public class MagazineAppCompatActivity extends AppCompatActivity {
             Log.d(LOG_TAG, profile.getName());
         }
 
+       **/
+        try {
 
-        if(! isLoggedInWithFacebook()) {
+            Thread.sleep(200);
+            if(! isLoggedInWithFacebook())
+                redirectToLogin();
 
-           // redirectToLogin();
+        }catch (Exception e){
+
+            Log.d(LOG_TAG, e.getMessage());
+            redirectToLogin();
+
         }
-
-
-
-**/
-
-        //Check for login here ....
-        /**
-         *
-         * if failed to retrieve a valid user session
-         *              redirect to login activity
-         *            + clear all cookies
-         *            + start a new User Session
-         *
-       * */
     }
 
 

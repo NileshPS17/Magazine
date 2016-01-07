@@ -12,7 +12,7 @@
     tools:context="com.cloudfoyo.magazine.Login">
 
     <!-- Login progress -->
-    <ProgressBar
+    <!--<ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
@@ -113,8 +113,18 @@
         </LinearLayout>
 
 
+-->
+
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/fb_login_button"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"/>
 
 
 
-    </ScrollView>
 </RelativeLayout>

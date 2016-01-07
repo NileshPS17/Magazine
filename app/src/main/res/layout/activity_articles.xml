@@ -56,31 +56,47 @@
 
 
 
+    <ListView
+        android:layout_width="match_parent"
+        android:id="@+id/articles_listView"
+        style="@style/listViewTheme"
+        android:divider="@android:color/transparent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_height="match_parent" />
 
-        <ListView
-            android:layout_width="match_parent"
-            android:id="@+id/articles_listView"
-            style="@style/listViewTheme"
-            android:divider="@android:color/transparent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_height="match_parent" />
-        <!--android:listSelector="@drawable/article_list_selector" !-->
 
-    <!--
 
-    <ProgressBar
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="50px"
-        android:indeterminateOnly="true"
-        android:progress="100"
-        android:id="@+id/progressBar"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="400dp"
-        style="?progressBarStyle"
-        android:layout_height="50px" />
--->
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/toolbar1"
+        android:layout_height="wrap_content">
 
+
+
+
+
+        <ProgressBar
+            android:layout_width="40dp"
+            android:layout_gravity="center"
+            android:indeterminateOnly="true"
+            android:layout_height="40dp"
+            android:id="@+id/progress"
+            android:visibility="visible"
+            style="?attr/indeterminateProgressStyle"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/noDataTextView"
+            android:visibility="gone"
+            android:text="(No Articles)"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_height="wrap_content" />
+
+    </FrameLayout>
 
 
 
