@@ -2,12 +2,10 @@ package com.cloudfoyo.magazine;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.WindowManager;
-
-import com.facebook.FacebookSdk;
 
 public class Splash extends AppCompatActivity {
 
@@ -19,8 +17,6 @@ public class Splash extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Initialise Facebook  SDK here ..
-        FacebookSdk.sdkInitialize(getApplicationContext());
 
         setContentView(R.layout.activity_splash);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -33,11 +29,6 @@ public class Splash extends AppCompatActivity {
             public void run() {
                 if (!firsttime) {
                     Intent intent = new Intent(Splash.this, MainActivity.class);
-                    startActivity(intent);
-                    Splash.this.finish();
-                }
-                else{
-                    Intent intent=new Intent(Splash.this,Login.class);
                     startActivity(intent);
                     Splash.this.finish();
                 }
