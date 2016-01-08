@@ -1,9 +1,11 @@
 package com.cloudfoyo.magazine;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -16,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -29,12 +30,12 @@ import com.cloudfoyo.magazine.extras.DynamicAdapterInterface;
 import com.cloudfoyo.magazine.extras.Utility;
 import com.cloudfoyo.magazine.wrappers.Article;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
-import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedList;
@@ -166,6 +167,7 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
     public void animateShowProgress()
     {
         noArticles.setVisibility(View.GONE);
+        progressBar.setAlpha(1f);
         progressBar.setVisibility(View.VISIBLE);
     }
 
@@ -206,7 +208,7 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
         }
     }
 
-    class FlipViewAdapter extends BaseAdapter  implements DynamicAdapterInterface<Article>, View.OnClickListener, CompoundButton.OnCheckedChangeListener{
+    class FlipViewAdapter extends BaseAdapter  implements DynamicAdapterInterface<Article>, View.OnClickListener{
 
         public LinkedList<Article> list = new LinkedList<Article>();
         private LayoutInflater inflater;
@@ -305,16 +307,6 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
 
         }
 
-         class ViewHolder {
-
-             TextView content, author,category, heading;
-             ImageView iv;
-             CollapsingToolbarLayout collapsingToolbarLayout;
-             ToggleButton toggleButton;
-             ImageButton shareButton;
-             YouTubeThumbnailView playerView;
-        }
-
 
 
 
@@ -324,15 +316,12 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
              a = list.get((Integer) v.getTag());
             if(id == R.id.share) // Share the article
             {
-
-                parseImage();
-                Uri imageUri=Uri.fromFile(file);
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_STREAM, imageUri);
-                intent.setType("image/*");
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                intent.putExtra(Intent.EXTRA_TEXT, a.getTitle() +"\n\n" + "\n\n" +  a.getContent() + "\n\n" +"https://www.youtube.com?watch="+a.getVideoUrl());
-                startActivity(Intent.createChooser(intent, "Select an app : " ));
+                try{
+                    new DecodeBitmapAsyncTask().execute(new URL(a.getImageUrl()));
+                }catch(Exception e) // That shouldnt happend := Ever
+                {
+                    Log.e(LOG_TAG, e.getMessage());
+                }
 
             }
             else if(id == R.id.playerButton)
@@ -342,6 +331,8 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
             }
 
         }
+
+        /**
          void parseImage(){
              Picasso.with(ViewArticleActivity.this)
                      .load(a.getImageUrl())
@@ -399,9 +390,89 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
         }
     }
 
+        **/
 
 
+
+    class DecodeBitmapAsyncTask extends AsyncTask<URL, Void, Uri>
+    {
+        ProgressDialog dialog;
+        public DecodeBitmapAsyncTask() {
+            super();
+            dialog = new ProgressDialog(ViewArticleActivity.this, ProgressDialog.STYLE_SPINNER);
+            dialog.setTitle("Just a minute");
+            dialog.setCancelable(false);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            dialog.show();
+        }
+
+        @Override
+        protected Uri doInBackground(URL... params) {
+
+            try {
+
+
+                HttpURLConnection con = (HttpURLConnection) params[0].openConnection();
+                con.setRequestMethod("GET");
+                con.setConnectTimeout(3000);
+                con.setReadTimeout(3000);
+                int code = con.getResponseCode();
+                if (code == 200 || code == 201) {
+                    Bitmap bitmap = BitmapFactory.decodeStream(con.getInputStream());
+                    File f = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator +  "saved.jpg");
+                    f.createNewFile();
+                    FileOutputStream fos = new FileOutputStream(f);
+                    if(! bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos) )
+                    {
+                        //Toast.makeText(getApplicationContext(), "Image coculd not be saved!", Toast.LENGTH_SHORT).show();
+                        Log.e(LOG_TAG, "Image could not be saved!");
+                    }
+
+                    return Uri.parse(f.getAbsolutePath());
+
+                }
+                else
+                {
+                    Log.e(LOG_TAG, "Bad Response Code!");
+                }
+
+            }catch(Exception e)
+            {
+                Log.d(LOG_TAG, e.getMessage());
+            }
+
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(Uri uri) {
+            super.onPostExecute(uri);
+
+            if(dialog.isShowing())
+                dialog.cancel();
+
+
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + "saved.jpg"));
+            intent.setType("image/*");
+            //Toast.makeText(getApplicationContext(), Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + "saved.jpg", Toast.LENGTH_SHORT).show();
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.putExtra(Intent.EXTRA_TEXT, a.getTitle() +"\n\n" + "\n\n" +  a.getContent() + "\n\n" +"https://www.youtube.com?watch="+a.getVideoUrl());
+            startActivity(Intent.createChooser(intent, "Select an app : "));
+
+
+
+        }
+    }
 
 
 }
+}
+
 
