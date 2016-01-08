@@ -173,7 +173,7 @@
                         android:background="@color/colorPrimary"
                         android:textColor="#fff"
                         android:typeface="sans"
-                        android:drawableLeft="@drawable/utube"
+
                         android:elevation="3dp"
                         android:textSize="12dp"
                         android:textStyle="bold"

@@ -1,7 +1,11 @@
 package com.cloudfoyo.magazine;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -27,7 +31,10 @@ import com.cloudfoyo.magazine.wrappers.Article;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedList;
@@ -45,6 +52,9 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
     ImageButton imageButton;
 
     private   FlipView flipView;
+    File file;
+    Article a;
+    private Target target;
 
     private  int categoryId = -1;
     private int articleId = -1;
@@ -311,14 +321,18 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
         @Override
         public void onClick(View v) {
             int id = v.getId();
-            Article a = list.get((Integer) v.getTag());
+             a = list.get((Integer) v.getTag());
             if(id == R.id.share) // Share the article
             {
 
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("text/plain");
-                    intent.putExtra(Intent.EXTRA_TEXT, a.getTitle() +"\n\n" + a.getImageUrl() + "\n\n" +  a.getContent() + "\n\n" +"https://www.youtube.com?watch="+a.getVideoUrl());
-                    startActivity(Intent.createChooser(intent, "Select an app : " ));
+                parseImage();
+                Uri imageUri=Uri.fromFile(file);
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_STREAM, imageUri);
+                intent.setType("image/*");
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.putExtra(Intent.EXTRA_TEXT, a.getTitle() +"\n\n" + "\n\n" +  a.getContent() + "\n\n" +"https://www.youtube.com?watch="+a.getVideoUrl());
+                startActivity(Intent.createChooser(intent, "Select an app : " ));
 
             }
             else if(id == R.id.playerButton)
@@ -328,6 +342,43 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
             }
 
         }
+         void parseImage(){
+             Picasso.with(ViewArticleActivity.this)
+                     .load(a.getImageUrl())
+                     .into((Target)target);
+
+                  target = new Target() {
+                 @Override
+                 public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                     new Thread(new Runnable() {
+                         @Override
+                         public void run() {
+
+                             file = new File(
+                                     Environment.getExternalStorageDirectory().getPath()
+                                             + "/saved.jpg");
+                             try {
+                                 file.createNewFile();
+                                 FileOutputStream ostream = new FileOutputStream(file);
+                                 bitmap.compress(Bitmap.CompressFormat.JPEG,100,ostream);
+                                 ostream.close();
+                             }
+                             catch (Exception e) {
+                                 e.printStackTrace();
+                             }
+                         }
+                     }).start();
+                 }
+
+                 @Override
+                 public void onBitmapFailed(Drawable errorDrawable) {}
+
+                 @Override
+                 public void onPrepareLoad(Drawable placeHolderDrawable) {}
+             };
+
+
+         }
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
