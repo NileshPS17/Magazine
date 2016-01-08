@@ -26,7 +26,6 @@
             <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:src="@drawable/cheese_1"
                     android:id="@+id/home_list_item_articleImage"
                     android:scaleType="centerCrop" />
 

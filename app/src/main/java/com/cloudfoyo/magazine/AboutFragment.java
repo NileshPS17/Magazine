@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import java.util.List;
 public class AboutFragment extends Fragment {
 
     private static final String LOG_TAG = AboutFragment.class.getSimpleName();
-
+    public int[] image_ids={R.drawable.jerintitus1,R.drawable.ajithjnair2,R.drawable.amjadalikhan,R.drawable.nikhilzacharia,R.drawable.hilpa5,R.drawable.kriparajalekshmi,R.drawable.firozpareed7,R.drawable.arathysudheer,R.drawable.anukurup9,R.drawable.naveen10,R.drawable.ayasankar11,R.drawable.devapriya12,R.drawable.ajeeshsabu13,R.drawable.ashik14 };
 
     List<Contributor> contributors = new ArrayList<>();
 
@@ -31,10 +32,20 @@ public class AboutFragment extends Fragment {
     public AboutFragment() {
         // Required empty public constructor
 
-        contributors.add(new Contributor("Alpha"));
-        contributors.add(new Contributor("Beeta"));
-        contributors.add(new Contributor("Gamma"));
-        contributors.add(new Contributor("Omega"));
+        contributors.add(new Contributor("Jerin Titus"));
+        contributors.add(new Contributor("Ajith J Nair"));
+        contributors.add(new Contributor("Amjadali Khan"));
+        contributors.add(new Contributor("Nikhil Zacharia"));
+        contributors.add(new Contributor("Shilpa S"));
+        contributors.add(new Contributor("Kripa Rajalekshmi"));
+        contributors.add(new Contributor("Firoz Pareed"));
+        contributors.add(new Contributor("Arathy Sudheer"));
+        contributors.add(new Contributor("Manu Kurup"));
+        contributors.add(new Contributor("Naveen R"));
+        contributors.add(new Contributor("Jayasankar"));
+        contributors.add(new Contributor("Devipriya"));
+        contributors.add(new Contributor("Ajeesh Sabu"));
+        contributors.add(new Contributor("Ashik"));
     }
 
     Handler h = new Handler();
@@ -78,6 +89,8 @@ public class AboutFragment extends Fragment {
                     convertView = LayoutInflater.from(getContext()).inflate(R.layout.grid_item, parent, false);
                 }
                 TextView tv = (TextView) convertView.findViewById(R.id.text);
+                ImageView imageView=(ImageView)convertView.findViewById(R.id.iv);
+                imageView.setImageResource(image_ids[position]);
                 tv.setText(contributors.get(position).name);
                 GridView.LayoutParams params = new GridView.LayoutParams(size, size);
                 convertView.setLayoutParams(params);
@@ -88,7 +101,8 @@ public class AboutFragment extends Fragment {
 
     class Contributor
     {
-        public String name; // TODO := Remove this class if no other info required
+        public String name;
+
 
         public Contributor(String name) {
             this.name = name;

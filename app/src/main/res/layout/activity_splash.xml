@@ -11,6 +11,6 @@
         android:layout_height="match_parent"
         android:src="@drawable/coverpic3"
         android:id="@+id/iv"
-        android:scaleType="centerCrop"/>
+        android:scaleType="fitCenter"/>
 
 </RelativeLayout>

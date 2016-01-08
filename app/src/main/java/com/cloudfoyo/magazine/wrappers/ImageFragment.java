@@ -15,7 +15,7 @@ import com.cloudfoyo.magazine.R;
  */
 public class ImageFragment extends Fragment {
 
-    int[] images = {R.drawable.cheese_1, R.drawable.cheese_2, R.drawable.cheese_3, R.drawable.cheese_4, R.drawable.cheese_5};
+
 
     public ImageFragment() {
         // Required empty public constructor
@@ -29,7 +29,7 @@ public class ImageFragment extends Fragment {
         ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
         Bundle bundle = getArguments();
         int position = bundle.getInt("pos");
-        imageView.setImageResource(images[position]);
+       // imageView.setImageResource(images[position]);
         return view;
     }
 
