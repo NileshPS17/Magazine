@@ -13,7 +13,6 @@
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:fitsSystemWindows="true"
-       android:src="@drawable/blr"
        android:scaleType="centerCrop"/>
 
     <com.facebook.login.widget.LoginButton

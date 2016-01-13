@@ -23,7 +23,7 @@ import java.util.List;
 public class AboutFragment extends Fragment {
 
     private static final String LOG_TAG = AboutFragment.class.getSimpleName();
-    public int[] image_ids={R.drawable.jerintitus1,R.drawable.ajithjnair2,R.drawable.amjadalikhan,R.drawable.nikhilzacharia,R.drawable.hilpa5,R.drawable.kriparajalekshmi,R.drawable.firozpareed7,R.drawable.arathysudheer,R.drawable.anukurup9,R.drawable.naveen10,R.drawable.ayasankar11,R.drawable.devapriya12,R.drawable.ajeeshsabu13,R.drawable.ashik14 };
+    public int[] image_ids={R.drawable.jerintitus1,R.drawable.ajithjnair2,R.drawable.amjadalikhan,R.drawable.nikhilzacharia,R.drawable.hilpa5,R.drawable.kriparajalekshmi,R.drawable.firozpareed7,R.drawable.arathysudheer,R.drawable.anukurup9,R.drawable.naveen10,R.drawable.ayasankar11,R.drawable.devi,R.drawable.ajeeshsabu13,R.drawable.ashik14 };
 
     List<Contributor> contributors = new ArrayList<>();
 

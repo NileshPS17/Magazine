@@ -178,6 +178,7 @@ public class HomeFragment extends Fragment implements ActivityPingListener, Adap
 
 
 
+
    /** public class ImageSliderAdapter extends PagerAdapter{
         Timer timer;
         TimerTask timerTask;
