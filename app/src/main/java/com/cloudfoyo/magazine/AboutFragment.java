@@ -43,7 +43,7 @@ public class AboutFragment extends Fragment {
         contributors.add(new Contributor("Manu Kurup"));
         contributors.add(new Contributor("Naveen R"));
         contributors.add(new Contributor("Jayasankar"));
-        contributors.add(new Contributor("Devipriya"));
+        contributors.add(new Contributor("Devapriya"));
         contributors.add(new Contributor("Ajeesh Sabu"));
         contributors.add(new Contributor("Ashik"));
     }
