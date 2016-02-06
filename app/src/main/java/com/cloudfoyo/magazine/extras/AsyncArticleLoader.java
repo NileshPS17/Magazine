@@ -127,7 +127,7 @@ public class AsyncArticleLoader extends AsyncTask<URL, Article, Void>
                     object.getString(context.getString(R.string.art_author)),
                     object.getString(context.getString(R.string.art_image)),
                     object.getString(context.getString(R.string.art_date)),
-                    (fetchContent ? object.getString(context.getString(R.string.art_content)) : ""));
+                    (fetchContent ? object.getString(context.getString(R.string.art_content)) : ""), obj.getString("video"));
             publishProgress(article);
 
         }
@@ -172,7 +172,7 @@ public class AsyncArticleLoader extends AsyncTask<URL, Article, Void>
                                             obj.getString(context.getString(R.string.art_author)) ,
                                             obj.getString(context.getString(R.string.art_image)),
                                             obj.getString(context.getString(R.string.art_date)),
-                             (fetchContent)?obj.getString(context.getString(R.string.art_content)):"");
+                             (fetchContent)?obj.getString(context.getString(R.string.art_content)):"", obj.getString("video"));
 
             publishProgress(article);
 
