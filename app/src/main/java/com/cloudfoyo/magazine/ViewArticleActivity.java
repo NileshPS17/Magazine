@@ -33,8 +33,10 @@ import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -60,8 +62,10 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
     private  int categoryId = -1;
     private int articleId = -1;
     private AsyncArticleLoader asyncTask = null;
+    private ImageView iv;
 
     private String categoryName;
+    private String imageUrl;
 
     private FlipViewAdapter adapter;
 
@@ -262,13 +266,13 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
 
 
             TextView content, author,category, heading;
-            ImageView iv;
             CollapsingToolbarLayout collapsingToolbarLayout;
             ToggleButton toggleButton;
             ImageButton shareButton;
             Button playButton;
 
             final Article article = list.get(position);
+              imageUrl=article.getImageUrl();
 
 
             if(convertView == null) {
@@ -280,6 +284,7 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
             category=(TextView)convertView.findViewById(R.id.category);
             author=(TextView)convertView.findViewById(R.id.author);
             iv=(ImageView)convertView.findViewById(R.id.iv);
+
             collapsingToolbarLayout = (CollapsingToolbarLayout)convertView.findViewById(R.id.collapsing_toolbar);
             //holder.toggleButton = (ToggleButton)convertView.findViewById(R.id.toggleButton);
             shareButton = (ImageButton)convertView.findViewById(R.id.share);
@@ -295,8 +300,24 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
             category.setText(article.getCategoryName());
             content.setText(article.getContent());
             heading.setText(article.getTitle());
-            Picasso.with(ViewArticleActivity.this).load(article.getImageUrl()).placeholder(R.drawable.img_loading).error(R.drawable.img_loading).into(iv);
+            Log.e("oldimage",article.getImageUrl());
+            Picasso.with(ViewArticleActivity.this).load(imageUrl).placeholder(R.drawable.img_loading).error(R.drawable.img_loading).into(iv);
+          //  Toast.makeText(ViewArticleActivity.this,article.getImageUrl(),Toast.LENGTH_LONG).show();
             collapsingToolbarLayout.setTitle(categoryName);
+
+
+            iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(ViewArticleActivity.this,ImageViewActivity.class);
+                    intent.putExtra("image",imageUrl);
+                    Log.e("IMAGE URL",imageUrl);
+                    startActivity(intent);
+
+                }
+            });
+
+
             //toggleButton.setTag(new Integer(position));
             shareButton.setTag(new Integer(position));
             //toggleButton.setOnCheckedChangeListener(this);
@@ -331,6 +352,10 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
             }
 
         }
+
+
+
+
 
         /**
          void parseImage(){

@@ -32,10 +32,11 @@
             android:fitsSystemWindows="true">
 
 
-            <ImageView
+            <ImageButton
                 android:layout_width="match_parent"
                 android:scaleType="centerCrop"
                 android:id="@+id/iv"
+                android:background="@null"
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax"
                 android:layout_height="match_parent" />

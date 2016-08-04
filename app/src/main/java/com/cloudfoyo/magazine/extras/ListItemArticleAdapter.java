@@ -70,7 +70,7 @@ public class ListItemArticleAdapter extends BaseAdapter implements DynamicAdapte
         TextView tv = (TextView)convertView.findViewById(R.id.home_list_item_category);
         tv.setText(article.getCategoryName());
         tv = (TextView) convertView.findViewById(R.id.home_list_item_date);
-        tv.setText(article.getDate());
+        //tv.setText(article.getDate());
         tv = (TextView)convertView.findViewById(R.id.home_list_item_title);
         tv.setText(article.getTitle());
         tv = (TextView)convertView.findViewById(R.id.home_list_item_author);
