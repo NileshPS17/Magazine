@@ -1,17 +1,16 @@
 package com.cloudfoyo.magazine;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
-
-public class ImageViewActivity extends AppCompatActivity {
+public class ImageViewActivity extends AppCompatActivity implements View.OnClickListener {
 
     ImageView iv;
 
@@ -20,9 +19,25 @@ public class ImageViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_view);
         iv=(ImageView)findViewById(R.id.iv);
+        if(Build.VERSION.SDK_INT >= 21)
+            getWindow().setStatusBarColor(Color.BLACK);
         String imageurl=getIntent().getStringExtra("image");
         Picasso.with(ImageViewActivity.this).load(imageurl).into(iv);
+        findViewById(R.id.back).setOnClickListener(this);
+    }
 
+    @Override
+    public void onClick(View v) {
+        this.finish();
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+            this.finish();
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

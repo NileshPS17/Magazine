@@ -77,19 +77,6 @@ public class GridFragment extends Fragment implements ActivityPingListener{
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        gridView.setVisibility(View.INVISIBLE);
-        noCategories.setVisibility(View.INVISIBLE);
-        progressBar.setVisibility(View.INVISIBLE);
-
-        Log.e(LOG_TAG, "onResume()");
-
-        populateGrid();
-
-    }
-
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -109,6 +96,14 @@ public class GridFragment extends Fragment implements ActivityPingListener{
         });
 
         gridView.setNumColumns(2);
+
+
+        gridView.setVisibility(View.INVISIBLE);
+        noCategories.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+
+
+        populateGrid();
     }
 
     @Override

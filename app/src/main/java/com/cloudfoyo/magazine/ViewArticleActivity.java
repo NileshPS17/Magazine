@@ -33,10 +33,8 @@ import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -158,6 +156,8 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
         progressBar = (ProgressBar)findViewById(R.id.progress);
 
         flipView.setVisibility(View.GONE);
+
+        fireup();
     }
 
 
@@ -190,11 +190,7 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
     }
 
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
+    public void fireup() {
         if(asyncTask != null)
         {
             asyncTask.cancel(true);
@@ -205,7 +201,8 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
             asyncTask = new AsyncArticleLoader(this, adapter, true, false, handler);
             asyncTask.execute(new URL(getString(R.string.base_url)+"/categories/"+ categoryId + "/articles"));
 
-        }catch (MalformedURLException e)
+        }
+        catch (MalformedURLException e)
         {
             Log.e(LOG_TAG, e.getMessage());
             asyncTask = null;
@@ -305,18 +302,8 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
           //  Toast.makeText(ViewArticleActivity.this,article.getImageUrl(),Toast.LENGTH_LONG).show();
             collapsingToolbarLayout.setTitle(categoryName);
 
-
-            iv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent=new Intent(ViewArticleActivity.this,ImageViewActivity.class);
-                    intent.putExtra("image",imageUrl);
-                    Log.e("IMAGE URL",imageUrl);
-                    startActivity(intent);
-
-                }
-            });
-
+            iv.setTag(position);
+            iv.setOnClickListener(this);
 
             //toggleButton.setTag(new Integer(position));
             shareButton.setTag(new Integer(position));
@@ -348,6 +335,11 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
             else if(id == R.id.playerButton)
             {
                 Intent intent = YouTubeStandalonePlayer.createVideoIntent(ViewArticleActivity.this, getString(R.string.YOUTUBE_KEY),a.getVideoUrl(), 0, true, false);
+                startActivity(intent);
+            }
+            else if( id == R.id.iv) {
+                Intent intent = new Intent(ViewArticleActivity.this, ImageViewActivity.class);
+                intent.putExtra("image", a.getImageUrl());
                 startActivity(intent);
             }
 
