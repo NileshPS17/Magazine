@@ -297,7 +297,6 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
             category.setText(article.getCategoryName());
             content.setText(article.getContent());
             heading.setText(article.getTitle());
-            Log.e("oldimage",article.getImageUrl());
             Picasso.with(ViewArticleActivity.this).load(imageUrl).placeholder(R.drawable.img_loading).error(R.drawable.img_loading).into(iv);
           //  Toast.makeText(ViewArticleActivity.this,article.getImageUrl(),Toast.LENGTH_LONG).show();
             collapsingToolbarLayout.setTitle(categoryName);

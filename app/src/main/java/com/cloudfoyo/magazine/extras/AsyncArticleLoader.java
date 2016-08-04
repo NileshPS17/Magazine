@@ -71,6 +71,7 @@ public class AsyncArticleLoader extends AsyncTask<URL, Article, Void>
                 }
                 connection.disconnect();
                 br.close();
+                Log.d(LOG_TAG, params[0] + " \n " + builder.toString());
 
                 JSONObject obj = new JSONObject(builder.toString());
                 if(obj.getBoolean(context.getString(R.string.json_error)))
@@ -99,6 +100,7 @@ public class AsyncArticleLoader extends AsyncTask<URL, Article, Void>
         {
             this.cancel(true);
             Log.e(LOG_TAG, e.getMessage());
+            e.printStackTrace();
         }
 
         return null;
@@ -127,7 +129,7 @@ public class AsyncArticleLoader extends AsyncTask<URL, Article, Void>
                     object.getString(context.getString(R.string.art_author)),
                     object.getString(context.getString(R.string.art_image)),
                     object.getString(context.getString(R.string.art_date)),
-                    (fetchContent ? object.getString(context.getString(R.string.art_content)) : ""), obj.getString("video"));
+                    (fetchContent ? object.getString(context.getString(R.string.art_content)) : ""), object.getString("article_video"));
             publishProgress(article);
 
         }

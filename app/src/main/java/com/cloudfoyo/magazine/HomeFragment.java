@@ -52,9 +52,6 @@ public class HomeFragment extends Fragment implements ActivityPingListener, Adap
 
     public HomeFragment() {
         // Required empty public constructor
-
-
-
     }
 
 
@@ -134,17 +131,9 @@ public class HomeFragment extends Fragment implements ActivityPingListener, Adap
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
         Intent intent = new Intent(getActivity(), ViewArticleActivity.class);
         intent.putExtra(ViewArticleActivity.ACTION_ARTICLE, (Article) adapter.getItem(position-1));
         startActivity(intent);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
     }
 
 
