@@ -17,6 +17,12 @@
     </style>
 
 
+    <style name="titleText" parent="@android:style/TextAppearance.Medium">
+    <item name="android:textSize">18sp</item>
+    <item name="android:textColor">#ffff</item>
+    <item name="android:textStyle">normal</item>
+
+</style>
     <style name="Home_list_item_text" parent="android:Widget.TextView">
         <item name="android:fontFamily">sans</item>
     </style>

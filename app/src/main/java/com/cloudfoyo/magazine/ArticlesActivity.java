@@ -47,6 +47,9 @@ private static final String LOG_TAG = ArticlesActivity.class.getSimpleName();
 
     Handler handler;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +68,7 @@ private static final String LOG_TAG = ArticlesActivity.class.getSimpleName();
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
         collapsingToolbarLayout.setTitle(c.getName());
+        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.titleText);
 
 
         articlesListView = (ListView)findViewById(R.id.articles_listView);

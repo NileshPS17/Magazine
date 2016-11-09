@@ -23,7 +23,7 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="300dp"
             app:expandedTitleGravity="left|bottom"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:contentScrim="?attr/colorPrimary"
@@ -90,7 +90,7 @@
             android:layout_gravity="fill_vertical"
             android:nestedScrollingEnabled="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_marginBottom="45dp"
+            android:layout_marginBottom="0dp"
             android:fillViewport="false">
 
 

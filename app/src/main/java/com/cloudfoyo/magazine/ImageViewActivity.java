@@ -18,13 +18,24 @@ public class ImageViewActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_view);
+
+
+
+        TouchImageView img = (TouchImageView) findViewById(R.id.iv);
+       // img.setImageResource(R.drawable.arathysudheer);
+        img.setMaxZoom(4f);
         iv=(ImageView)findViewById(R.id.iv);
         if(Build.VERSION.SDK_INT >= 21)
             getWindow().setStatusBarColor(Color.BLACK);
-        String imageurl=getIntent().getStringExtra("image");
-        Picasso.with(ImageViewActivity.this).load(imageurl).into(iv);
+
+        String imageurl = getIntent().getStringExtra("image");
+        Picasso.with(ImageViewActivity.this).load(imageurl).into(img);
+
+
         findViewById(R.id.back).setOnClickListener(this);
     }
+
+
 
     @Override
     public void onClick(View v) {

@@ -41,7 +41,7 @@
             <android.support.v7.widget.Toolbar
                 android:layout_width="match_parent"
                 android:background="?android:attr/selectableItemBackground"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="56dp"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_collapseMode="pin"
                 android:id="@+id/toolbar1" >
