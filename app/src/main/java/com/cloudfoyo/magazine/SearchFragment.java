@@ -149,10 +149,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
 
     public void showNoSearchResultsInterface()
     {
-
         dialog.show();
-
-
     }
 
 
@@ -223,7 +220,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
 
                             JSONObject object = array.getJSONObject(i);
                             Article article = new Article(object.getInt(getString(R.string.art_id)),
-                                    object.getInt(getString(R.string.cat_id)),
+                                    object.getInt("cat_id"),
                                     object.getString(getString(R.string.cat_name)),
                                     object.getString(getString(R.string.art_title)),
                                     object.getString(getString(R.string.art_author)),

@@ -8,24 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 
 
 public class MagazineAppCompatActivity extends AppCompatActivity {
-
-
-
-
     private static final String LOG_TAG = MagazineAppCompatActivity.class.getSimpleName();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
-
     }
-
-
-
-
 
     public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
