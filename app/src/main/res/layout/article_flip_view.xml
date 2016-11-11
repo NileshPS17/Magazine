@@ -51,16 +51,16 @@
 
 
 
-                 <ImageButton
+                <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/back_button"
                     android:src="?android:homeAsUpIndicator"
                     android:gravity="center"
-                     android:paddingLeft="5dp"
-                     android:layout_marginRight="12dp"
-                     android:scaleType="fitXY"
-                     android:background="?attr/selectableItemBackgroundBorderless"
+                    android:paddingLeft="5dp"
+                    android:layout_marginRight="12dp"
+                    android:scaleType="fitXY"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:layout_alignParentLeft="true"
                     android:onClick="back" />
 
@@ -83,157 +83,168 @@
     </android.support.design.widget.AppBarLayout>
 
 
-        <ScrollView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollview"
+        android:layout_gravity="fill_vertical"
+        android:nestedScrollingEnabled="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_marginBottom="0dp"
+        android:fillViewport="true">
+
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/scrollview"
-            android:layout_gravity="fill_vertical"
-            android:nestedScrollingEnabled="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_marginBottom="0dp"
-            android:fillViewport="false">
+            android:layout_height="wrap_content">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="30dp"
+                android:paddingTop="7dp"
+                android:text="Heading Goes Here"
+                android:layout_marginLeft="15dp"
+                android:textColor="#000"
+                android:id="@+id/heading" />
 
-            <RelativeLayout
+            <com.cloudfoyo.magazine.extras.HorizontalLine
                 android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_below="@id/heading"
+                android:id="@+id/breaker"
+                android:layout_height="2dp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_below="@id/breaker"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="15dp"
+                android:paddingLeft="15dp"
+                android:text="Category:"
+                android:id="@+id/category"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_toRightOf="@+id/category"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_below="@id/category"
+                android:textSize="15dp"
+                android:text="By Author"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/author"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="3dp"
+                android:layout_below="@+id/author"
+                android:fontFamily="sans-serif-thin"
+                android:textStyle="normal"
+                android:textSize="20dp"
+                android:textColor="#000"
+                android:paddingBottom="50dp"
+                android:paddingTop="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:id="@+id/content"/>
+
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_below="@id/content"
+                android:foregroundGravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
                 android:layout_height="wrap_content">
 
-                <TextView
+                <Button
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-condensed"
-                    android:textSize="30dp"
-                    android:text="Heading Goes Here"
-                    android:layout_marginLeft="15dp"
-                    android:textColor="#000"
-                    android:id="@+id/heading"/>
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/playerButton"
+                    android:padding="15dp"
+                    android:text="Watch Video"
+                    android:background="@color/colorPrimary"
+                    android:textColor="#fff"
+                    android:typeface="sans"
 
-                <com.cloudfoyo.magazine.extras.HorizontalLine
-                    android:layout_width="match_parent"
-                    android:layout_margin="10dp"
-                    android:layout_below="@id/heading"
-                    android:id="@+id/breaker"
-                    android:layout_height="2dp" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_below="@id/breaker"
-                    android:fontFamily="sans-serif-condensed"
-                    android:textSize="15dp"
-                    android:paddingLeft="15dp"
-                    android:text="Category:"
-                    android:id="@+id/category"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_toRightOf="@+id/category"
-                    android:fontFamily="sans-serif-condensed"
-                    android:layout_below="@id/category"
-                    android:textSize="15dp"
-                    android:text="By Author"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="15dp"
-                    android:id="@+id/author"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lineSpacingExtra="3dp"
-                    android:layout_below="@+id/author"
-                    android:fontFamily="sans-serif-thin"
-                    android:textStyle="normal"
-                    android:textSize="20dp"
-                    android:textColor="#000"
-                    android:paddingBottom="50dp"
-                    android:paddingTop="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:id="@+id/content"/>
-
-
-
-                <FrameLayout
-                    android:layout_width="match_parent"
+                    android:elevation="3dp"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
                     android:layout_below="@id/content"
-                    android:foregroundGravity="center"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginEnd="2dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content" />
 
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:id="@+id/playerButton"
-                        android:padding="15dp"
-                        android:text="Watch Video"
-                        android:background="@color/colorPrimary"
-                        android:textColor="#fff"
-                        android:typeface="sans"
+            </FrameLayout>
 
-                        android:elevation="3dp"
-                        android:textSize="12dp"
-                        android:textStyle="bold"
-                        android:layout_below="@id/content"
-                        android:layout_height="wrap_content" />
+        </RelativeLayout>
 
-                </FrameLayout>
+    </ScrollView>
 
-            </RelativeLayout>
+    <!--   <android.support.v7.widget.Toolbar
+           android:layout_width="match_parent"
+           android:layout_height="45dp"
+           android:id="@+id/toolbar2"
+           android:elevation="5dp"
+           android:layout_gravity="bottom"
+           android:gravity="center_vertical"
+           android:layout_alignParentBottom="true"
+           android:background="#D50000">
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:orientation="horizontal"
+               android:layout_height="match_parent">
 
-        </ScrollView>
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_weight="1"
+                   android:paddingTop="7.5dp"
+                   android:paddingBottom="7.5dp"
+                   android:gravity="center_horizontal"
+                   android:layout_height="wrap_content">
+                   <ToggleButton
+                       android:id="@+id/toggleButton"
+                       android:layout_width="25dp"
+                       android:layout_height="25dp"
+                       android:layout_gravity="left"
+                       style="@style/toggleButton"
+                       android:background="@drawable/ic_toggle_bg"/>
+               </LinearLayout>
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_weight="1"
+                   android:paddingTop="7.5dp"
+                   android:paddingBottom="7.5dp"="wrap_content">
+dth="25dp"
+ight="25dp"
+share"
+wable/share"
+="fitXY"
+                   android:gravity="center_horizontal"
+                   android:layout_height="wrap_content">
+dth="25dp"
+ight="25dp"
+share"
+wable/share"
+="fitXY"
+                   <ImageButton
+                       android:layout_width="25dp"
+                       android:layout_height="25dp"
+                       android:id="@+id/share"
+                       android:src="@drawable/share"
+                       android:scaleType="fitXY"
+                       android:layout_toRightOf="@+id/toggleButton"
+                       android:background="?android:attr/selectableItemBackgroundBorderless" />
+               </LinearLayout>
+           </LinearLayout>
 
-     <!--   <android.support.v7.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:id="@+id/toolbar2"
-            android:elevation="5dp"
-            android:layout_gravity="bottom"
-            android:gravity="center_vertical"
-            android:layout_alignParentBottom="true"
-            android:background="#D50000">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="match_parent">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingTop="7.5dp"
-                    android:paddingBottom="7.5dp"
-                    android:gravity="center_horizontal"
-                    android:layout_height="wrap_content">
-                    <ToggleButton
-                        android:id="@+id/toggleButton"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="left"
-                        style="@style/toggleButton"
-                        android:background="@drawable/ic_toggle_bg"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingTop="7.5dp"
-                    android:paddingBottom="7.5dp"
-                    android:gravity="center_horizontal"
-                    android:layout_height="wrap_content">
-                    <ImageButton
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:id="@+id/share"
-                        android:src="@drawable/share"
-                        android:scaleType="fitXY"
-                        android:layout_toRightOf="@+id/toggleButton"
-                        android:background="?android:attr/selectableItemBackgroundBorderless" />
-                </LinearLayout>
-            </LinearLayout>
-
-        </android.support.v7.widget.Toolbar>
+       </android.support.v7.widget.Toolbar>
 
 -->
 

@@ -213,10 +213,6 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
 
         public LinkedList<Article> list = new LinkedList<Article>();
         private LayoutInflater inflater;
-
-
-
-
         public FlipViewAdapter()
         {
             inflater = getLayoutInflater();
@@ -429,10 +425,7 @@ public class ViewArticleActivity extends MagazineAppCompatActivity {
 
         @Override
         protected Uri doInBackground(URL... params) {
-
             try {
-
-
                 HttpURLConnection con = (HttpURLConnection) params[0].openConnection();
                 con.setRequestMethod("GET");
                 con.setConnectTimeout(3000);
