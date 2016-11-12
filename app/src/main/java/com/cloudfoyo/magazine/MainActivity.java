@@ -23,12 +23,15 @@ public class MainActivity extends MagazineAppCompatActivity {
     private HomeFragment homeFragment = new HomeFragment();
     private GridFragment gridFragment = new GridFragment();
 
+
     public static final String FULL_RELOAD = "com.cloudfoyo.magazine.mainactivity.full_reload";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+
 
         setContentView(R.layout.activity_main);
         tabLayout=(TabLayout)findViewById(R.id.tablayout);

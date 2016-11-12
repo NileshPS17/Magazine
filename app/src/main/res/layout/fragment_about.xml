@@ -1,9 +1,9 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffff"
-    tools:context="com.cloudfoyo.magazine.AboutFragment">
+    >
+
 
 
     <android.support.v7.widget.Toolbar
@@ -40,13 +40,118 @@
 
 
 
-    <GridView
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffff"
+            android:id="@+id/rl"
+            tools:context="com.cloudfoyo.magazine.AboutFragment">
+
+
+    <TextView
         android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/heading_mageditor"
+        android:text="Magazine Editor"
+        android:textSize="20dp"
+        android:textColor="#000"
+        android:gravity="center"
+        android:layout_marginTop="52dp"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_image_container"
+        android:layout_below="@+id/heading_mageditor">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/a1"
+        android:scaleType="centerCrop"
+        android:id="@+id/edit_image"/>
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:paddingBottom="15dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="15dp"
+        android:textStyle="bold"
+        android:text="JERIN TITUS"
+        android:textSize="20dp"
+        android:layout_gravity="bottom"
+        android:textColor="@android:color/white" />
+
+
+    </FrameLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/heading_editorboard"
+        android:text="Editorial Board"
+        android:textSize="20dp"
+        android:textColor="#000"
+        android:gravity="center"
+        android:layout_below="@+id/edit_image_container"/>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/heading_editorboard"
+        android:id="@+id/recycler_view"/>
+
+
+
+  <!-- <com.cloudfoyo.magazine.ExpandableHeightGridView
+        android:layout_width="wrap_content"
         android:id="@+id/about_gridView"
         android:layout_marginTop="1dp"
-        android:layout_below="@id/toolbar1"
+        android:layout_below="@id/heading_editorboard"
+        android:horizontalSpacing="2dp"
+       android:nestedScrollingEnabled="false"
+       android:isScrollContainer="false"
+        android:verticalSpacing="2dp"
+        android:layout_height="match_parent"/>
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/heading_union"
+        android:text="College Union"
+        android:textSize="20dp"
+        android:textColor="#000"
+        android:gravity="center"
+        android:layout_below="@+id/about_gridView"/>
+
+    <com.cloudfoyo.magazine.ExpandableHeightGridView
+        android:layout_width="wrap_content"
+        android:id="@+id/about_gridView2"
+        android:layout_marginTop="1dp"
+        android:layout_below="@id/heading_union"
         android:horizontalSpacing="2dp"
         android:verticalSpacing="2dp"
-        android:layout_height="match_parent"></GridView>
+        android:isScrollContainer="false"
+        android:nestedScrollingEnabled="false"
+        android:layout_height="match_parent"></com.cloudfoyo.magazine.ExpandableHeightGridView>
+-->
+
+
+
 
 </RelativeLayout>
+
+
+
+</FrameLayout>
