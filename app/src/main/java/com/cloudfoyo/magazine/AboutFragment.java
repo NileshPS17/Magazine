@@ -36,8 +36,8 @@ public class AboutFragment extends Fragment {
 
     private ExpandableHeightGridView gridView, gridView2;
 
-    RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
+    RecyclerView recyclerView,recyclerView2;
+    RecyclerView.LayoutManager layoutManager,layoutManager2;
     RelativeLayout layout;
 
 
@@ -94,7 +94,7 @@ public class AboutFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        layout=(RelativeLayout) view.findViewById(R.id.rl);
+        //layout=(RelativeLayout) view.findViewById(R.id.rl);
         int size=getActivity().getWindowManager().getDefaultDisplay().getWidth()/3;
         Log.d("Size",Integer.toString(size));
 
@@ -102,8 +102,19 @@ public class AboutFragment extends Fragment {
         //final Grid layoutManager = new org.solovyev.android.views.llm.LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         layoutManager = new GridLayoutManager(getActivity(), 3, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        //recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(new MyRecyclerAdapter(contributors, image_ids,size, getActivity()));
+
+
+        recyclerView2 = (RecyclerView) view.findViewById(R.id.recycler_view2);
+        //final Grid layoutManager = new org.solovyev.android.views.llm.LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        layoutManager2 = new GridLayoutManager(getActivity(), 3, GridLayoutManager.VERTICAL, false);
+        recyclerView2.setLayoutManager(layoutManager2);
+        recyclerView2.setHasFixedSize(true);
+        recyclerView2.setNestedScrollingEnabled(false);
+        recyclerView2.setAdapter(new MyRecyclerAdapter(contributors, image_ids2,size, getActivity()));
+
         //int size=recyclerView..getWidth();
        // RecyclerView.LayoutParams layoutParams=new RecyclerView.LayoutParams(30,30);
        // recyclerView.setLayoutParams(layoutParams);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cloudfoyo.magazine"
-    android:versionCode="1"
+    android:versionCode="2"
     android:versionName="Stable Release v1">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
@@ -15,7 +15,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher2"
-        android:label="Appoopanthadi"
+        android:label="Appooppan Thadi"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity

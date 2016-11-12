@@ -1,7 +1,9 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     >
 
 
@@ -39,15 +41,22 @@
     </android.support.v7.widget.Toolbar>
 
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true"
+        >
 
 
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffff"
             android:id="@+id/rl"
-            tools:context="com.cloudfoyo.magazine.AboutFragment">
+            android:orientation="vertical"
+            >
 
 
     <TextView
@@ -106,9 +115,30 @@
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/heading_editorboard"
+        android:layout_height="wrap_content"
+        android:minHeight="360dp"
         android:id="@+id/recycler_view"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/heading_union"
+                android:text="College Union"
+                android:textSize="20dp"
+                android:textColor="#000"
+                android:gravity="center"
+               />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="360dp"
+                android:id="@+id/recycler_view2"/>
+
+
+
 
 
 
@@ -150,8 +180,8 @@
 
 
 
+</LinearLayout>
+
+    </ScrollView>
+
 </RelativeLayout>
-
-
-
-</FrameLayout>
