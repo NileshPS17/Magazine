@@ -39,6 +39,7 @@ public class AboutFragment extends Fragment {
     RecyclerView recyclerView,recyclerView2;
     RecyclerView.LayoutManager layoutManager,layoutManager2;
     RelativeLayout layout;
+    ImageView imageView;
 
 
     public AboutFragment() {
@@ -97,6 +98,9 @@ public class AboutFragment extends Fragment {
         //layout=(RelativeLayout) view.findViewById(R.id.rl);
         int size=getActivity().getWindowManager().getDefaultDisplay().getWidth()/3;
         Log.d("Size",Integer.toString(size));
+
+        imageView=(ImageView) view.findViewById(R.id.edit_image);
+        Picasso.with(getActivity()).load(R.drawable.a1).into(imageView);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         //final Grid layoutManager = new org.solovyev.android.views.llm.LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
